@@ -1,0 +1,16 @@
+<% if pokemon_counter % 5 == 0 %>
+<tr>
+<% end %>
+<td>
+	<div id="pokemon_<%= pokemon.id %>">
+		<% series = @series[pokemon.id] %>
+		<div style="width: 160px; height: 160px">
+			<%= image_tag series.latest_sprite.url if series and series.latest_sprite %>
+		</div>
+		<%= pokemon.full_name %><br />
+		<%= html_for_series(series) if series %>
+	</div>
+</td>
+<% if pokemon_counter == number_of_entries - 1 or pokemon_counter % 5 == 4 %>
+</tr>
+<% end %>

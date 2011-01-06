@@ -1,7 +1,17 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
-#   Mayor.create(:name => 'Daley', :city => cities.first)
+# Import Pokémon list
+file = File.open(Rails.root.join("db", "csv", "pokemon.csv")) do |f|
+  f.each_line do |l|
+    l.strip!
+    next if l.blank?
+    
+    fields = l.split(',')
+    
+    form_name = fields[2]
+    
+    Pokemon.create(
+      :dex_number => fields[0],
+      :name => fields[1],
+      :form_name => form_name.blank? ? nil : form_name
+    )
+  end
+end
