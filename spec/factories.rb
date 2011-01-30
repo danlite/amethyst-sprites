@@ -1,9 +1,13 @@
 Factory.define :artist do |a|
   a.name 'Jungle Boy'
+  a.email 'jungleboy@email.net'
+  a.password '123456'
 end
 
 Factory.define :another_artist, :class => 'Artist' do |a|
   a.name 'Dan'
+  a.email 'dan@email.net'
+  a.password 'qwerty'
 end
   
 Factory.define :pokemon do |p|

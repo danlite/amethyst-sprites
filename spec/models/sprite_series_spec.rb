@@ -17,21 +17,6 @@ describe SpriteSeries do
     end
   end
   
-  describe "Pokemon" do
-    it "should not create a new series if there is an existing non-archived series for the same Pokemon" do
-      @series = Factory(:sprite_series)
-      @series.state = :editing
-      
-      lambda do
-        @series.pokemon.series.create(:state => :reserved)
-      end.should_not change(SpriteSeries, :count)
-      
-      lambda do
-        @series.pokemon.series.create(:state => :archived)
-      end.should change(SpriteSeries, :count)
-    end
-  end
-  
   describe "sprites" do
     it "should get its latest sprite" do
       @series = Factory(:sprite_series)

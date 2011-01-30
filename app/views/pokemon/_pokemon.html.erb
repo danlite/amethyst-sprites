@@ -3,7 +3,7 @@
 <% end %>
 <td>
 	<div id="pokemon_<%= pokemon.id %>">
-		<% series = @series[pokemon.id] %>
+		<% series = pokemon.current_series %>
 		<div style="width: 160px; height: 160px">
 			<%= image_tag series.latest_sprite.url if series and series.latest_sprite %>
 		</div>

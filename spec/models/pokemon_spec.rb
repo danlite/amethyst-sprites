@@ -22,4 +22,32 @@ describe Pokemon do
       @pokemon.should_not be_valid
     end
   end
+  
+  describe "sprite series" do
+    it "should validate its series"
+    # do
+    #   @pokemon = Factory(:pokemon)
+    #   SpriteSeries.create(:pokemon => @pokemon)
+    #   
+    #   invalid_series = @pokemon.series.create
+    #   invalid_series.should_not be_valid
+    # end
+    
+    it "should set update its current series after creating a new series" do
+      @pokemon = Factory(:pokemon)
+      @series = SpriteSeries.create(:pokemon => @pokemon)
+      @pokemon.reload.current_series.should == @series
+    end
+    
+    it "should not create a new series if it has a current series" do
+      @pokemon = Factory(:pokemon)
+      @series = SpriteSeries.create(:pokemon => @pokemon)
+      
+      @pokemon.reload.current_series.should == @pokemon.current_series
+      
+      lambda do
+        SpriteSeries.create(:pokemon => @pokemon)
+      end.should_not change(SpriteSeries, :count)
+    end
+  end
 end
