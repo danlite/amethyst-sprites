@@ -45,6 +45,8 @@ describe Artist do
         end
       end.should change(SpriteSeries, :count).by(Artist::MAXIMUM_CONCURRENT_WORKS)
       
+      artist.has_maximum_wip.should be_true
+      
       lambda do
         artist.claim_pokemon(Factory(:form_pokemon))
       end.should_not change(SpriteSeries, :count)

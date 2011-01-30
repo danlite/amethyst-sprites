@@ -1,0 +1,9 @@
+<% if artist_signed_in? %>
+  <li>
+  <%= link_to('Logout', destroy_artist_session_path) %>        
+  </li>
+<% else %>
+  <li>
+  <%= link_to('Login', new_artist_session_path)  %>  
+  </li>
+<% end %>

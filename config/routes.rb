@@ -1,5 +1,18 @@
 AmethystSprites::Application.routes.draw do
-  resources :pokemon
+  devise_for :artists
+
+  resources :pokemon do
+    member do
+      get :claim
+      get :unclaim
+    end
+  end
+  
+  resources :series do
+    resources :sprites
+  end
+  
+  root :to => 'pokemon#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

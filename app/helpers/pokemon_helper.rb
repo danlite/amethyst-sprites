@@ -14,12 +14,18 @@ module PokemonHelper
     end
     case series.state
       # TODO - validate series has sprite for these states
-      when true
-        true
-      # when :reserved, :working, :editing, :qc
-      #   state_text += " by #{series.latest_sprite.artist.name}"
+      when :reserved, :working, :editing, :qc
+        state_text += " by #{series.latest_sprite.artist.name}"
     end
     state_text
+  end
+  
+  def html_for_available(pokemon, artist)
+    if artist.nil? or artist.has_maximum_wip
+      "available"
+    else
+      link_to "available", claim_pokemon_path(pokemon)
+    end
   end
   
 end

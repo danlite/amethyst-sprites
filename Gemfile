@@ -10,6 +10,8 @@ gem 'paperclip'
 
 gem 'aws-s3', :require => 'aws/s3'
 
+gem 'devise'
+
 group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'

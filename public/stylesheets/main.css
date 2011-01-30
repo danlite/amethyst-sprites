@@ -1,0 +1,34 @@
+.mainmenu {
+	font-size: 16pt;
+	font-weight: bold;
+}
+
+.hmenu a {
+	text-decoration: none;
+}
+
+.hmenu a:hover {
+	text-decoration: underline;
+}
+
+ul.hmenu {
+	list-style: none;
+	margin: 0 0 2em;
+	padding: 0;
+}
+
+ul.hmenu li {
+  display: inline;  
+}
+
+.notice {
+	background-color: #dfd;
+	border: 1px solid #070;
+	padding: 5px;
+}
+
+.alert {
+	background-color: #ffa;
+	border: 1px solid #070;
+	padding: 5px;
+}
