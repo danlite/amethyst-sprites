@@ -1,7 +1,16 @@
 AmethystSprites::Application.routes.draw do
   devise_for :artists
 
-  resources :pokemon
+  resources :pokemon do
+    member do
+      get :claim
+      get :unclaim
+    end
+  end
+  
+  resources :series do
+    resources :sprites
+  end
   
   root :to => 'pokemon#index'
 

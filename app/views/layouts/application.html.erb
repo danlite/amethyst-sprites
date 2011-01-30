@@ -7,6 +7,23 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
+	<ul class="hmenu mainmenu" style="float: left">
+		<li><%= link_to "Gallery", pokemon_index_path %></li>
+	</ul>
+	<ul class="hmenu" style="float: right">
+		<% if artist_signed_in? %>
+		<li><%= current_artist.email %></li>
+		<% end %>
+	  <%= render 'devise/menu/registration_items' %>
+	  <%= render 'devise/menu/login_items' %>
+	</ul>
+	<div style="clear: both" />
+<% if notice %>	
+	<p class="notice"><%= notice %></p>
+<% end %>
+<% if alert %>
+	<p class="alert"><%= alert %></p>
+<% end %>
 
 <%= yield %>
 
