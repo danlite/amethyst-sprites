@@ -9,7 +9,11 @@ AmethystSprites::Application.routes.draw do
   end
   
   resources :series do
-    resources :sprites
+    resources :sprites do
+      collection do
+        post :submit
+      end
+    end
   end
   
   root :to => 'pokemon#index'

@@ -2,4 +2,6 @@
 
 <% if @current_series %>
 <%= render :partial => 'series/series', :object => @current_series %>
+<% else %>
+<%= link_to "Reserve this sprite", claim_pokemon_path(@pokemon) unless (current_artist.nil? or current_artist.has_maximum_wip) %>
 <% end %>

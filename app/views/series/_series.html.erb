@@ -1,25 +1,34 @@
-<% if series.state == :reserved %>
-<span style="color: red; font-weight: bold">Reserved by <%= series.latest_sprite.artist.name %></span>
-<% if series.latest_sprite.artist == current_artist %>
-<%= link_to "(Unreserve)", unclaim_pokemon_path(series.pokemon) %>
-<% end %>
+<% if series.state == SERIES_RESERVED %>
+	<span style="color: red; font-weight: bold">Reserved by <%= series.latest_sprite.artist.name %></span>
+	<% if series.latest_sprite.artist == current_artist %>
+		<%= link_to "(Unreserve)", unclaim_pokemon_path(series.pokemon) %>
+	<% end %>
 <% else %>
-<h2>Current sprites:</h2>
-<table>
-	<tr>
-		<th>Sprite</th>
-		<th></th>
-	</tr>
-	<% series.sprites.each do |sprite| %>
-	<tr>
-		<td>
-			<% if sprite.image? %>
-				<%= image_tag sprite.image.url %><br />
-				by <%= sprite.artist.name %>
-			<% else %>
+	<h2>Current sprites:</h2>
+	<table>
+		<tr>
+			<th>Sprite</th>
+			<th></th>
+		</tr>
+		<% series.sprites.each do |sprite| %>
+		<tr>
+			<td>
+				<% if sprite.image? %>
+					<%= image_tag sprite.image.url %><br />
+					by <%= sprite.artist.name %>
+				<% else %>
 			
-			<% end %>
-		</td>
-	</tr>
+				<% end %>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+<% end %>
+
+<% if series.owned? and series.current_owner == current_artist %>
+	<h2>Submit sprite</h2>
+	<%= form_tag submit_series_sprites_path(series), :multipart => true do %>
+		<%= file_field_tag 'image' %><br />
+		<%= submit_tag 'Upload' %>
 	<% end %>
 <% end %>
