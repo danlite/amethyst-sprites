@@ -19,7 +19,7 @@ class PokemonController < ApplicationController
   def unclaim
     @pokemon = Pokemon.find(params[:id])
     @series = @pokemon.current_series
-    if @series and @series.state == SERIES_ARCHIVED and @series.sprites.first.artist == current_artist
+    if @series and @series.state == SERIES_RESERVED and @series.sprites.first.artist == current_artist
       @series.delete
     end
     redirect_to pokemon_index_path
