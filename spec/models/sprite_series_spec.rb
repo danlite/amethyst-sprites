@@ -35,7 +35,7 @@ describe SpriteSeries do
     
     it "should be reserved by default" do
       @series = SpriteSeries.create(:pokemon => @pokemon)
-      @series.state.should == :reserved
+      @series.state.should == SERIES_RESERVED
     end
     
     it "should create a sprite when it is created" do

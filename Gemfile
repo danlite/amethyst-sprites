@@ -11,10 +11,12 @@ gem 'paperclip'
 gem 'aws-s3', :require => 'aws/s3'
 gem 'devise'
 gem 'transitions', :require => ["transitions", "active_record/transitions"]
+gem 'pg'
 
 group :development, :test do
   gem 'rspec', '2.0.1'
   gem 'rspec-rails', '2.0.1'
+  gem 'silent-postgres'
 end
 
 group :test do

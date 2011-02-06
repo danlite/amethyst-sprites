@@ -20,8 +20,8 @@ class Artist < ActiveRecord::Base
   validates :name, :presence => true
   
   def has_maximum_wip
-    current_wip = self.sprites.joins(:series).where('sprite_series.state IN (?)', [SERIES_RESERVED, SERIES_WORKING]).group('sprite_series.id').all
-    return current_wip.count >= MAXIMUM_CONCURRENT_WORKS
+    current_wip = self.sprites.joins(:series).where('sprite_series.state IN (?)', [SERIES_RESERVED, SERIES_WORKING]).count('sprite_series.id')
+    return current_wip >= MAXIMUM_CONCURRENT_WORKS
   end
   
   def claim_pokemon(pokemon, start_work=false)
