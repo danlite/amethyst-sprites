@@ -4,10 +4,10 @@ class Sprite < ActiveRecord::Base
   has_attached_file :image,
     :storage => Rails.env.test? ? :filesystem : :s3,
     :s3_credentials => {
-      :bucket => ENV['S3_BUCKET'],
       :access_key_id => ENV['S3_KEY'],
       :secret_access_key => ENV['S3_SECRET']
     },
+    :bucket => ENV['S3_BUCKET'],
     :path => Rails.env.test? ? ":rails_root/tmp/:attachment/:id" : "/:attachment/:id"
   
   validates :artist, :presence => true
