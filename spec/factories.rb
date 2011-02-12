@@ -33,7 +33,7 @@ end
 Factory.define :sprite do |s|
   s.association :series, :factory => :sprite_series
   s.association :artist
-  s.step :work
+  s.step SPRITE_WORK
 end
 
 Factory.define :contributor do |c|

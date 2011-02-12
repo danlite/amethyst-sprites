@@ -21,8 +21,8 @@ describe SpriteSeries do
     it "should get its latest sprite" do
       @series = Factory(:sprite_series)
       @artist = Factory(:artist)
-      @series.sprites.create(:step => :work, :artist => @artist)
-      latest = @series.sprites.create(:step => :edit, :artist => @artist)
+      @series.sprites.create(:step => SPRITE_WORK, :artist => @artist)
+      latest = @series.sprites.create(:step => SPRITE_EDIT, :artist => @artist)
       @series.latest_sprite.should == latest
     end
   end
@@ -41,6 +41,7 @@ describe SpriteSeries do
     it "should create a sprite when it is created" do
       @series = @artist.claim_pokemon(@pokemon)
       @series.latest_sprite.should_not be_nil
+      @series.empty_sprite.should_not be_nil
     end
   end
 end

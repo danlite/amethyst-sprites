@@ -17,7 +17,7 @@ describe Sprite do
     end
     
     it "should require a valid step" do
-      @sprite.step = :invalid_step
+      @sprite.step = "invalid_step"
       @sprite.should_not be_valid
     end
   end

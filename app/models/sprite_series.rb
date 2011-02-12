@@ -27,7 +27,7 @@ class SpriteSeries < ActiveRecord::Base
     
     event :mark_for_edit do
       transitions :to => :awaiting_edit, :from => [:working], :guard => lambda { |series|
-        series.latest_sprite and [:work, :edit].include?(series.latest_sprite.step) and series.latest_sprite.image?
+        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(series.latest_sprite.step) and series.latest_sprite.image?
       }
     end
     
@@ -37,7 +37,7 @@ class SpriteSeries < ActiveRecord::Base
     
     event :mark_for_qc do
       transitions :to => :awaiting_qc, :from => [:working, :awaiting_edit, :editing], :guard => lambda { |series|
-        series.latest_sprite and [:work, :edit].inclue?(series.latest_sprite.step) and series.latest_sprite.image?
+        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].inclue?(series.latest_sprite.step) and series.latest_sprite.image?
       }
     end
     
@@ -47,7 +47,7 @@ class SpriteSeries < ActiveRecord::Base
     
     event :finish do
       transitions :to => :done, :from => [:qc], :guard => lambda { |series|
-        series.latest_sprite and series.latest_sprite.step == :qc and series.latest_sprite.image?
+        series.latest_sprite and series.latest_sprite.step == SPRITE_QC and series.latest_sprite.image?
       }
     end
     
@@ -68,12 +68,22 @@ class SpriteSeries < ActiveRecord::Base
     self.sprites.order("created_at DESC").first
   end
   
+  def empty_sprite
+    latest = self.latest_sprite
+    return latest if latest and not latest.image?
+    nil
+  end
+  
   def owned?
     [SERIES_RESERVED, SERIES_WORKING, SERIES_EDITING, SERIES_QC].include? self.state
   end
   
   def current_owner
     self.latest_sprite.artist
+  end
+  
+  def artist_can_upload?(artist)
+    artist and ((self.owned? and artist == self.current_owner) or self.state == SERIES_AWAITING_EDIT)
   end
   
 end

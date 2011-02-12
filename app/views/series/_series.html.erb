@@ -8,27 +8,28 @@
 	<table>
 		<tr>
 			<th>Sprite</th>
-			<th></th>
+			<th>Artist</th>
+			
 		</tr>
 		<% series.sprites.each do |sprite| %>
 		<tr>
 			<td>
 				<% if sprite.image? %>
-					<%= image_tag sprite.image.url %><br />
-					by <%= sprite.artist.name %>
+					<%= image_tag sprite.image.url %>
 				<% else %>
 			
 				<% end %>
+			</td>
+			<td>
+				<%= sprite.artist.name %>
 			</td>
 		</tr>
 		<% end %>
 	</table>
 <% end %>
 
-<% if series.owned? and series.current_owner == current_artist %>
-	<h2>Submit sprite</h2>
-	<%= form_tag submit_series_sprites_path(series), :multipart => true do %>
-		<%= file_field_tag 'image' %><br />
-		<%= submit_tag 'Upload' %>
-	<% end %>
+<% if series.artist_can_upload?(current_artist) %>
+<% if series.state == SERIES_WORKING %><h2>Add another sprite</h2><% end %>
+<% if series.state == SERIES_AWAITING_EDIT %><h2>Submit a peer edit</h2><% end %>
+<%= render :partial => "series/upload_form", :locals => { :series => series } %>
 <% end %>

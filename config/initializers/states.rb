@@ -8,3 +8,9 @@ SERIES_STATES = [
   SERIES_DONE = 'done',
   SERIES_ARCHIVED = 'archived'
 ]
+
+SPRITE_STEPS = [
+  SPRITE_WORK = 'work',
+  SPRITE_EDIT = 'edit',
+  SPRITE_QC = 'qc'
+]

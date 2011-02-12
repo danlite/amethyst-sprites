@@ -1,0 +1,4 @@
+<%= form_tag submit_series_sprites_path(series), :multipart => true do %>
+	<%= file_field_tag 'image' %><br />
+	<%= submit_tag 'Upload' %>
+<% end %>
