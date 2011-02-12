@@ -12,11 +12,9 @@ module PokemonHelper
       when SERIES_ARCHIVED then "archived"
       else "unknown state"
     end
-    case series.state
-      # TODO - validate series has sprite for these states
-      when SERIES_RESERVED, SERIES_WORKING, SERIES_EDITING, SERIES_QC
-        state_text += " by #{series.latest_sprite.artist.name}"
-    end
+    
+    state_text += " by #{series.reserver.name}" if series.owned?
+      
     state_text
   end
   

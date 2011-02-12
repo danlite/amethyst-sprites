@@ -1,6 +1,8 @@
 <% if pokemon_counter % 6 == 0 %>
 <tr>
 <% end %>
+
+<% cache(pokemon) do %>
 <td>
 	<div id="pokemon_<%= pokemon.id %>">
 		<% series = pokemon.current_series %>
@@ -15,6 +17,8 @@
 		<% end %>
 	</div>
 </td>
+<% end %>
+
 <% if pokemon_counter == number_of_entries - 1 or pokemon_counter % 6 == 5 %>
 </tr>
 <% end %>

@@ -9,6 +9,7 @@ class SpriteSeries < ActiveRecord::Base
   include ActiveRecord::Transitions
   
   belongs_to :pokemon
+  belongs_to :reserver, :class_name => "Artist"
   has_many :sprites, :class_name => "Sprite", :foreign_key => "series_id"
   
   state_machine do
@@ -22,7 +23,9 @@ class SpriteSeries < ActiveRecord::Base
     state :archived
     
     event :begin_work do
-      transitions :to => :working, :from => [:reserved]
+      transitions :to => :working, :from => [:reserved], :guard => lambda { |series|
+        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(series.latest_sprite.step) and series.latest_sprite.image?
+      }
     end
     
     event :mark_for_edit do
@@ -37,7 +40,7 @@ class SpriteSeries < ActiveRecord::Base
     
     event :mark_for_qc do
       transitions :to => :awaiting_qc, :from => [:working, :awaiting_edit, :editing], :guard => lambda { |series|
-        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].inclue?(series.latest_sprite.step) and series.latest_sprite.image?
+        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(series.latest_sprite.step) and series.latest_sprite.image?
       }
     end
     
@@ -68,22 +71,18 @@ class SpriteSeries < ActiveRecord::Base
     self.sprites.order("created_at DESC").first
   end
   
-  def empty_sprite
-    latest = self.latest_sprite
-    return latest if latest and not latest.image?
-    nil
-  end
-  
   def owned?
     [SERIES_RESERVED, SERIES_WORKING, SERIES_EDITING, SERIES_QC].include? self.state
   end
   
-  def current_owner
-    self.latest_sprite.artist
+  def artist_can_upload?(artist)
+    artist and ((self.owned? and artist == self.reserver) or self.state == SERIES_AWAITING_EDIT or (self.state == SERIES_AWAITING_QC and artist.qc))
   end
   
-  def artist_can_upload?(artist)
-    artist and ((self.owned? and artist == self.current_owner) or self.state == SERIES_AWAITING_EDIT)
-  end
+  private
+  
+    def unreserve
+      self.reserver = nil
+    end
   
 end

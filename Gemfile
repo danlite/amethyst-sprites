@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.2'
+gem 'rails', '3.0.4'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -12,10 +12,11 @@ gem 'aws-s3', :require => 'aws/s3'
 gem 'devise'
 gem 'transitions', :require => ["transitions", "active_record/transitions"]
 gem 'pg'
+gem 'dalli'
 
 group :development, :test do
-  gem 'rspec', '2.0.1'
-  gem 'rspec-rails', '2.0.1'
+  gem 'rspec'
+  gem 'rspec-rails'
   gem 'silent-postgres'
 end
 

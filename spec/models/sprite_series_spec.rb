@@ -21,8 +21,8 @@ describe SpriteSeries do
     it "should get its latest sprite" do
       @series = Factory(:sprite_series)
       @artist = Factory(:artist)
-      @series.sprites.create(:step => SPRITE_WORK, :artist => @artist)
-      latest = @series.sprites.create(:step => SPRITE_EDIT, :artist => @artist)
+      @series.sprites.create(:step => SPRITE_WORK, :artist => @artist, :image => File.open(Rails.root.join('spec', 'sprite.png')))
+      latest = @series.sprites.create(:step => SPRITE_EDIT, :artist => @artist, :image => File.open(Rails.root.join('spec', 'sprite.png')))
       @series.latest_sprite.should == latest
     end
   end
@@ -36,12 +36,6 @@ describe SpriteSeries do
     it "should be reserved by default" do
       @series = SpriteSeries.create(:pokemon => @pokemon)
       @series.state.should == SERIES_RESERVED
-    end
-    
-    it "should create a sprite when it is created" do
-      @series = @artist.claim_pokemon(@pokemon)
-      @series.latest_sprite.should_not be_nil
-      @series.empty_sprite.should_not be_nil
     end
   end
 end

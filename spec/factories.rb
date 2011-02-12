@@ -31,6 +31,7 @@ Factory.define :finished_series, :class => 'SpriteSeries' do |s|
 end
 
 Factory.define :sprite do |s|
+  s.image File.open(Rails.root.join('spec', 'sprite.png'))
   s.association :series, :factory => :sprite_series
   s.association :artist
   s.step SPRITE_WORK
@@ -40,6 +41,12 @@ Factory.define :contributor do |c|
   c.association :artist
   c.association :series, :factory => :finished_series
   c.role :artist
+end
+
+Factory.define :reservation do |r|
+  r.association :artist
+  r.association :series, :factory => :sprite_series
+  r.step SPRITE_WORK
 end
 
 # Sequences

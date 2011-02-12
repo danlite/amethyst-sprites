@@ -40,8 +40,7 @@ describe Artist do
       
       lambda do
         Artist::MAXIMUM_CONCURRENT_WORKS.times do |n|
-          start_work = (n % 2 == 0)
-          artist.claim_pokemon(Factory(:form_pokemon), start_work)
+          artist.claim_pokemon(Factory(:form_pokemon))
         end
       end.should change(SpriteSeries, :count).by(Artist::MAXIMUM_CONCURRENT_WORKS)
       
@@ -57,13 +56,11 @@ describe Artist do
       artist = Factory(:artist)
       
       lambda do
-        lambda do
-          
-          new_series = artist.claim_pokemon(pokemon)
-          new_series.should_not be_nil
-          new_series.latest_sprite.should_not be_nil
-          
-        end.should change(Sprite, :count).by(1)
+        
+        new_series = artist.claim_pokemon(pokemon)
+        new_series.should_not be_nil
+        new_series.latest_sprite.should be_nil
+        
       end.should change(SpriteSeries, :count).by(1)
       
     end

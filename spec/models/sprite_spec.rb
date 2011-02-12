@@ -20,5 +20,10 @@ describe Sprite do
       @sprite.step = "invalid_step"
       @sprite.should_not be_valid
     end
+    
+    it "should require an image" do
+      @sprite.image = nil
+      @sprite.should_not be_valid
+    end
   end
 end

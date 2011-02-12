@@ -1,17 +1,20 @@
 <% if series.state == SERIES_RESERVED %>
-	<span style="color: red; font-weight: bold">Reserved by <%= series.latest_sprite.artist.name %></span>
-	<% if series.latest_sprite.artist == current_artist %>
+	<span style="color: red; font-weight: bold">Reserved by <%= series.reserver.name %></span>
+	<% if series.reserver == current_artist %>
 		<%= link_to "(Unreserve)", unclaim_pokemon_path(series.pokemon) %>
 	<% end %>
 <% else %>
-	<h2>Current sprites:</h2>
+<% if series.owned? and series.reserver == current_artist %>
+Ready for this sprite to move on?
+<% end %>
 	<table>
 		<tr>
-			<th>Sprite</th>
+			<th width="160"></th>
 			<th>Artist</th>
+			<th>Date</th>
 			
 		</tr>
-		<% series.sprites.each do |sprite| %>
+		<% series.sprites.order('created_at DESC').each do |sprite| %>
 		<tr>
 			<td>
 				<% if sprite.image? %>
@@ -23,14 +26,20 @@
 			<td>
 				<%= sprite.artist.name %>
 			</td>
+			<td>
+				<%= time_ago_in_words(sprite.image_updated_at) + " ago" if sprite.image? %>
+			</td>
 		</tr>
 		<% end %>
 	</table>
 <% end %>
 
 <% if series.artist_can_upload?(current_artist) %>
-<% if series.state == SERIES_RESERVED %><h2>Submit the first sprite</h2><% end %>
-<% if series.state == SERIES_WORKING %><h2>Add another sprite</h2><% end %>
-<% if series.state == SERIES_AWAITING_EDIT %><h2>Submit a peer edit</h2><% end %>
+<div>
+<% if series.state == SERIES_RESERVED %><h3>Submit the first sprite</h3><% end %>
+<% if series.state == SERIES_WORKING %><h3>Add another sprite</h3><% end %>
+<% if series.state == SERIES_AWAITING_EDIT %><h3>Submit a peer edit</h3><% end %>
+<% if series.state == SERIES_EDITING %><h3>Submit a peer edit</h3><% end %>
 <%= render :partial => "series/upload_form", :locals => { :series => series } %>
+</div>
 <% end %>

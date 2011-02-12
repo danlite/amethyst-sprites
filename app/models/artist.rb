@@ -13,6 +13,7 @@ class Artist < ActiveRecord::Base
   
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name
   
+  has_many :reservations, :class_name => "SpriteSeries", :foreign_key => "reserver_id"
   has_many :sprites
   has_many :contributions, :class_name => "Contributor"
   has_many :series_contributions, :through => :contributions, :source => :series
@@ -20,19 +21,17 @@ class Artist < ActiveRecord::Base
   validates :name, :presence => true
   
   def has_maximum_wip
-    current_wip = self.sprites.joins(:series).where('sprite_series.state IN (?)', [SERIES_RESERVED, SERIES_WORKING]).count('sprite_series.id', :distinct => true)
+    current_wip = self.reservations.count
     return current_wip >= MAXIMUM_CONCURRENT_WORKS
   end
   
-  def claim_pokemon(pokemon, start_work=false)
+  def claim_pokemon(pokemon)
     return nil if has_maximum_wip
     
-    series = SpriteSeries.create(:pokemon => pokemon)
-    if series.valid?
-      sprite = Sprite.create!(:artist => self, :series => series, :step => SPRITE_WORK)
-      series.begin_work! if start_work
-      return series
-    end
+    series = SpriteSeries.create(:pokemon => pokemon, :reserver => self)
+    
+    return series if series.valid?
+        
     nil
   end
 end

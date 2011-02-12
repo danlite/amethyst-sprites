@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110119194929) do
+ActiveRecord::Schema.define(:version => 20110212171033) do
 
   create_table "artists", :force => true do |t|
     t.string   "name"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20110119194929) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.boolean  "admin"
+    t.boolean  "qc"
   end
 
   add_index "artists", ["email"], :name => "index_artists_on_email", :unique => true
@@ -49,12 +51,24 @@ ActiveRecord::Schema.define(:version => 20110119194929) do
     t.integer  "current_series_id"
   end
 
+  create_table "reservations", :force => true do |t|
+    t.integer  "artist_id"
+    t.integer  "series_id"
+    t.string   "step"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "sprite_series", :force => true do |t|
     t.integer  "pokemon_id"
     t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "reserver_id"
   end
+
+  add_index "sprite_series", ["reserver_id"], :name => "index_sprite_series_on_reserver_id"
 
   create_table "sprites", :force => true do |t|
     t.integer  "series_id"
