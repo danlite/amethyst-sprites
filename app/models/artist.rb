@@ -29,7 +29,7 @@ class Artist < ActiveRecord::Base
     
     series = SpriteSeries.create(:pokemon => pokemon)
     if series.valid?
-      sprite = Sprite.create(:artist => self, :series => series, :step => SPRITE_WORK)
+      sprite = Sprite.create!(:artist => self, :series => series, :step => SPRITE_WORK)
       series.begin_work! if start_work
       return series
     end

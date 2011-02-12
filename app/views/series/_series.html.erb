@@ -29,6 +29,7 @@
 <% end %>
 
 <% if series.artist_can_upload?(current_artist) %>
+<% if series.state == SERIES_RESERVED %><h2>Submit the first sprite</h2><% end %>
 <% if series.state == SERIES_WORKING %><h2>Add another sprite</h2><% end %>
 <% if series.state == SERIES_AWAITING_EDIT %><h2>Submit a peer edit</h2><% end %>
 <%= render :partial => "series/upload_form", :locals => { :series => series } %>
