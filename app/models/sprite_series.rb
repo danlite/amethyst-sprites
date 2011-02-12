@@ -24,14 +24,14 @@ class SpriteSeries < ActiveRecord::Base
     
     event :begin_work do
       transitions :to => :working, :from => [:reserved], :guard => lambda { |series|
-        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(series.latest_sprite.step) and series.latest_sprite.image?
+        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(series.latest_sprite.step)
       }
     end
     
     event :mark_for_edit do
       transitions :to => :awaiting_edit, :from => [:working], :guard => lambda { |series|
-        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(series.latest_sprite.step) and series.latest_sprite.image?
-      }
+        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(series.latest_sprite.step)
+      }, :on_transition => :unreserve
     end
     
     event :begin_edit do
@@ -40,8 +40,8 @@ class SpriteSeries < ActiveRecord::Base
     
     event :mark_for_qc do
       transitions :to => :awaiting_qc, :from => [:working, :awaiting_edit, :editing], :guard => lambda { |series|
-        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(series.latest_sprite.step) and series.latest_sprite.image?
-      }
+        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(series.latest_sprite.step)
+      }, :on_transition => :unreserve
     end
     
     event :begin_qc do
@@ -50,12 +50,12 @@ class SpriteSeries < ActiveRecord::Base
     
     event :finish do
       transitions :to => :done, :from => [:qc], :guard => lambda { |series|
-        series.latest_sprite and series.latest_sprite.step == SPRITE_QC and series.latest_sprite.image?
-      }
+        series.latest_sprite and series.latest_sprite.step == SPRITE_QC
+      }, :on_transition => :unreserve
     end
     
     event :archive do
-      transitions :to => :archived, :from => [:working, :awaiting_edit, :editing, :awaiting_qc, :qc, :done]
+      transitions :to => :archived, :from => [:working, :awaiting_edit, :editing, :awaiting_qc, :qc, :done], :on_transition => :unreserve
     end
   end
   

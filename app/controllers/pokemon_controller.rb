@@ -13,6 +13,7 @@ class PokemonController < ApplicationController
   def claim
     @pokemon = Pokemon.find(params[:id])
     @series = current_artist.claim_pokemon(@pokemon)
+    expire_fragment(@pokemon)
     redirect_to @pokemon
   end
   
@@ -21,6 +22,7 @@ class PokemonController < ApplicationController
     @series = @pokemon.current_series
     if @series and @series.state == SERIES_RESERVED and @series.reserver == current_artist
       @series.destroy
+      expire_fragment(@pokemon)
     end
     redirect_to pokemon_index_path
   end

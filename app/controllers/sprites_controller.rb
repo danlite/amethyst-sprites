@@ -20,6 +20,7 @@ class SpritesController < ApplicationController
             when SERIES_AWAITING_EDIT then @series.begin_edit!
             when SERIES_AWAITING_QC then @series.begin_qc!
           end
+          expire_fragment(@series.pokemon)
         end
       end
     end

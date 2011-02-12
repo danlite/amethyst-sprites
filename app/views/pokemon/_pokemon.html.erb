@@ -13,7 +13,7 @@
 		<% if series %>
 		<%= html_for_series(series) %>
 		<% else %>
-		available <%= link_to "(reserve)", claim_pokemon_path(pokemon) unless (current_artist.nil? or current_artist.has_maximum_wip) %>
+		available
 		<% end %>
 	</div>
 </td>
