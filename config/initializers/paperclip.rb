@@ -1,0 +1,1 @@
+ENV['S3_BUCKET'] = "#{Rails.env}.sprites.amethyst.smogon.com"
