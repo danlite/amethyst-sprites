@@ -15,11 +15,7 @@ class SpritesController < ApplicationController
       if sprite
         sprite.image = params[:image]
         if sprite.save
-          case @series.state
-            when SERIES_RESERVED then @series.begin_work!
-            when SERIES_AWAITING_EDIT then @series.begin_edit!
-            when SERIES_AWAITING_QC then @series.begin_qc!
-          end
+          @series.begin_work! if @series.state == SERIES_RESERVED
           expire_fragment(@series.pokemon)
         end
       end

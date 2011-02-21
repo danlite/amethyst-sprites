@@ -10,10 +10,9 @@ AmethystSprites::Application.routes.draw do
   
   resources :series do
     resources :sprites do
-      collection do
-        post :submit
-      end
+      post :submit, :on => :collection
     end
+    match 'transition/:event' => 'series#transition', :on => :member, :as => :transition, :via => :get
   end
   
   root :to => 'pokemon#index'

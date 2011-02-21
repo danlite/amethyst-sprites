@@ -4,15 +4,22 @@
 		<%= link_to "(Unreserve)", unclaim_pokemon_path(series.pokemon) %>
 	<% end %>
 <% else %>
-<% if series.owned? and series.reserver == current_artist %>
-Ready for this sprite to move on?
+
+<% events = series.events_for_artist(current_artist) %>
+<% unless events.blank? %>
+Available actions:
+<ul>
+	<% events.each do |event| %>
+	<li><%= link_to event.to_s.humanize, transition_series_path(series, :event => event), :confirm => (event == :archive ? "Are you sure?" : nil) %></li>
+	<% end %>
+</ul>
 <% end %>
+
 	<table>
 		<tr>
 			<th width="160"></th>
 			<th>Artist</th>
 			<th>Date</th>
-			
 		</tr>
 		<% series.sprites.order('created_at DESC').each do |sprite| %>
 		<tr>
@@ -20,7 +27,7 @@ Ready for this sprite to move on?
 				<% if sprite.image? %>
 					<%= image_tag sprite.image.url %>
 				<% else %>
-			
+
 				<% end %>
 			</td>
 			<td>

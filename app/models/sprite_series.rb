@@ -23,15 +23,11 @@ class SpriteSeries < ActiveRecord::Base
     state :archived
     
     event :begin_work do
-      transitions :to => :working, :from => [:reserved], :guard => lambda { |series|
-        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(series.latest_sprite.step)
-      }
+      transitions :to => :working, :from => [:reserved]
     end
     
     event :mark_for_edit do
-      transitions :to => :awaiting_edit, :from => [:working], :guard => lambda { |series|
-        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(series.latest_sprite.step)
-      }, :on_transition => :unreserve
+      transitions :to => :awaiting_edit, :from => [:working], :guard => :has_working_sprite, :on_transition => :unreserve
     end
     
     event :begin_edit do
@@ -39,9 +35,7 @@ class SpriteSeries < ActiveRecord::Base
     end
     
     event :mark_for_qc do
-      transitions :to => :awaiting_qc, :from => [:working, :awaiting_edit, :editing], :guard => lambda { |series|
-        series.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(series.latest_sprite.step)
-      }, :on_transition => :unreserve
+      transitions :to => :awaiting_qc, :from => [:working, :awaiting_edit, :editing], :guard => :has_working_sprite, :on_transition => :unreserve
     end
     
     event :begin_qc do
@@ -49,9 +43,7 @@ class SpriteSeries < ActiveRecord::Base
     end
     
     event :finish do
-      transitions :to => :done, :from => [:qc], :guard => lambda { |series|
-        series.latest_sprite and series.latest_sprite.step == SPRITE_QC
-      }, :on_transition => :unreserve
+      transitions :to => :done, :from => [:qc], :guard => :has_qc_sprite, :on_transition => :unreserve
     end
     
     event :archive do
@@ -75,8 +67,35 @@ class SpriteSeries < ActiveRecord::Base
     [SERIES_RESERVED, SERIES_WORKING, SERIES_EDITING, SERIES_QC].include? self.state
   end
   
+  def has_working_sprite
+    self.latest_sprite and [SPRITE_WORK, SPRITE_EDIT].include?(self.latest_sprite.step)
+  end
+  
+  def has_qc_sprite
+    self.latest_sprite and self.latest_sprite.step == SPRITE_QC
+  end
+  
   def artist_can_upload?(artist)
-    artist and ((self.owned? and artist == self.reserver) or self.state == SERIES_AWAITING_EDIT or (self.state == SERIES_AWAITING_QC and artist.qc))
+    artist and self.owned? and artist == self.reserver
+  end
+  
+  def events_for_artist(artist)
+    return [] unless artist
+    is_owner = artist == self.reserver
+    
+    machine = SpriteSeries.state_machines[:default]
+    events = machine.events_for(self.state.to_sym)
+    
+    events.select do |event|
+      case event
+        when :archive then artist.admin
+        when :finish then has_qc_sprite and artist.qc
+        when :begin_qc then artist.qc
+        when :mark_for_qc, :mark_for_edit then has_working_sprite
+        when :begin_work then is_owner
+        else true
+      end
+    end
   end
   
   private

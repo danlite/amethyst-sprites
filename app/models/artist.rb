@@ -21,7 +21,7 @@ class Artist < ActiveRecord::Base
   validates :name, :presence => true
   
   def has_maximum_wip
-    current_wip = self.reservations.count
+    current_wip = self.reservations.where('state IN (?)', [SERIES_WORKING, SERIES_EDITING, SERIES_RESERVED]).count
     return current_wip >= MAXIMUM_CONCURRENT_WORKS
   end
   
