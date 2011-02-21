@@ -13,6 +13,7 @@ gem 'devise'
 gem 'transitions', :require => ["transitions", "active_record/transitions"]
 gem 'pg'
 gem 'dalli'
+gem 'jquery-rails'
 
 group :development, :test do
   gem 'rspec'
