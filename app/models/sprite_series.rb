@@ -43,7 +43,7 @@ class SpriteSeries < ActiveRecord::Base
     end
     
     event :finish do
-      transitions :to => :done, :from => [:qc], :guard => :has_qc_sprite, :on_transition => :unreserve
+      transitions :to => :done, :from => [:awaiting_qc, :qc], :on_transition => :unreserve
     end
     
     event :archive do
@@ -89,7 +89,7 @@ class SpriteSeries < ActiveRecord::Base
     events.select do |event|
       case event
         when :archive then artist.admin
-        when :finish then has_qc_sprite and artist.qc
+        when :finish then artist.qc
         when :begin_qc then artist.qc
         when :mark_for_qc, :mark_for_edit then has_working_sprite
         when :begin_work then is_owner
