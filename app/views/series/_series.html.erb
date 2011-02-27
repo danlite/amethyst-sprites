@@ -25,9 +25,7 @@ Available actions:
 		<tr>
 			<td>
 				<% if sprite.image? %>
-					<%= image_tag sprite.image.url %>
-				<% else %>
-
+					<%= image_tag sprite.image.url, :title => sprite.step %>
 				<% end %>
 			</td>
 			<td>

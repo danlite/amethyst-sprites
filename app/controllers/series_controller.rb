@@ -17,6 +17,8 @@ class SeriesController < ApplicationController
     @series.reserver = current_artist if @series.owned?
     @series.save
     
+    expire_fragment(@series.pokemon)
+    
     redirect_to series_path(@series)
   end
   
