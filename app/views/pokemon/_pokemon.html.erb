@@ -9,7 +9,7 @@
 		<div style="width: 160px; height: 160px">
 			<%= image_tag series.latest_sprite.image.url if series and series.latest_sprite and series.latest_sprite.image? %>
 		</div>
-		<%= link_to pokemon.full_name, pokemon_path(pokemon) %><br />
+		<%= link_to pokemon.full_name, named_pokemon_path(:name => pokemon.name, :form => pokemon.form_name) %><br />
 		<% if series %>
 		<%= html_for_series(series) %>
 		<% else %>

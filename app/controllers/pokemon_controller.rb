@@ -6,7 +6,16 @@ class PokemonController < ApplicationController
   end
   
   def show
-    @pokemon = Pokemon.find(params[:id])
+    name, form = params[:name], params[:form]
+    
+    if form and name
+      @pokemon = Pokemon.find_by_name_and_form_name(name, form)
+    elsif name
+      @pokemon = Pokemon.find_by_name(name)
+    else
+      @pokemon = Pokemon.find(params[:id])
+    end
+    
     @current_series = @pokemon.current_series
   end
   
@@ -14,7 +23,7 @@ class PokemonController < ApplicationController
     @pokemon = Pokemon.find(params[:id])
     @series = current_artist.claim_pokemon(@pokemon)
     expire_fragment(@pokemon)
-    redirect_to @pokemon
+    redirect_to named_pokemon_path(@pokemon.name, @pokemon.form_name)
   end
   
   def unclaim

@@ -18,7 +18,7 @@ class Artist < ActiveRecord::Base
   has_many :contributions, :class_name => "Contributor"
   has_many :series_contributions, :through => :contributions, :source => :series
   
-  validates :name, :presence => true
+  validates :name, :presence => true, :uniqueness => true
   
   def has_maximum_wip
     current_wip = self.reservations.where('state IN (?)', [SERIES_WORKING, SERIES_EDITING, SERIES_RESERVED]).count
