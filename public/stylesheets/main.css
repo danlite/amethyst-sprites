@@ -18,7 +18,8 @@ ul.hmenu {
 }
 
 ul.hmenu li {
-  display: inline;  
+  display: inline;
+	margin-left: 5px;
 }
 
 .notice {

@@ -5,15 +5,14 @@ gem 'rails', '3.0.4'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'devise'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'paperclip'
 gem 'aws-s3', :require => 'aws/s3'
-gem 'devise'
 gem 'transitions', :require => ["transitions", "active_record/transitions"]
 gem 'pg'
 gem 'dalli'
 gem 'jquery-rails'
+gem 'bcrypt-ruby', :require => 'bcrypt'
 
 group :development, :test do
   gem 'rspec'

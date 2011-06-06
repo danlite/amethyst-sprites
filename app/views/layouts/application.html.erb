@@ -11,11 +11,11 @@
 		<li><%= link_to "Gallery", pokemon_index_path %></li>
 	</ul>
 	<ul class="hmenu" style="float: right">
-		<% if artist_signed_in? %>
-		<li><%= current_artist.email %></li>
+		<% if current_artist %>
+		<li>Logged in as <%= current_artist.name %></li>
 		<% end %>
-	  <%= render 'devise/menu/registration_items' %>
-	  <%= render 'devise/menu/login_items' %>
+	  <%= render 'navigation/registration_items' %>
+	  <%= render 'navigation/login_items' %>
 	</ul>
 	<div style="clear: both" />
 <% if notice %>	

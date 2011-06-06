@@ -1,5 +1,5 @@
 class SeriesController < ApplicationController
-  before_filter :authenticate_artist!, :except => [:show]
+  before_filter :authenticate_artist, :except => [:show]
   
   def show
     @series = SpriteSeries.find(params[:id])

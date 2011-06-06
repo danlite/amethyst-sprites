@@ -1,5 +1,5 @@
 class SpritesController < ApplicationController
-  before_filter :authenticate_artist!
+  before_filter :authenticate_artist
   
   def submit
     @series = SpriteSeries.find(params[:series_id])
