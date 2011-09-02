@@ -2,7 +2,7 @@ class PokemonController < ApplicationController
   before_filter :authenticate_artist, :except => [:index, :show]
   
   def index
-    @pokemon = Pokemon.includes(:current_series).order('id ASC')
+    @pokemon = Pokemon.includes(:current_series).order('dex_number ASC, form_order ASC, form_name ASC')
   end
   
   def show

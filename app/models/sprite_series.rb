@@ -10,7 +10,8 @@ class SpriteSeries < ActiveRecord::Base
   
   belongs_to :pokemon
   belongs_to :reserver, :class_name => "Artist"
-  has_many :sprites, :class_name => "Sprite", :foreign_key => "series_id"
+  has_many :sprites, :class_name => "Sprite", :foreign_key => "series_id", :dependent => :destroy
+  has_many :contributors, :foreign_key => "series_id"
   
   state_machine do
     state :reserved
@@ -64,7 +65,7 @@ class SpriteSeries < ActiveRecord::Base
   end
   
   def owned?
-    [SERIES_RESERVED, SERIES_WORKING, SERIES_EDITING, SERIES_QC].include? self.state
+    self.reserver and [SERIES_RESERVED, SERIES_WORKING, SERIES_EDITING, SERIES_QC].include? self.state
   end
   
   def has_working_sprite

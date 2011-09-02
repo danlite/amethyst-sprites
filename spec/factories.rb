@@ -40,7 +40,7 @@ end
 Factory.define :contributor do |c|
   c.association :artist
   c.association :series, :factory => :finished_series
-  c.role :artist
+  c.name 'Jungle Boy'
 end
 
 Factory.define :reservation do |r|

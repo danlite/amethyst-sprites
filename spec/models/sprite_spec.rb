@@ -11,9 +11,9 @@ describe Sprite do
       @sprite.should_not be_valid
     end
     
-    it "should require an artist" do
+    it "should not require an artist" do
       @sprite.artist = nil
-      @sprite.should_not be_valid
+      @sprite.should be_valid
     end
     
     it "should require a valid step" do

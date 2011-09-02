@@ -8,9 +8,8 @@ class Sprite < ActiveRecord::Base
       :access_key_id => ENV['S3_KEY'],
       :secret_access_key => ENV['S3_SECRET']
     },
-    :path => Rails.env.test? ? ":rails_root/tmp/:attachment/:id" : "/:attachment/:id"
+    :path => Rails.env.test? ? ":rails_root/tmp/:class/:pokemon-:id.png" : "/:class/:pokemon-:id.png"
   
-  validates :artist, :presence => true
   validates :series, :presence => true
   validates :step, :inclusion => { :in => SPRITE_STEPS }
   validates_attachment_presence :image
@@ -18,6 +17,6 @@ class Sprite < ActiveRecord::Base
   after_destroy do
     series.reload
     series.destroy if series.sprites.empty?
-    self.image = nil
+    self.image.clear
   end
 end
