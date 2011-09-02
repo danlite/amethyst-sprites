@@ -1,3 +1,4 @@
+<div style="margin: 10px 0">
 <% if series.state == SERIES_RESERVED %>
 	<span style="color: red; font-weight: bold">Reserved by <%= series.reserver.name %></span>
 	<% if series.reserver == current_artist %>
@@ -5,12 +6,16 @@
 	<% end %>
 <% else %>
 
+<% if series.limbo? %>
+  <span style="color: blue; font-weight: bold">In Limbo!</span>
+<% end %>
+
 <% events = series.events_for_artist(current_artist) %>
 <% unless events.blank? %>
 Available actions:
 <ul>
 	<% events.each do |event| %>
-	<li><%= link_to event.to_s.humanize, transition_series_path(series, :event => event), :confirm => (event == :archive ? "Are you sure?" : nil) %></li>
+	<li><%= link_to event.to_s.humanize, transition_series_path(series, :event => event), :confirm => (event == :archive ? "Archive these sprites to start from scratch?" : nil) %></li>
 	<% end %>
 </ul>
 <% end %>
@@ -29,7 +34,7 @@ Available actions:
 				<% end %>
 			</td>
 			<td>
-				<%= sprite.artist.name %>
+				<%= sprite.artist ? sprite.artist.name : series.contributors.map{|c| c.name }.join(", ") %>
 			</td>
 			<td>
 				<%= time_ago_in_words(sprite.image_updated_at) + " ago" if sprite.image? %>
@@ -48,3 +53,4 @@ Available actions:
 <%= render :partial => "series/upload_form", :locals => { :series => series } %>
 </div>
 <% end %>
+</div>

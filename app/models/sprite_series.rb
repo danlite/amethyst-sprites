@@ -1,7 +1,7 @@
 class SeriesPokemonValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    record.errors.add(attribute, options[:message] || "already has an active (non-archived) sprite series") unless
-      value.current_series.blank? or value.current_series == record
+    record.errors.add(attribute, options[:message] || "already has an active (non-archived, non-limbo) sprite series") unless
+      value.current_series.blank? or value.current_series == record or value.current_series.limbo?
   end
 end
 
@@ -11,7 +11,7 @@ class SpriteSeries < ActiveRecord::Base
   belongs_to :pokemon
   belongs_to :reserver, :class_name => "Artist"
   has_many :sprites, :class_name => "Sprite", :foreign_key => "series_id", :dependent => :destroy
-  has_many :contributors, :foreign_key => "series_id"
+  has_many :contributors, :foreign_key => "series_id", :dependent => :destroy
   
   state_machine do
     state :reserved
@@ -44,11 +44,11 @@ class SpriteSeries < ActiveRecord::Base
     end
     
     event :finish do
-      transitions :to => :done, :from => [:awaiting_qc, :qc], :on_transition => :unreserve
+      transitions :to => :done, :from => [:awaiting_qc, :qc], :on_transition => [:unreserve, :unlimbo]
     end
     
     event :archive do
-      transitions :to => :archived, :from => [:working, :awaiting_edit, :editing, :awaiting_qc, :qc, :done], :on_transition => :unreserve
+      transitions :to => :archived, :from => [:working, :awaiting_edit, :editing, :awaiting_qc, :qc, :done], :on_transition => [:unreserve, :unlimbo]
     end
   end
   
@@ -103,6 +103,10 @@ class SpriteSeries < ActiveRecord::Base
   
     def unreserve
       self.reserver = nil
+    end
+    
+    def unlimbo
+      self.limbo = false
     end
   
 end

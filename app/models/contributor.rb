@@ -4,5 +4,8 @@ class Contributor < ActiveRecord::Base
   
   validates :series, :presence => true
   validates :name, :presence => true, :unless => Proc.new {|contributor| contributor.artist}
-  validates :name, :uniqueness => true
+  
+  def name
+    artist ? artist.name : read_attribute(:name)
+  end
 end

@@ -35,6 +35,18 @@ describe Artist do
       end.should_not change(SpriteSeries, :count)
     end
     
+    it "should be able to claim a Pokemon with sprites in limbo" do
+      sprite = Factory(:sprite)
+      sprite.series.update_attributes(:state => :qc, :limbo => true)
+      
+      artist = Factory(:another_artist)
+      artist.should_not == sprite.artist
+      
+      lambda do
+        artist.claim_pokemon(sprite.series.pokemon)
+      end.should change(SpriteSeries, :count)
+    end
+    
     it "should have an upper limit of in-progress or reserved Pokemon" do
       artist = Factory(:artist)
       

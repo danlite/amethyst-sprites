@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110902035707) do
+ActiveRecord::Schema.define(:version => 20110902165406) do
 
   create_table "artists", :force => true do |t|
     t.string   "name"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20110902035707) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "reserver_id"
+    t.boolean  "limbo"
   end
 
   add_index "sprite_series", ["reserver_id"], :name => "index_sprite_series_on_reserver_id"

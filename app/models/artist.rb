@@ -2,7 +2,7 @@ class Artist < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation
-  MAXIMUM_CONCURRENT_WORKS = 8
+  MAXIMUM_CONCURRENT_WORKS = 6
   
   attr_accessor :password
   before_save :encrypt_password

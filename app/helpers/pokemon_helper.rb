@@ -14,6 +14,8 @@ module PokemonHelper
     end
     
     state_text += " by #{series.reserver.name}" if series.owned?
+    
+    state_text += " (limbo)" if series.limbo?
       
     state_text
   end

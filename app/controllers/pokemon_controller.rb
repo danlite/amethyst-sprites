@@ -30,6 +30,9 @@ class PokemonController < ApplicationController
     @pokemon = Pokemon.find(params[:id])
     @series = @pokemon.current_series
     if @series and @series.state == SERIES_RESERVED and @series.reserver == current_artist
+      old_limbo_series = @pokemon.series.where("limbo = ?", true).first
+      @pokemon.current_series = old_limbo_series
+      @pokemon.save
       @series.destroy
       expire_fragment(@pokemon)
     end

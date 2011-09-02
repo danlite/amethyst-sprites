@@ -1,7 +1,12 @@
 <h1><%= @pokemon.full_name %></h1>
 
 <% if @current_series %>
-<%= render :partial => 'series/series', :object => @current_series %>
+  <% if @current_series.limbo? %>
+    <div>This Pokémon has sprites in limbo, so you may <%= link_to_unless (current_artist.nil? or current_artist.has_maximum_wip), "reserve and work on it", claim_pokemon_path(@pokemon) %>.</div>
+  <% elsif (@limbo_series = @pokemon.series.where("limbo = ?", true)).exists? %>
+    <div>This Pokémon has old sprites in limbo (<%= link_to "check it out", series_path(@limbo_series.first) %>)
+  <% end %>
+  <%= render :partial => 'series/series', :object => @current_series %>
 <% else %>
-<%= link_to "Reserve this sprite", claim_pokemon_path(@pokemon) unless (current_artist.nil? or current_artist.has_maximum_wip) %>
+  <%= link_to "Reserve this sprite", claim_pokemon_path(@pokemon) unless (current_artist.nil? or current_artist.has_maximum_wip) %>
 <% end %>
