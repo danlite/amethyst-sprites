@@ -1,5 +1,3 @@
-require 'rmagick'
-
 class Sprite < ActiveRecord::Base
   SPRITE_DIMENSION = 160
   
