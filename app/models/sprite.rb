@@ -52,6 +52,11 @@ class Sprite < ActiveRecord::Base
       
       errors.add(:image, "must have a transparent background") unless percent > 0.75
     end
+    
+    map = img.unique_colors
+    errors.add(:image, "must have no more than 15 colours, not including 'transparent'") if map.columns > 16
+    b64_colour_map = ActiveSupport::Base64.encode64(map.scale(10).to_blob)
+    self.update_attribute :colour_map, b64_colour_map
   end
   
 end

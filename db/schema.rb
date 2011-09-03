@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110902165406) do
+ActiveRecord::Schema.define(:version => 20110903044135) do
 
   create_table "artists", :force => true do |t|
     t.string   "name"
@@ -42,15 +42,6 @@ ActiveRecord::Schema.define(:version => 20110902165406) do
     t.integer  "form_order"
   end
 
-  create_table "reservations", :force => true do |t|
-    t.integer  "artist_id"
-    t.integer  "series_id"
-    t.string   "step"
-    t.boolean  "active"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "sprite_series", :force => true do |t|
     t.integer  "pokemon_id"
     t.string   "state"
@@ -72,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20110902165406) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.text     "colour_map"
   end
 
 end
