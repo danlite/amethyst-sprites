@@ -1,6 +1,8 @@
 class Sprite < ActiveRecord::Base
   SPRITE_DIMENSION = 160
   
+  attr_accessor :make_transparent
+  
   belongs_to :series, :class_name => "SpriteSeries", :foreign_key => "series_id"
   belongs_to :artist
   has_attached_file :image,
@@ -10,7 +12,8 @@ class Sprite < ActiveRecord::Base
       :access_key_id => ENV['S3_KEY'],
       :secret_access_key => ENV['S3_SECRET']
     },
-    :path => Rails.env.test? ? ":rails_root/tmp/:class/:pokemon-:id.png" : "/:class/:pokemon-:id.png"
+    :path => Rails.env.test? ? ":rails_root/tmp/:class/:pokemon-:id.png" : "/:class/:pokemon-:id.png",
+    :styles => {:original => {:processors => [:transparent]}}
   
   validates :series, :presence => true
   validates :step, :inclusion => { :in => SPRITE_STEPS }
@@ -34,9 +37,9 @@ class Sprite < ActiveRecord::Base
     errors.add(:image, "must be 160x160 pixels") unless valid_size
     
     valid_format = img.format.match(/^PNG/) and img.alpha?
-    errors.add(:image, "must be a transparent PNG") unless valid_format
+    errors.add(:image, "must be a transparent PNG") unless valid_format or make_transparent
     
-    if valid_format and valid_size
+    if valid_format and valid_size and not make_transparent
       rects = [[0, 0, 160, 1],
         [0, 159, 160, 1],
         [0, 1, 1, 158],

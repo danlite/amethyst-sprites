@@ -1,4 +1,5 @@
 <%= form_tag submit_series_sprites_path(series), :multipart => true do %>
-	<%= file_field_tag 'image' %><br />
+	<%= file_field_tag 'image' %><br /><br />
+	<%= check_box_tag 'make_transparent' %><%= label_tag 'make_transparent', "Determine the background colour and replace it with transparency. Make sure the background colour doesn't appear in the sprite (e.g. white background and white eyes)!" %><br /><br />
 	<%= submit_tag 'Upload' %>
 <% end %>

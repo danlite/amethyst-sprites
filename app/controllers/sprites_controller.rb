@@ -10,7 +10,7 @@ class SpritesController < ApplicationController
         when SERIES_EDITING then SPRITE_EDIT
         when SERIES_QC then SPRITE_QC
       end
-      sprite = Sprite.new(:artist => current_artist, :step => step, :series => @series)
+      sprite = Sprite.new(:artist => current_artist, :step => step, :series => @series, :make_transparent => params[:make_transparent])
       
       error_messages = nil
       
