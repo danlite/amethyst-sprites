@@ -19,10 +19,13 @@
 	</ul>
 	<div style="clear: both" />
 <% if notice %>	
-	<p class="notice"><%= notice %></p>
+	<div class="notice"><%= notice %></div>
 <% end %>
 <% if alert %>
-	<p class="alert"><%= alert %></p>
+	<div class="alert"><%= alert %></div>
+<% end %>
+<% if flash[:errors] %>
+  <div class="error"><%= flash[:errors].is_a?(String) ? flash[:errors] : content_tag(:ul){ flash[:errors].map{|e| content_tag(:li, e)}.join.html_safe } %></div>
 <% end %>
 
 <%= yield %>

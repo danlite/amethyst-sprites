@@ -12,16 +12,20 @@ class SpritesController < ApplicationController
       end
       sprite = Sprite.new(:artist => current_artist, :step => step, :series => @series)
       
+      error_messages = nil
+      
       if sprite
         sprite.image = params[:image]
         if sprite.save
           @series.begin_work! if @series.state == SERIES_RESERVED
           expire_fragment(@series.pokemon)
+        else
+          error_messages = sprite.errors.full_messages
         end
       end
     end
     
-    redirect_to series_path(@series)
+    redirect_to series_path(@series), :flash => {:errors => error_messages}
   end
   
 end

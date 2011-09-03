@@ -13,6 +13,7 @@ gem 'pg'
 gem 'dalli'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', :require => 'bcrypt'
+gem 'rmagick'
 
 group :development, :test do
   gem 'rspec'

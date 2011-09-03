@@ -25,11 +25,19 @@ ul.hmenu li {
 .notice {
 	background-color: #dfd;
 	border: 1px solid #070;
-	padding: 5px;
 }
 
 .alert {
-	background-color: #ffa;
-	border: 1px solid #070;
-	padding: 5px;
+  background-color: #ffa;
+  border: 1px solid #a70;
+}
+
+.error {
+  background-color: #fdd;
+  border: 1px solid #f00;
+}
+
+.notice, .alert, .error {
+  margin: 5px 0;
+  padding: 5px;
 }
