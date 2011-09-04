@@ -20,6 +20,7 @@ class SpriteSeries < ActiveRecord::Base
     state :editing
     state :awaiting_qc
     state :qc
+    state :awaiting_approval
     state :done
     state :archived
     
@@ -32,23 +33,27 @@ class SpriteSeries < ActiveRecord::Base
     end
     
     event :begin_edit do
-      transitions :to => :editing, :from => [:awaiting_edit]
+      transitions :to => :editing, :from => [:awaiting_edit, :awaiting_qc]
     end
     
     event :mark_for_qc do
-      transitions :to => :awaiting_qc, :from => [:working, :awaiting_edit, :editing], :guard => :has_working_sprite, :on_transition => :unreserve
+      transitions :to => :awaiting_qc, :from => [:working, :awaiting_edit, :editing, :awaiting_approval], :guard => :has_working_sprite, :on_transition => :unreserve
     end
     
     event :begin_qc do
-      transitions :to => :qc, :from => [:awaiting_edit, :awaiting_qc]
+      transitions :to => :qc, :from => [:awaiting_edit, :awaiting_qc, :awaiting_approval]
+    end
+    
+    event :mark_for_approval do
+      transitions :to => :awaiting_approval, :from => [:awaiting_qc, :qc]
     end
     
     event :finish do
-      transitions :to => :done, :from => [:awaiting_qc, :qc], :on_transition => [:unreserve, :unlimbo]
+      transitions :to => :done, :from => [:awaiting_approval], :on_transition => [:unreserve, :unlimbo]
     end
     
     event :archive do
-      transitions :to => :archived, :from => [:working, :awaiting_edit, :editing, :awaiting_qc, :qc, :done], :on_transition => [:unreserve, :unlimbo]
+      transitions :to => :archived, :from => [:working, :awaiting_edit, :editing, :awaiting_qc, :qc, :awaiting_approval, :done], :on_transition => [:unreserve, :unlimbo]
     end
   end
   
@@ -81,7 +86,7 @@ class SpriteSeries < ActiveRecord::Base
   end
   
   def artist_can_upload?(artist)
-    artist and self.owned? and artist == self.reserver
+    self.owned? and artist and artist == self.reserver
   end
   
   def events_for_artist(artist)
@@ -93,11 +98,11 @@ class SpriteSeries < ActiveRecord::Base
     
     events.select do |event|
       case event
-        when :archive then artist.admin
-        when :finish then artist.qc
-        when :begin_qc then artist.qc
-        when :mark_for_qc, :mark_for_edit then has_working_sprite
+        when :archive, :finish then artist.admin
+        when :begin_qc, :mark_for_approval then artist.qc
+        when :mark_for_qc, :mark_for_edit then is_owner and has_working_sprite
         when :begin_work then is_owner
+        when :begin_edit then state == SERIES_AWAITING_QC ? (latest_sprite and latest_sprite.artist == artist) : true
         else true
       end
     end

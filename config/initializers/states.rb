@@ -5,6 +5,7 @@ SERIES_STATES = [
   SERIES_EDITING = 'editing',
   SERIES_AWAITING_QC = 'awaiting_qc',
   SERIES_QC = 'qc',
+  SERIES_AWAITING_APPROVAL = 'awaiting_approval',
   SERIES_DONE = 'done',
   SERIES_ARCHIVED = 'archived'
 ]

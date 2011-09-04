@@ -8,6 +8,7 @@ module PokemonHelper
       when SERIES_EDITING then "being edited"
       when SERIES_AWAITING_QC then "awaiting QC"
       when SERIES_QC then "in QC"
+      when SERIES_AWAITING_APPROVAL then "awaiting approval"
       when SERIES_DONE then "done"
       when SERIES_ARCHIVED then "archived"
       else "unknown state"

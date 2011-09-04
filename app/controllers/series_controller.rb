@@ -1,5 +1,5 @@
 class SeriesController < ApplicationController
-  before_filter :authenticate_artist, :except => [:show]
+  before_filter :authenticate_artist, :except => [:index, :show]
   
   def index
     redirect_to root_path unless params[:pokemon_id]
