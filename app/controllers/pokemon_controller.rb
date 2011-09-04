@@ -25,7 +25,9 @@ class PokemonController < ApplicationController
     @pokemon = Pokemon.find(params[:id])
     @series = current_artist.claim_pokemon(@pokemon)
     expire_fragment(@pokemon)
-    redirect_to named_pokemon_path(@pokemon.name, @pokemon.form_name)
+    remaining_reservations = Artist::MAXIMUM_CONCURRENT_WORKS - current_artist.current_wip
+    reservation_text = remaining_reservations == 0 ? "You must finish your other sprites before reserving any more Pokemon." : "You may reserve #{remaining_reservations} more Pokemon."
+    redirect_to named_pokemon_path(@pokemon.name, @pokemon.form_name), :notice => "Reserved #{@pokemon.full_name}! #{reservation_text}"
   end
   
   def unclaim
