@@ -1,2 +1,2 @@
-<h1><%= @series.pokemon.full_name %></h1>
+<%= render :partial => 'pokemon/pokemon_title', :locals => {:title_pokemon => @series.pokemon} %>
 <%= render :partial => 'series', :object => @series %>

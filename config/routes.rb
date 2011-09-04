@@ -10,6 +10,7 @@ AmethystSprites::Application.routes.draw do
   match 'pokemon/:name(/:form)' => 'pokemon#show', :constraints => {:name => /[A-Z][^\/]+/}, :as => 'named_pokemon', :via => :get
 
   resources :pokemon do
+    resources :series
     member do
       get :claim
       get :unclaim

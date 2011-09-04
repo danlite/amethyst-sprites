@@ -21,8 +21,6 @@ module Paperclip
         pixels.each {|pixel| border_pixels[pixel] += 1 }
       end
       
-      y border_pixels
-      
       border_colour = nil
       greatest_count = 0
       border_pixels.each do |pixel, count|

@@ -8,6 +8,8 @@
 
 <% if series.limbo? %>
   <span style="color: blue; font-weight: bold">In Limbo!</span>
+<% elsif series.state == SERIES_ARCHIVED %>
+  <em style="font-size: 150%">Archived</em>
 <% end %>
 
 <% events = series.events_for_artist(current_artist) %>
@@ -18,6 +20,16 @@ Available actions:
 	<li><%= link_to event.to_s.humanize, transition_series_path(series, :event => event), :confirm => (event == :archive ? "Archive these sprites to start from scratch?" : nil) %></li>
 	<% end %>
 </ul>
+<% end %>
+
+<% if series.artist_can_upload?(current_artist) %>
+<div>
+<% if series.state == SERIES_RESERVED %><h3>Submit the first sprite</h3><% end %>
+<% if series.state == SERIES_WORKING %><h3>Add another sprite</h3><% end %>
+<% if series.state == SERIES_AWAITING_EDIT %><h3>Submit a peer edit</h3><% end %>
+<% if series.state == SERIES_EDITING %><h3>Submit a peer edit</h3><% end %>
+<%= render :partial => "series/upload_form", :locals => { :series => series } %>
+</div>
 <% end %>
 
 	<table>
@@ -45,13 +57,4 @@ Available actions:
 	</table>
 <% end %>
 
-<% if series.artist_can_upload?(current_artist) %>
-<div>
-<% if series.state == SERIES_RESERVED %><h3>Submit the first sprite</h3><% end %>
-<% if series.state == SERIES_WORKING %><h3>Add another sprite</h3><% end %>
-<% if series.state == SERIES_AWAITING_EDIT %><h3>Submit a peer edit</h3><% end %>
-<% if series.state == SERIES_EDITING %><h3>Submit a peer edit</h3><% end %>
-<%= render :partial => "series/upload_form", :locals => { :series => series } %>
-</div>
-<% end %>
 </div>

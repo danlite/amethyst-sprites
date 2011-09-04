@@ -1,6 +1,14 @@
 class SeriesController < ApplicationController
   before_filter :authenticate_artist, :except => [:show]
   
+  def index
+    redirect_to root_path unless params[:pokemon_id]
+    
+    @pokemon = Pokemon.find(params[:pokemon_id])
+    
+    @series = @pokemon.series.order("created_at DESC")
+  end
+  
   def show
     @series = SpriteSeries.find(params[:id])
   end
@@ -14,7 +22,7 @@ class SeriesController < ApplicationController
     method = (params[:event] + "!").to_sym
     
     raise "Unable to transition" unless @series.send(method)
-    @series.reserver = current_artist if @series.owned?
+    @series.reserver = current_artist if @series.in_ownable_state?
     @series.save
     
     expire_fragment(@series.pokemon)

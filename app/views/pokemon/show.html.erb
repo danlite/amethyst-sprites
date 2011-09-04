@@ -1,4 +1,4 @@
-<h1><%= @pokemon.full_name %></h1>
+<%= render :partial => 'pokemon/pokemon_title', :locals => {:title_pokemon => @pokemon} %>
 
 <% if @current_series %>
   <% if @current_series.limbo? %>

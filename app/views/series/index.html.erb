@@ -1,0 +1,20 @@
+<h1><%= @pokemon.full_name %></h1>
+
+<table>
+  <tr>
+    <th>Current sprite</th>
+    <th>Status</th>
+  </tr>
+<% @series.each do |series| %>
+  <tr>
+    <td height="160">
+      <% if series.state == SERIES_RESERVED %>
+        Reserved by <%= series.reserver.name %>
+      <% elsif series.latest_sprite %>
+        <%= image_tag series.latest_sprite.image.url %>
+      <% end %>
+    </td>
+    <td><%= link_to series.state.humanize, series_path(series) %><%= " (Limbo)" if series.limbo? %></td>
+  </tr>
+<% end %>
+</table>

@@ -64,8 +64,12 @@ class SpriteSeries < ActiveRecord::Base
     self.sprites.order("created_at DESC").first
   end
   
+  def in_ownable_state?
+    [SERIES_RESERVED, SERIES_WORKING, SERIES_EDITING, SERIES_QC].include? self.state
+  end
+  
   def owned?
-    self.reserver and [SERIES_RESERVED, SERIES_WORKING, SERIES_EDITING, SERIES_QC].include? self.state
+    self.reserver and in_ownable_state?
   end
   
   def has_working_sprite
