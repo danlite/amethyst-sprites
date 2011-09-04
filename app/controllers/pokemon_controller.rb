@@ -3,6 +3,8 @@ class PokemonController < ApplicationController
   
   def index
     @pokemon = Pokemon.includes(:current_series).order('dex_number ASC, form_order ASC, form_name ASC')
+    @newest_artists = Artist.order("created_at DESC").limit(10).all
+    @remaining_artists = Artist.count - @newest_artists.count
   end
   
   def show

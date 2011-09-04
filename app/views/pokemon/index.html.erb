@@ -1,3 +1,8 @@
+<div style="margin: 10px 0">
+  <p><strong>Newest artists: </strong>
+  <%= @newest_artists.map{|a| a.name}.join(", ") %><%= ", and #{@remaining_artists} others" if @remaining_artists > 0 %></p>
+</div>
+
 <table border='2'>
 <%= render :partial => "pokemon", :collection => @pokemon, :locals => { :number_of_entries => @pokemon.count } %>
 </table>
