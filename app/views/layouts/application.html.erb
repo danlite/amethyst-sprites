@@ -25,7 +25,10 @@
 	<div class="alert"><%= alert %></div>
 <% end %>
 <% if flash[:errors] %>
-  <div class="error"><%= flash[:errors].is_a?(String) ? flash[:errors] : content_tag(:ul){ flash[:errors].map{|e| content_tag(:li, e)}.join.html_safe } %></div>
+  <div class="error">
+    <%= flash[:errors].is_a?(String) ? flash[:errors] : content_tag(:ul){ flash[:errors].map{|e| content_tag(:li, e)}.join.html_safe } %>
+    <%= render(:partial => "sprites/colour_map", :locals => flash[:error_colours]) if flash[:error_colours] %>
+  </div>
 <% end %>
 
 <%= yield %>

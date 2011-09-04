@@ -41,3 +41,13 @@ ul.hmenu li {
   margin: 5px 0;
   padding: 5px;
 }
+
+.artist {}
+
+.artist-qc {
+  font-style: italic;
+}
+
+.artist-admin {
+  font-weight: bold;
+}

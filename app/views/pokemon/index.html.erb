@@ -1,6 +1,6 @@
 <div style="margin: 10px 0">
   <p><strong>Newest artists: </strong>
-  <%= @newest_artists.map{|a| a.name}.join(", ") %><%= ", and #{@remaining_artists} others" if @remaining_artists > 0 %></p>
+  <%= @newest_artists.map{|a| style_artist_name(a)}.join(", ").html_safe %><%= ", and #{@remaining_artists} others" if @remaining_artists > 0 %></p>
 </div>
 
 <table border='2'>

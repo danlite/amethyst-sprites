@@ -25,7 +25,13 @@ class SpritesController < ApplicationController
       end
     end
     
-    redirect_to series_path(@series), :flash => {:errors => error_messages}
+    error_colours = nil
+    if sprite.error_num_colours
+      error_colours = {:colour_map => sprite.colour_map, :num_colours => sprite.error_num_colours}
+      sprite.error_num_colours = nil
+    end
+    
+    redirect_to series_path(@series), :flash => {:errors => error_messages, :error_colours => error_colours}
   end
   
 end

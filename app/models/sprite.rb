@@ -2,6 +2,7 @@ class Sprite < ActiveRecord::Base
   SPRITE_DIMENSION = 160
   
   attr_accessor :make_transparent
+  attr_accessor :error_num_colours
   
   belongs_to :series, :class_name => "SpriteSeries", :foreign_key => "series_id"
   belongs_to :artist
@@ -57,7 +58,11 @@ class Sprite < ActiveRecord::Base
     end
     
     map = img.unique_colors
-    errors.add(:image, "must have no more than 15 colours, not including 'transparent'") if map.columns > 16
+    if map.columns > 16
+      errors.add(:image, "must have no more than 15 colours, not including 'transparent'")
+      self.error_num_colours = map.columns
+    end
+    
     b64_colour_map = ActiveSupport::Base64.encode64(map.scale(10).to_blob)
     self.update_attribute :colour_map, b64_colour_map
   end

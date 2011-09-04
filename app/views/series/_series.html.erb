@@ -35,7 +35,7 @@ Available actions:
 				<% if sprite.image? %>
 					<%= image_tag sprite.image.url, :title => sprite.step %>
 				<% end %>
-				<%= render :partial => "sprites/colour_map", :locals => { :colour_map => sprite.colour_map } if sprite.colour_map %>
+				<%= render :partial => "sprites/colour_map", :locals => { :colour_map => sprite.colour_map, :num_colours => nil } if sprite.colour_map %>
 			</td>
 			<td>
 				<%= sprite.artist ? sprite.artist.name : series.contributors.map{|c| c.name }.join(", ") %>
