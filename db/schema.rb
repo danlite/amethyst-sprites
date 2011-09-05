@@ -10,7 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110903044135) do
+ActiveRecord::Schema.define(:version => 20110905010812) do
+
+  create_table "activities", :force => true do |t|
+    t.string   "type"
+    t.string   "subtype"
+    t.integer  "actor_id"
+    t.integer  "pokemon_id"
+    t.integer  "series_id"
+    t.integer  "sprite_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "artists", :force => true do |t|
     t.string   "name"
@@ -40,6 +51,15 @@ ActiveRecord::Schema.define(:version => 20110903044135) do
     t.datetime "updated_at"
     t.integer  "current_series_id"
     t.integer  "form_order"
+  end
+
+  create_table "reservations", :force => true do |t|
+    t.integer  "artist_id"
+    t.integer  "series_id"
+    t.string   "step"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sprite_series", :force => true do |t|

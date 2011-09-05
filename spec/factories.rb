@@ -49,6 +49,10 @@ Factory.define :reservation do |r|
   r.step SPRITE_WORK
 end
 
+Factory.define :upload_activity do |a|
+  a.association :sprite
+end
+
 # Sequences
 Factory.sequence :pokemon_form do |n|
   "form_#{n}"

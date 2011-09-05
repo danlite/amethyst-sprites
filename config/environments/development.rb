@@ -24,5 +24,9 @@ AmethystSprites::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
   
   config.cache_store = :file_store, "tmp/cache"
+  
+  Pusher.app_id = ENV['AMETHYST_DEV_PUSHER_APP_ID']
+  Pusher.key    = ENV['AMETHYST_DEV_PUSHER_KEY']
+  Pusher.secret = ENV['AMETHYST_DEV_PUSHER_SECRET']
 end
 

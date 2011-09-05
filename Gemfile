@@ -14,6 +14,7 @@ gem 'dalli'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'rmagick', :require => "RMagick"
+gem 'pusher'
 
 group :development, :test do
   gem 'rspec'

@@ -24,4 +24,11 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+  
+  config.before(:each) do
+    channel_mock = mock "pusher_channel"
+    channel_mock.stub(:trigger)
+    Pusher.stub(:"[]").and_return(channel_mock)
+  end
+  
 end

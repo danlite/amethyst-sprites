@@ -3,6 +3,10 @@ class SpritesController < ApplicationController
   
   def submit
     @series = SpriteSeries.find(params[:series_id])
+    
+    error_messages = nil
+    error_colours = nil
+    
     if @series.owned? and @series.reserver == current_artist
       
       step = case @series.state
@@ -12,20 +16,18 @@ class SpritesController < ApplicationController
       end
       sprite = Sprite.new(:artist => current_artist, :step => step, :series => @series, :make_transparent => params[:make_transparent])
       
-      error_messages = nil
-      
       if sprite
         sprite.image = params[:image]
         if sprite.save
           @series.begin_work! if @series.state == SERIES_RESERVED
           expire_fragment(@series.pokemon)
+          UploadActivity.create(:sprite => sprite)
         else
           error_messages = sprite.errors.full_messages
         end
       end
     end
     
-    error_colours = nil
     if sprite.error_num_colours
       error_colours = {:colour_map => sprite.colour_map, :num_colours => sprite.error_num_colours}
       sprite.error_num_colours = nil
