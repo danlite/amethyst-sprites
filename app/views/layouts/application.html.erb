@@ -10,6 +10,9 @@
 <body>
 	<ul class="hmenu mainmenu" style="float: left">
 		<li><%= link_to "Gallery", pokemon_index_path %></li>
+		<li class="less-important"><%= link_to "Awaiting edit", series_index_path(:filter => SERIES_AWAITING_EDIT) %></li>
+		<li class="less-important"><%= link_to "Awaiting QC", series_index_path(:filter => SERIES_AWAITING_QC) %></li>
+		<li class="less-important"><%= link_to "Awaiting approval", series_index_path(:filter => SERIES_AWAITING_APPROVAL) %></li>
 	</ul>
 	<ul class="hmenu" style="float: right">
 		<% if current_artist %>

@@ -27,6 +27,15 @@ table#gallery {
   text-decoration: underline;
 }
 
+.mainmenu .less-important {
+  font-size: 70%;
+}
+
+.mainmenu .less-important:before {
+  margin-right: 10px;
+  content: "\2022";
+}
+
 ul.hmenu {
   list-style: none;
   margin: 0 0 2em;

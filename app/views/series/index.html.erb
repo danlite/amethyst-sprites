@@ -1,11 +1,16 @@
-<%= render :partial => 'pokemon/pokemon_title', :locals => {:title_pokemon => @pokemon} %>
+<%= render :partial => 'pokemon/pokemon_title', :locals => {:title_pokemon => @pokemon} if @pokemon %>
+<%= content_tag(:h2, humanize_state_description(@filter)) if @filter %>
 
-<div style="width: 200px">
+<div style="text-align: center">
 <% @series.each do |series| %>
-  <% text = humanize_state_description(series.state).html_safe %>
-  <% text += "<br />by ".html_safe + content_tag(:span, series.reserver.name) if series.state == SERIES_RESERVED %>
-  <% text += "<br />(Limbo)".html_safe if series.limbo? %>
-  <div style="margin: 5px auto">
+  <% if @pokemon %>
+    <% text = humanize_state_description(series.state).html_safe %>
+    <% text += "<br />by ".html_safe + content_tag(:span, series.reserver.name) if series.state == SERIES_RESERVED %>
+    <% text += "<br />(Limbo)".html_safe if series.limbo? %>
+  <% else %>
+    <% text = series.pokemon.full_name %>
+  <% end %>
+  <div style="margin: 5px; <%= 'float: left' if @filter %>">
     <%= series_button(series, text, series.latest_sprite, false, "width: 178px") %>
   </div>
 <% end %>

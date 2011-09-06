@@ -2,11 +2,15 @@ class SeriesController < ApplicationController
   before_filter :authenticate_artist, :except => [:index, :show]
   
   def index
-    redirect_to root_path unless params[:pokemon_id]
+    redirect_to root_path unless (params[:pokemon_id] or params[:filter])
     
-    @pokemon = Pokemon.find(params[:pokemon_id])
-    
-    @series = @pokemon.series.order("created_at DESC")
+    if params[:pokemon_id]
+      @pokemon = Pokemon.find(params[:pokemon_id])
+      @series = @pokemon.series.order("created_at DESC")
+    else
+      @filter = params[:filter]
+      @series = SpriteSeries.where("state = ?", @filter).order("created_at DESC")
+    end
   end
   
   def show
