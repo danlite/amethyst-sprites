@@ -62,6 +62,11 @@ ul.hmenu li {
   padding-left: 10px;
 }
 
+.destructive {
+  font-weight: bold;
+  color: red;
+}
+
 /* Modified from http://www.red-team-design.com/just-another-awesome-css3-buttons */
 
 .button

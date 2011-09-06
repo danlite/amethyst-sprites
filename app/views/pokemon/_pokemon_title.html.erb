@@ -1,2 +1,10 @@
-<h1><%= title_pokemon.full_name %>
-    <%= link_to(content_tag(:span, "#{title_pokemon.series.count} other sprite series", :style => "font-size: 50%"), pokemon_series_index_path(title_pokemon)) if title_pokemon.series.count > 1 %></h1>
+<h1>
+  <%= title_pokemon.full_name %>
+  <% if title_pokemon.series.count > 1 %>
+  <span style="font-size: 12pt">
+    <% current = (defined?(current_series) and current_series )%>
+    (<%= link_to_unless current, "current", title_pokemon %> | 
+    <%= link_to_if current, "all #{title_pokemon.series.count} series", pokemon_series_index_path(title_pokemon) %>)
+  </span>
+  <% end %>
+</h1>

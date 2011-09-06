@@ -9,6 +9,7 @@ class ActivityPushController < AbstractController::Base
   include AbstractController::Logger
   include Rails.application.routes.url_helpers
   
+  helper ApplicationHelper
   helper ActivitiesHelper
 
   self.view_paths = "app/views"

@@ -1,12 +1,14 @@
 <% if series.artist_can_upload?(current_artist) %>
-<div>
-  <% if series.state == SERIES_RESERVED %><h3>Submit the first sprite</h3><% end %>
-  <% if series.state == SERIES_WORKING %><h3>Add another sprite</h3><% end %>
-  <% if series.state == SERIES_AWAITING_EDIT %><h3>Submit a peer edit</h3><% end %>
-  <% if series.state == SERIES_EDITING %><h3>Submit a peer edit</h3><% end %>
+<div class="alert" style="padding: 5px auto">
+  <h3 style="margin-top: 0">
+  <% if series.state == SERIES_RESERVED %>Submit the first sprite<% end %>
+  <% if series.state == SERIES_WORKING %>Add another sprite<% end %>
+  <% if series.state == SERIES_AWAITING_EDIT %>Submit a peer edit<% end %>
+  <% if series.state == SERIES_EDITING %>Submit a peer edit<% end %>
+  </h3>
   <%= form_tag submit_series_sprites_path(series), :multipart => true do %>
   	<%= file_field_tag 'image' %><br /><br />
-  	<%= check_box_tag 'make_transparent' %><%= label_tag 'make_transparent', "Determine the background colour and replace it with transparency. Make sure the background colour doesn't appear in the sprite (e.g. white background and white eyes)!" %><br /><br />
+  	<%= check_box_tag 'make_transparent' %> <%= label_tag 'make_transparent', "Determine the background colour and replace it with transparency. Make sure the background colour doesn't appear in the sprite (e.g. white background and white eyes)!" %><br /><br />
   	<%= submit_tag 'Upload' %>
   <% end %>
 </div>

@@ -1,20 +1,12 @@
-<h1><%= @pokemon.full_name %></h1>
+<%= render :partial => 'pokemon/pokemon_title', :locals => {:title_pokemon => @pokemon} %>
 
-<table>
-  <tr>
-    <th>Current sprite</th>
-    <th>Status</th>
-  </tr>
+<div style="width: 200px">
 <% @series.each do |series| %>
-  <tr>
-    <td height="160">
-      <% if series.state == SERIES_RESERVED %>
-        Reserved by <%= series.reserver.name %>
-      <% elsif series.latest_sprite %>
-        <%= image_tag series.latest_sprite.image.url %>
-      <% end %>
-    </td>
-    <td><%= link_to series.state.humanize, series_path(series) %><%= " (Limbo)" if series.limbo? %></td>
-  </tr>
+  <% text = humanize_state_description(series.state).html_safe %>
+  <% text += "<br />by #{series.reserver.name}".html_safe if series.state == SERIES_RESERVED %>
+  <% text += "<br />(Limbo)".html_safe if series.limbo? %>
+  <div style="margin: 5px auto">
+    <%= series_button(series, text, series.latest_sprite, false, "width: 178px") %>
+  </div>
 <% end %>
-</table>
+</div>

@@ -10,7 +10,23 @@ class SeriesController < ApplicationController
   end
   
   def show
-    @series = SpriteSeries.find(params[:id])
+    begin
+      @series = SpriteSeries.find(params[:id])
+    rescue
+      redirect_to :root, :flash => {:errors => "That sprite no longer seems to exist!"}
+    end
+  end
+  
+  def destroy
+    @series = SpriteSeries.destroy(params[:id])
+    
+    raise "Not allowed!" unless current_artist and current_artist.admin and @series.state == SERIES_ARCHIVED
+    
+    pokemon = @series.pokemon
+    
+    @series.destroy
+    
+    redirect_to pokemon_path(pokemon)
   end
   
   def transition
@@ -23,8 +39,8 @@ class SeriesController < ApplicationController
     
     raise "Unable to transition" unless @series.send(method)
     @series.reserver = current_artist if @series.in_ownable_state?
-    if @series.save and ![SERIES_AWAITING_APPROVAL, SERIES_ARCHIVED].include?(@series.state)
-      ProgressActivity.create(:series => @series, :actor => current_artist, :subtype => @series.state)
+    if @series.save
+      ProgressActivity.create(:series => @series, :actor => current_artist, :subtype => @series.state, :hidden => [SERIES_AWAITING_APPROVAL, SERIES_ARCHIVED].include?(@series.state))
     end
     
     expire_fragment(@series.pokemon)

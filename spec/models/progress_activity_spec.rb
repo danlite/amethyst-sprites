@@ -17,7 +17,7 @@ describe ProgressActivity do
       @activity.should_not be_valid
     end
     
-    it "should require an artist" do
+    it "should require an actor" do
       @activity.actor = nil
       @activity.should_not be_valid
     end

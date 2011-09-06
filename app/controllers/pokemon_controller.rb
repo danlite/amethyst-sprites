@@ -7,8 +7,9 @@ class PokemonController < ApplicationController
     @newest_artists = Artist.order("created_at DESC").limit(10).all
     @remaining_artists = Artist.count - @newest_artists.count
     
-    @latest_activities = Activity.order("created_at DESC").limit(15).all
-    @older_activity_count = Activity.count - @latest_activities.count
+    visible_activities = Activity.visible
+    @latest_activities = visible_activities.order("created_at DESC").limit(15).all
+    @older_activity_count = visible_activities.count - @latest_activities.count
   end
   
   def show

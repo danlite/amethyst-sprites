@@ -6,7 +6,7 @@ class ActivitiesController < ApplicationController
   end
   
   def index
-    @activities = Activity.all
+    @activities = Activity.visible.order("created_at DESC")
   end
   
 end

@@ -6,6 +6,7 @@ class Sprite < ActiveRecord::Base
   
   belongs_to :series, :class_name => "SpriteSeries", :foreign_key => "series_id"
   belongs_to :artist
+  has_one :upload_activity, :dependent => :destroy
   
   paperclip_config = {
     :storage => Rails.env.test? ? :filesystem : :s3,
@@ -28,8 +29,6 @@ class Sprite < ActiveRecord::Base
   validate :image_properties, :if => Proc.new{|s| s.image.file? }
   
   after_destroy do
-    series.reload
-    series.destroy if series.sprites.empty?
     self.image.clear
   end
   

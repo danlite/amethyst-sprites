@@ -7,9 +7,11 @@ class Activity < ActiveRecord::Base
   
   after_create :send_event
   
+  scope :visible, where('hidden = ? or hidden IS NULL', false)
+  
   protected
   
   def send_event
-    Pusher[ACTIVITY_CHANNEL].trigger('activity', {:content => ActivityPushController.new(:id => self.id).show})
+    Pusher[ACTIVITY_CHANNEL].trigger('activity', {:content => ActivityPushController.new(:id => self.id).show}) unless hidden
   end
 end
