@@ -1,7 +1,6 @@
-<div style="background-image: url('<%= image_path 'background-stripes.png' %>'); padding: 0; width: <%= num_colours ? (num_colours * 10).to_s + "px" : "100%" %>">
+<div>
   <img
     src="data:image/png;base64,<%= colour_map %>"
-    style="margin: 0; border: 0; float: left"
+    style="background-image: url('<%= image_path 'background-stripes.png' %>'); margin: 0; border: 0"
    />
-  <div style="clear: both"></div>
 </div>
