@@ -3,7 +3,7 @@
 <div style="width: 200px">
 <% @series.each do |series| %>
   <% text = humanize_state_description(series.state).html_safe %>
-  <% text += "<br />by #{series.reserver.name}".html_safe if series.state == SERIES_RESERVED %>
+  <% text += "<br />by ".html_safe + content_tag(:span, series.reserver.name) if series.state == SERIES_RESERVED %>
   <% text += "<br />(Limbo)".html_safe if series.limbo? %>
   <div style="margin: 5px auto">
     <%= series_button(series, text, series.latest_sprite, false, "width: 178px") %>

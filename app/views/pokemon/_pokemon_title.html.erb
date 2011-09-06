@@ -1,6 +1,6 @@
 <h1>
   <%= title_pokemon.full_name %>
-  <% if title_pokemon.series.count > 1 %>
+  <% if title_pokemon.series.count > 1 or (title_pokemon.series.count == 1 and title_pokemon.series.first.state == SERIES_ARCHIVED) %>
   <span style="font-size: 12pt">
     <% current = (defined?(current_series) and current_series )%>
     (<%= link_to_unless current, "current", title_pokemon %> | 

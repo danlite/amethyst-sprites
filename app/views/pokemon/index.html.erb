@@ -10,7 +10,7 @@
   <%= render :partial => "pokemon", :collection => @pokemon, :locals => { :number_of_entries => @pokemon.count } %>
   </table>
 </div>
-<div id="activity-feed" style="margin-left: 1020px">
+<div id="activity-feed" style="margin-left: 1030px">
   <% @latest_activities.each do |activity| %>
   <%= render :partial => "activities/#{activity.type.underscore}", :locals => {:activity => activity} %>
   <% end %>
