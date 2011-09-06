@@ -10,16 +10,16 @@
   <%= render :partial => "pokemon", :collection => @pokemon, :locals => { :number_of_entries => @pokemon.count } %>
   </table>
 </div>
-<div id="activity-feed" style="margin-left: 1030px">
-  <% unless @latest_activities.empty? %>
-  <div style="text-align: center; font-weight: bold; font-size: 120%">Latest Activity<hr width="75%" /></div>
-  <% end %>
-  <% @latest_activities.each do |activity| %>
-  <%= render :partial => "activities/#{activity.type.underscore}", :locals => {:activity => activity} %>
-  <% end %>
-  <% if @older_activity_count > 0 %>
-  <div class="activity-feed-item" style="width: 100%; text-align: center"><%= link_to "View all activity", activities_path %></div>
-  <% end %>
+<div style="margin-left: 1030px">
+  <div id="activity-feed-header" style="text-align: center; font-weight: bold; font-size: 120%">Latest Activity<hr width="75%" /></div>
+  <div id="activity-feed">
+    <% @latest_activities.each do |activity| %>
+    <%= render :partial => "activities/#{activity.type.underscore}", :locals => {:activity => activity} %>
+    <% end %>
+    <% if @older_activity_count > 0 %>
+    <div class="activity-feed-item" style="width: 100%; text-align: center"><%= link_to "View all activity", activities_path %></div>
+    <% end %>
+  </div>
 </div>
 
 </div>
