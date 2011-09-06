@@ -1,3 +1,19 @@
+html {
+  font-family: Lucida, "Lucida Grande", Verdana, Geneva, Helvetica, Arial, sans-serif;
+}
+
+table#gallery, #gallery th, #gallery td {
+  border: 2px solid #ddd;
+}
+
+#gallery td {
+  padding: 2px;
+}
+
+table#gallery {
+  border-collapse: collapse;
+}
+
 .mainmenu {
   font-size: 16pt;
   font-weight: bold;
@@ -87,7 +103,9 @@ ul.hmenu li {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#cccccc');
   border: 1px solid #777;
   margin: 0.5em;
-  font: bold 1em/2em Arial, Helvetica;
+  font-weight: bold;
+  font-size: 1em;
+  line-height: 2em;
   text-decoration: none;
   color: #333;
   text-shadow: 0 1px 0 rgba(255,255,255,.8);

@@ -6,11 +6,14 @@
 </div>
 
 <div style="float: left; width: 1020px">
-  <table border='2'>
+  <table id="gallery">
   <%= render :partial => "pokemon", :collection => @pokemon, :locals => { :number_of_entries => @pokemon.count } %>
   </table>
 </div>
 <div id="activity-feed" style="margin-left: 1030px">
+  <% unless @latest_activities.empty? %>
+  <div style="text-align: center; font-weight: bold; font-size: 120%">Latest Activity<hr width="75%" /></div>
+  <% end %>
   <% @latest_activities.each do |activity| %>
   <%= render :partial => "activities/#{activity.type.underscore}", :locals => {:activity => activity} %>
   <% end %>

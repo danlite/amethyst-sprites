@@ -27,6 +27,7 @@ Available actions:
 <%= render :partial => "series/upload_form", :locals => { :series => series } %>
 
 <div>
+  <hr width="100%" />
   <%= render :partial => 'series/activity', :collection => series.activities.order('created_at DESC') %>
 </div>
 <% end %>
