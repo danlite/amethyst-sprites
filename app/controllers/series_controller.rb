@@ -23,7 +23,9 @@ class SeriesController < ApplicationController
     
     raise "Unable to transition" unless @series.send(method)
     @series.reserver = current_artist if @series.in_ownable_state?
-    @series.save
+    if @series.save and ![SERIES_AWAITING_APPROVAL, SERIES_ARCHIVED].include?(@series.state)
+      ProgressActivity.create(:series => @series, :actor => current_artist, :subtype => @series.state)
+    end
     
     expire_fragment(@series.pokemon)
     

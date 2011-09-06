@@ -12,6 +12,7 @@ class SpriteSeries < ActiveRecord::Base
   belongs_to :reserver, :class_name => "Artist"
   has_many :sprites, :class_name => "Sprite", :foreign_key => "series_id", :dependent => :destroy
   has_many :contributors, :foreign_key => "series_id", :dependent => :destroy
+  has_many :activities, :foreign_key => "series_id", :dependent => :destroy
   
   state_machine do
     state :reserved
@@ -116,6 +117,6 @@ class SpriteSeries < ActiveRecord::Base
     
     def unlimbo
       self.limbo = false
-    end
+    end      
   
 end

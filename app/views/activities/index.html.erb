@@ -1,0 +1,3 @@
+<% @activities.each do |a| %>
+<%= render :partial => a.type.underscore, :locals => {:activity => a} %>
+<% end %>

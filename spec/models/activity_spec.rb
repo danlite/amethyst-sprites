@@ -7,7 +7,7 @@ describe Activity do
     it "should send a Pusher event after creation" do
       Pusher.should_receive(:"[]").with(ACTIVITY_CHANNEL)
       
-      Activity.create!
+      UploadActivity.create!(:sprite => Factory(:sprite))
     end
     
   end

@@ -10,6 +10,6 @@ class Activity < ActiveRecord::Base
   protected
   
   def send_event
-    Pusher[ACTIVITY_CHANNEL].trigger('activity', {:message => "Something happened!"})
+    Pusher[ACTIVITY_CHANNEL].trigger('activity', {:content => ActivityPushController.new(:id => self.id).show})
   end
 end

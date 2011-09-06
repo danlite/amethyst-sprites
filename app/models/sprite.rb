@@ -6,15 +6,21 @@ class Sprite < ActiveRecord::Base
   
   belongs_to :series, :class_name => "SpriteSeries", :foreign_key => "series_id"
   belongs_to :artist
-  has_attached_file :image,
+  
+  paperclip_config = {
     :storage => Rails.env.test? ? :filesystem : :s3,
-    :s3_credentials => {
-      :bucket => ENV['S3_BUCKET'],
-      :access_key_id => ENV['S3_KEY'],
-      :secret_access_key => ENV['S3_SECRET']
-    },
-    :path => Rails.env.test? ? ":rails_root/tmp/:class/:pokemon-:id.png" : "/:class/:pokemon-:id.png",
     :styles => {:original => {:processors => [:transparent]}}
+  }
+  
+  paperclip_config[:url] = "/images/tmp/:class/:pokemon-:id.png"
+  paperclip_config[:path] = "/:class/:pokemon-:id.png" unless Rails.env.test?
+  paperclip_config[:s3_credentials] = {
+    :bucket => ENV['S3_BUCKET'],
+    :access_key_id => ENV['S3_KEY'],
+    :secret_access_key => ENV['S3_SECRET']
+  } unless Rails.env.test?
+  
+  has_attached_file :image, paperclip_config
   
   validates :series, :presence => true
   validates :step, :inclusion => { :in => SPRITE_STEPS }

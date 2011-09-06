@@ -3,8 +3,12 @@ class PokemonController < ApplicationController
   
   def index
     @pokemon = Pokemon.includes(:current_series).order('dex_number ASC, form_order ASC, form_name ASC')
+    
     @newest_artists = Artist.order("created_at DESC").limit(10).all
     @remaining_artists = Artist.count - @newest_artists.count
+    
+    @latest_activities = Activity.order("created_at DESC").limit(15).all
+    @older_activity_count = Activity.count - @latest_activities.count
   end
   
   def show
@@ -24,6 +28,9 @@ class PokemonController < ApplicationController
   def claim
     @pokemon = Pokemon.find(params[:id])
     @series = current_artist.claim_pokemon(@pokemon)
+    
+    ProgressActivity.create(:series => @series, :actor => current_artist, :subtype => SERIES_RESERVED)
+    
     expire_fragment(@pokemon)
     remaining_reservations = Artist::MAXIMUM_CONCURRENT_WORKS - current_artist.current_wip
     reservation_text = remaining_reservations == 0 ? "You must finish your other sprites before reserving any more Pokemon." : "You may reserve #{remaining_reservations} more Pokemon."

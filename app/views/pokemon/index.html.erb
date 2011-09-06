@@ -1,8 +1,44 @@
+<div style="width: 1520px">
+
 <div style="margin: 10px 0">
   <p><strong>Newest artists: </strong>
   <%= @newest_artists.map{|a| style_artist_name(a)}.join(", ").html_safe %><%= ", and #{@remaining_artists} others" if @remaining_artists > 0 %></p>
 </div>
 
-<table border='2'>
-<%= render :partial => "pokemon", :collection => @pokemon, :locals => { :number_of_entries => @pokemon.count } %>
-</table>
+<div style="float: left; width: 1020px">
+  <table border='2'>
+  <%= render :partial => "pokemon", :collection => @pokemon, :locals => { :number_of_entries => @pokemon.count } %>
+  </table>
+</div>
+<div id="activity-feed" style="margin-left: 1020px">
+  <% @latest_activities.each do |activity| %>
+  <%= render :partial => "activities/#{activity.type.underscore}", :locals => {:activity => activity} %>
+  <% end %>
+  <% if @older_activity_count > 0 %>
+  <div class="activity-feed-item" style="width: 100%; text-align: center"><%= link_to "View all activity", activities_path %></div>
+  <% end %>
+</div>
+
+</div>
+
+<script type="text/javascript">
+<% if Rails.env.development? %>
+
+  // Enable pusher logging - don't include this in production
+  Pusher.log = function(message) {
+    if (window.console && window.console.log) window.console.log(message);
+  };
+  
+  // Flash fallback logging - don't include this in production
+  WEB_SOCKET_DEBUG = true;
+  
+<% end %>
+
+  var pusher = new Pusher('<%= Pusher.key %>');
+  var channel = pusher.subscribe('<%= Activity::ACTIVITY_CHANNEL %>');
+  channel.bind('activity', function(data) {
+    var contentElement = $(data.content)
+    contentElement.hide().prependTo('#activity-feed')
+    contentElement.slideToggle();
+  });
+</script>

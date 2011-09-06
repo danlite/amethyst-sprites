@@ -6,6 +6,7 @@ AmethystSprites::Application.routes.draw do
   
   resources :artists
   resources :sessions
+  resources :activities
   
   match 'pokemon/:name(/:form)' => 'pokemon#show', :constraints => {:name => /[A-Z][^\/]+/}, :as => 'named_pokemon', :via => :get
 
