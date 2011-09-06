@@ -8,34 +8,39 @@
   <%= javascript_include_tag "http://js.pusherapp.com/1.9/pusher.min.js" %>
 </head>
 <body>
-	<ul class="hmenu mainmenu" style="float: left">
-		<li><%= link_to "Gallery", pokemon_index_path %></li>
-		<li class="less-important"><%= link_to "Awaiting edit", series_index_path(:filter => SERIES_AWAITING_EDIT) %></li>
-		<li class="less-important"><%= link_to "Awaiting QC", series_index_path(:filter => SERIES_AWAITING_QC) %></li>
-		<li class="less-important"><%= link_to "Awaiting approval", series_index_path(:filter => SERIES_AWAITING_APPROVAL) %></li>
-	</ul>
-	<ul class="hmenu" style="float: right">
-		<% if current_artist %>
-		<li>Logged in as <%= current_artist.name %></li>
-		<% end %>
-	  <%= render 'navigation/registration_items' %>
-	  <%= render 'navigation/login_items' %>
-	</ul>
-	<div style="clear: both"></div>
-<% if notice %>	
-	<div class="notice"><%= notice %></div>
-<% end %>
-<% if alert %>
-	<div class="alert"><%= alert %></div>
-<% end %>
-<% if flash[:errors] %>
-  <div class="error">
-    <%= flash[:errors].is_a?(String) ? flash[:errors] : content_tag(:ul){ flash[:errors].map{|e| content_tag(:li, e)}.join.html_safe } %>
-    <%= render(:partial => "sprites/colour_map", :locals => flash[:error_colours]) if flash[:error_colours] %>
-  </div>
-<% end %>
+  <% if Rails.env.development? %>
+  <div id="dev-header"></div>
+  <% end %>
+  <div id="body-content">
+  	<ul class="hmenu mainmenu" style="float: left">
+  		<li><%= link_to "Gallery", pokemon_index_path %></li>
+  		<li class="less-important"><%= link_to "Awaiting edit", series_index_path(:filter => SERIES_AWAITING_EDIT) %></li>
+  		<li class="less-important"><%= link_to "Awaiting QC", series_index_path(:filter => SERIES_AWAITING_QC) %></li>
+  		<li class="less-important"><%= link_to "Awaiting approval", series_index_path(:filter => SERIES_AWAITING_APPROVAL) %></li>
+  	</ul>
+  	<ul class="hmenu" style="float: right">
+  		<% if current_artist %>
+  		<li>Logged in as <%= current_artist.name %></li>
+  		<% end %>
+  	  <%= render 'navigation/registration_items' %>
+  	  <%= render 'navigation/login_items' %>
+  	</ul>
+  	<div style="clear: both"></div>
+  <% if notice %>	
+  	<div class="notice"><%= notice %></div>
+  <% end %>
+  <% if alert %>
+  	<div class="alert"><%= alert %></div>
+  <% end %>
+  <% if flash[:errors] %>
+    <div class="error">
+      <%= flash[:errors].is_a?(String) ? flash[:errors] : content_tag(:ul){ flash[:errors].map{|e| content_tag(:li, e)}.join.html_safe } %>
+      <%= render(:partial => "sprites/colour_map", :locals => flash[:error_colours]) if flash[:error_colours] %>
+    </div>
+  <% end %>
 
-<%= yield %>
+  <%= yield %>
+</div>
 
 </body>
 </html>

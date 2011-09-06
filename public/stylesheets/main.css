@@ -2,6 +2,20 @@ html {
   font-family: Lucida, "Lucida Grande", Verdana, Geneva, Helvetica, Arial, sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
+#body-content {
+  margin: 8px;
+}
+
+#dev-header {
+  background-image: url('/images/construction-stripes.png');
+  background-repeat: repeat-x;
+  height: 20px;
+}
+
 table#gallery, #gallery th, #gallery td {
   border: 2px solid #ddd;
 }
