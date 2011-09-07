@@ -20,8 +20,9 @@
     <% end %>
   </div>
 </div>
-<div id="gallery">
+<div id="gallery" style="padding-right: 100px">
   <%= render :partial => "pokemon", :collection => @pokemon, :locals => { :number_of_entries => @pokemon.count } %>
+  <div style="clear: both"></div>
 </div>
 
 </div>

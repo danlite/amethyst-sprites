@@ -28,7 +28,6 @@ body {
 
 .pokemon-state {
   margin: 0;
-  font-size: 80%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

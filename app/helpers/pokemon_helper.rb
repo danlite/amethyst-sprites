@@ -22,7 +22,7 @@ module PokemonHelper
       state_text += " (limbo)" if series.limbo?
     end
       
-    content_tag(:p, state_text, :class => 'pokemon-state')
+    content_tag(:p, state_text, :class => 'pokemon-state', :style => 'font-size: 80%')
   end
   
   def html_for_available(pokemon, artist)
