@@ -10,13 +10,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110907061633) do
+ActiveRecord::Schema.define(:version => 20110907073704) do
 
   create_table "activities", :force => true do |t|
     t.string   "type"
     t.string   "subtype"
     t.integer  "actor_id"
-    t.integer  "pokemon_id"
     t.integer  "series_id"
     t.integer  "sprite_id"
     t.datetime "created_at"
@@ -24,6 +23,11 @@ ActiveRecord::Schema.define(:version => 20110907061633) do
     t.boolean  "hidden"
     t.integer  "comment_id"
   end
+
+  add_index "activities", ["actor_id"], :name => "index_activities_on_actor_id"
+  add_index "activities", ["series_id"], :name => "index_activities_on_series_id"
+  add_index "activities", ["subtype"], :name => "index_activities_on_subtype"
+  add_index "activities", ["type"], :name => "index_activities_on_type"
 
   create_table "artists", :force => true do |t|
     t.string   "name"
@@ -45,6 +49,8 @@ ActiveRecord::Schema.define(:version => 20110907061633) do
     t.datetime "updated_at"
   end
 
+  add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
+
   create_table "contributors", :force => true do |t|
     t.integer  "artist_id"
     t.string   "role"
@@ -64,14 +70,7 @@ ActiveRecord::Schema.define(:version => 20110907061633) do
     t.integer  "form_order"
   end
 
-  create_table "reservations", :force => true do |t|
-    t.integer  "artist_id"
-    t.integer  "series_id"
-    t.string   "step"
-    t.boolean  "active"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  add_index "pokemon", ["current_series_id"], :name => "index_pokemon_on_current_series_id"
 
   create_table "sprite_series", :force => true do |t|
     t.integer  "pokemon_id"
@@ -82,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20110907061633) do
     t.boolean  "limbo"
   end
 
+  add_index "sprite_series", ["pokemon_id"], :name => "index_sprite_series_on_pokemon_id"
   add_index "sprite_series", ["reserver_id"], :name => "index_sprite_series_on_reserver_id"
 
   create_table "sprites", :force => true do |t|
@@ -96,5 +96,7 @@ ActiveRecord::Schema.define(:version => 20110907061633) do
     t.datetime "image_updated_at"
     t.text     "colour_map"
   end
+
+  add_index "sprites", ["series_id"], :name => "index_sprites_on_series_id"
 
 end
