@@ -1,0 +1,4 @@
+<div class="comment">
+  <span style="font-weight: bold; font-size: 80%"><%= format_event_datetime(comment.created_at) %> by <%= comment.artist.name %></span>
+  <%= simple_format(comment.body) %>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110906035418) do
+ActiveRecord::Schema.define(:version => 20110906205508) do
 
   create_table "activities", :force => true do |t|
     t.string   "type"
@@ -35,6 +35,15 @@ ActiveRecord::Schema.define(:version => 20110906035418) do
     t.string   "password_salt"
   end
 
+  create_table "comments", :force => true do |t|
+    t.integer  "artist_id"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "contributors", :force => true do |t|
     t.integer  "artist_id"
     t.string   "role"
@@ -52,15 +61,6 @@ ActiveRecord::Schema.define(:version => 20110906035418) do
     t.datetime "updated_at"
     t.integer  "current_series_id"
     t.integer  "form_order"
-  end
-
-  create_table "reservations", :force => true do |t|
-    t.integer  "artist_id"
-    t.integer  "series_id"
-    t.string   "step"
-    t.boolean  "active"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "sprite_series", :force => true do |t|

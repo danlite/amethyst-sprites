@@ -1,5 +1,5 @@
 AmethystSprites::Application.routes.draw do
-  
+
   get 'log_out' => 'sessions#destroy', :as => 'log_out'
   get 'log_in' => 'sessions#new', :as => 'log_in'
   get 'sign_up' => 'artists#new', :as => 'sign_up'
@@ -7,6 +7,10 @@ AmethystSprites::Application.routes.draw do
   resources :artists
   resources :sessions
   resources :activities
+  
+  resources :sprites do
+    resources :comments
+  end
   
   match 'pokemon/:name(/:form)' => 'pokemon#show', :constraints => {:name => /[A-Z][^\/]+/}, :as => 'named_pokemon', :via => :get
 

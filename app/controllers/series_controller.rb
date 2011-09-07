@@ -13,7 +13,7 @@ class SeriesController < ApplicationController
     end
   end
   
-  def show
+  def show    
     begin
       @series = SpriteSeries.find(params[:id])
     rescue

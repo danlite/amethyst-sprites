@@ -1,6 +1,6 @@
 # http://amberbit.com/blog/render-views-partials-outside-controllers-rails-3
 
-class ActivityPushController < AbstractController::Base
+class EventPushController < AbstractController::Base
   attr_reader :params
   
   include AbstractController::Rendering
@@ -19,9 +19,14 @@ class ActivityPushController < AbstractController::Base
     config.assets_dir = Rails.root.join('public')
   end
   
-  def show
+  def show_activity
     @activity = Activity.find(params[:id])
     render :partial => "activities/#{@activity.type.underscore}", :locals => {:activity => @activity}
+  end
+
+  def show_comment
+    @comment = Comment.find(params[:id])
+    render :partial => "comments/comment", :object => @comment
   end
   
 end

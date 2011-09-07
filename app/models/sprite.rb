@@ -7,6 +7,7 @@ class Sprite < ActiveRecord::Base
   belongs_to :series, :class_name => "SpriteSeries", :foreign_key => "series_id"
   belongs_to :artist
   has_one :upload_activity, :dependent => :destroy
+  has_many :comments, :as => :commentable
   
   paperclip_config = {
     :storage => Rails.env.test? ? :filesystem : :s3,

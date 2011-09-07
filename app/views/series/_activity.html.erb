@@ -1,19 +1,33 @@
 <div>
-  <% if activity.is_a? UploadActivity %>
-  <div style="float: left">
-    <%= image_tag(activity.sprite.image.url, :style => "padding: 5px; margin: 5px; border: 1px dashed #999") %>
-    <%= render :partial => "sprites/colour_map", :locals => { :colour_map => activity.sprite.colour_map, :num_colours => nil } if activity.sprite.colour_map %>
-  </div>
-  <% else %>
-  <div style="float: left; width: 182px">
-    &nbsp;
-  </div>
-  <% end %>
-  <div style="float: left; margin-bottom: 10px">
-    <span style="font-weight: bold; font-size: 80%"><%= format_activities_datetime(activity.created_at) %></span>
-    <br /><br />
-    <%= text_for_activity(activity) %>
-  </div>
+  <table style="width: 100%"><tr valign="top">
+    <td style="width: 182px">
+    <% if activity.is_a? UploadActivity %>
+      <%= image_tag(activity.sprite.image.url, :class => 'sprite-display') %>
+      <%= render :partial => "sprites/colour_map", :locals => { :colour_map => activity.sprite.colour_map, :num_colours => nil } if activity.sprite.colour_map %>
+      <br />
+      <a href="#"
+      class="button"
+      style="height: 35px; padding: 0 10px; display: block"
+      onclick="if (AS_Comments.showCommentForm()){$.ajax('<%= new_sprite_comment_path(activity.sprite) %>', { success: AS_Comments.commentFormLoaded })}; return false;">
+        Post a comment
+      </a>
+    <% else %>
+    <div style="width: 182px">
+      &nbsp;
+    </div>
+    <% end %>
+    </td><td>
+    <span style="font-weight: bold; font-size: 80%"><%= format_event_datetime(activity.created_at) %></span>
+    <p><%= text_for_activity(activity) %></p>
+    <% if activity.is_a? UploadActivity %>
+    <div id="comments-sprite-<%= activity.sprite_id %>" class="comments-container" style="width: 100%">
+      <% activity.sprite.comments.order('created_at DESC').each do |comment| %>
+      <%= render :partial => 'comments/comment', :object => comment %>
+      <% end %>
+    </div>
+    <% end %>
+    </td>
+  </tr></table>
   <div style="clear: both"></div>
   <hr width="100%" />
 </div>

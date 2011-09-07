@@ -1,5 +1,9 @@
 module ApplicationHelper
-
+  
+  def format_event_datetime(datetime)
+    datetime.strftime("%b %e at %l:%M %p %Z")
+  end
+  
   def series_button(series, text, sprite, small = false, style = '')
     dim = small ? 80 : 160
     link_to(series_path(:id => series), :class => "button", :style => style) do

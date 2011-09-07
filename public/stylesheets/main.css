@@ -106,6 +106,60 @@ ul.hmenu li {
   color: red;
 }
 
+.sprite-display {
+  border: 1px dashed #999;
+  padding: 5px;
+  margin: 5px;
+  background-color: white;
+}
+
+.pretty-submit {
+  font-size: 16px;
+  border-style: none;
+  margin: 1px;
+  padding: 2px 10px;
+  background-color: #bbb;
+}
+
+.pretty-submit:hover {
+  color: white;
+  background-color: #090;
+}
+
+.pretty-submit:disabled {
+  color: #666;
+  background-color: #bbb;
+}
+
+#comment-overlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+#create-comment-container {
+  display: none;
+  width: 800px;
+  text-align: center;
+  border: 5px solid black;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  margin: 100px auto;
+  background-color: #ddd;
+}
+
+.comment {
+  padding: 5px;
+  border: 1px solid #999;
+  background-color: #eee;
+  margin: 4px 0;
+}
+
+.comments-container {
+  margin-bottom: 10px;
+}
+
 /* Modified from http://www.red-team-design.com/just-another-awesome-css3-buttons */
 
 .button

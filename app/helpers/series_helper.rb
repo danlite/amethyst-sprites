@@ -3,10 +3,6 @@ module SeriesHelper
   def humanize_state_description(state)
     state.humanize.gsub(/[Qq]c/, "QC")
   end
-
-  def format_activities_datetime(datetime)
-    datetime.strftime("%b %e at %l:%M %p %Z")
-  end
   
   def text_for_activity(activity)
     if activity.is_a? UploadActivity

@@ -12,6 +12,6 @@ class Activity < ActiveRecord::Base
   protected
   
   def send_event
-    Pusher[ACTIVITY_CHANNEL].trigger('activity', {:content => ActivityPushController.new(:id => self.id).show}) unless hidden
+    Pusher[ACTIVITY_CHANNEL].trigger('activity', {:content => EventPushController.new(:id => self.id).show_activity}) unless hidden
   end
 end
