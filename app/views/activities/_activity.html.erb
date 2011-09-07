@@ -1,11 +1,10 @@
 <div>
   <div id="activity-<%= activity.id %>" class="activity-feed-item <%= activity.type %>">
-    <% reserved = activity.subtype == SERIES_RESERVED ? "Reserved" : nil %>
-    <%= series_button(activity.series, reserved, reserved ? nil : activity.series.latest_sprite, true) %>
+    <%= button_for_activity(activity) %>
     <div class="activity-description">
       <span style="font-weight: bold; font-size: 80%"><%= format_activity_feed_datetime(activity.created_at) %></span>
       <br /><br />
-      <%= text_for_progress_activity(activity) %>
+      <%= text_for_activity(activity) %>
     </div>
     <div style="clear: both"></div>
   </div>

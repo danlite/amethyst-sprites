@@ -2,7 +2,7 @@ class ActivitiesController < ApplicationController
   
   def show
     @activity = Activity.find(params[:id])
-    render :text => EventPushController.new(params).show_activity
+    render :text => ActivityPushController.new(params).show_activity
   end
   
   def index

@@ -5,6 +5,25 @@ module ActivitiesHelper
     "#{day} at #{datetime.strftime("%l:%M %p %Z")}"
   end
   
+  def button_for_activity(activity)
+    if activity.is_a? UploadActivity
+      series_button(activity.series, nil, activity.sprite, true)
+    elsif activity.is_a? ProgressActivity
+      reserved = activity.subtype == SERIES_RESERVED ? "Reserved" : nil
+      series_button(activity.series, reserved, reserved ? nil : activity.series.latest_sprite, true)
+    end
+  end
+  
+  def text_for_activity(activity)
+    if activity.is_a? UploadActivity
+      "#{activity.sprite.artist ? activity.sprite.artist.name : 'Someone'} uploaded a sprite for #{activity.sprite.series.pokemon.full_name}"
+    elsif activity.is_a? ProgressActivity
+      text_for_progress_activity(activity)
+    else
+      ""
+    end
+  end
+  
   def text_for_progress_activity(progress)
     pokemon = progress.series.pokemon.full_name
     text = case progress.subtype

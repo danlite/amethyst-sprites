@@ -11,6 +11,6 @@ class Comment < ActiveRecord::Base
   protected
   
   def send_event
-    Pusher[COMMENT_CHANNEL].trigger('comment', {:sprite_id => self.commentable_id, :content => EventPushController.new(:id => self.id).show_comment})
+    Pusher[COMMENT_CHANNEL].trigger('comment', {:sprite_id => self.commentable_id, :content => ActivityPushController.new(:id => self.id).show_comment})
   end
 end
