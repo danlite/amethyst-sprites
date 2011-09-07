@@ -33,6 +33,11 @@ class Sprite < ActiveRecord::Base
     self.image.clear
   end
   
+  def commenting_open?
+    # Only allow commenting if it's the latest sprite of an active series
+    (series.latest_sprite == self) and (![SERIES_ARCHIVED, SERIES_DONE].include?(series.state))
+  end
+  
   protected
   
   def image_properties

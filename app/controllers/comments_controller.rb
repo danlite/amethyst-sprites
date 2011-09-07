@@ -11,7 +11,15 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(params[:comment].merge(:commentable => @commentable, :artist_id => current_artist))
     
-    success = @comment.save
+    success = false
+    
+    if @commentable.is_a? Sprite
+      success = @commentable.commenting_open?
+    else
+      success = true
+    end
+    
+    success &&= @comment.save
     
     respond_to do |format|
       format.json do
