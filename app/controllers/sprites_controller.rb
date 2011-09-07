@@ -21,7 +21,7 @@ class SpritesController < ApplicationController
         if sprite.save
           @series.begin_work! if @series.state == SERIES_RESERVED
           expire_fragment(@series.pokemon)
-          UploadActivity.create(:sprite => sprite, :series => @series, :actor => current_artist)
+          UploadActivity.create(:sprite => sprite, :series => @series)
         else
           error_messages = sprite.errors.full_messages
         end

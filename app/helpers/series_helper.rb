@@ -6,7 +6,7 @@ module SeriesHelper
   
   def text_for_activity(activity)
     if activity.is_a? UploadActivity
-      activity.actor ? "uploaded by #{activity.actor.name}" : "sprite work by #{activity.series.contributors.map{|c| c.name }.join(", ")}"
+      activity.sprite.artist ? "uploaded by #{activity.sprite.artist.name}" : "sprite work by #{activity.series.contributors.map{|c| c.name }.join(", ")}"
     elsif activity.is_a? ProgressActivity
       text_for_series_progress_activity(activity)
     else
