@@ -9,9 +9,17 @@ class Activity < ActiveRecord::Base
   
   scope :visible, where('hidden = ? or hidden IS NULL', false)
   
+  def event_type
+    type ? type : 'Activity'
+  end
+  
+  def event_parameters
+    {}
+  end
+  
   protected
   
   def send_event
-    Pusher[ACTIVITY_CHANNEL].trigger('activity', {:content => ActivityPushController.new(:id => self.id).show_activity}) unless hidden
+    Pusher[ACTIVITY_CHANNEL].trigger(event_type, {:content => ActivityPushController.new(:id => self.id).show_activity}.merge(event_parameters)) unless hidden
   end
 end

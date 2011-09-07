@@ -1,3 +1,5 @@
+<h1>All activity</h1>
+
 <% @activities.each do |a| %>
-<%= render :partial => a.type.underscore, :locals => {:activity => a} %>
+<%= render :partial => 'activity', :locals => {:activity => a} %>
 <% end %>

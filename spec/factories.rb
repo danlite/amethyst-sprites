@@ -51,8 +51,18 @@ Factory.define :reservation do |r|
   r.step SPRITE_WORK
 end
 
+Factory.define :comment do |c|
+  c.association :artist, :factory => :another_artist
+  c.association :commentable, :factory => :sprite
+  c.body "This is a FABulous sprite!!! ^_~"
+end
+
 Factory.define :upload_activity do |a|
   a.association :sprite
+end
+
+Factory.define :comment_activity do |a|
+  a.association :comment
 end
 
 # Sequences

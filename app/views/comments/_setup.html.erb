@@ -18,10 +18,10 @@
 <% end %>
 
   var pusher = new Pusher('<%= Pusher.key %>');
-  var channel = pusher.subscribe('<%= Comment::COMMENT_CHANNEL %>');
-  channel.bind('comment', function(data) {
-    var contentElement = $(data.content);
-    var spriteCommentsElement = $('#comments-sprite-' + data.sprite_id)[0];
+  var channel = pusher.subscribe('<%= Activity::ACTIVITY_CHANNEL %>');
+  channel.bind('<%= CommentActivity.to_s %>', function(data) {
+    var contentElement = $(data.full_content);
+    var spriteCommentsElement = $('#comments-sprite-' + data.commentable_id)[0];
     if (!spriteCommentsElement) { return; }
     contentElement.hide().prependTo(spriteCommentsElement);
     contentElement.slideToggle();

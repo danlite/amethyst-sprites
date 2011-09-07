@@ -23,10 +23,14 @@ class ActivityPushController < AbstractController::Base
     @activity = Activity.find(params[:id])
     render :partial => "activities/activity", :locals => {:activity => @activity}
   end
-
-  def show_comment
-    @comment = Comment.find(params[:id])
-    render :partial => "comments/comment", :object => @comment
+  
+  def show_full_activity
+    @activity = Activity.find(params[:id])
+    if @activity.is_a? CommentActivity
+      render :partial => "comments/comment", :object => @activity.comment
+    else
+      render :text => ''
+    end
   end
   
 end

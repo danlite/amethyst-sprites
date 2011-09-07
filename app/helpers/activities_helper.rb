@@ -11,6 +11,8 @@ module ActivitiesHelper
     elsif activity.is_a? ProgressActivity
       reserved = activity.subtype == SERIES_RESERVED ? "Reserved" : nil
       series_button(activity.series, reserved, reserved ? nil : activity.series.latest_sprite, true)
+    elsif activity.is_a? CommentActivity
+      series_button(activity.comment.commentable.series, nil, activity.comment.commentable, true)
     end
   end
   
@@ -19,6 +21,8 @@ module ActivitiesHelper
       "#{activity.sprite.artist ? activity.sprite.artist.name : 'Someone'} uploaded a sprite for #{activity.sprite.series.pokemon.full_name}"
     elsif activity.is_a? ProgressActivity
       text_for_progress_activity(activity)
+    elsif activity.is_a? CommentActivity
+      "#{h(activity.comment.artist.name)}: &ldquo;#{h(activity.comment.body.truncate(40))}&rdquo;".html_safe
     else
       ""
     end

@@ -4,7 +4,7 @@ module SeriesHelper
     state.humanize.gsub(/[Qq]c/, "QC")
   end
   
-  def text_for_activity(activity)
+  def text_for_series_activity(activity)
     if activity.is_a? UploadActivity
       activity.sprite.artist ? "uploaded by #{activity.sprite.artist.name}" : "sprite work by #{activity.series.contributors.map{|c| c.name }.join(", ")}"
     elsif activity.is_a? ProgressActivity

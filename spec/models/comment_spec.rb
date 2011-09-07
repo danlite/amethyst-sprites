@@ -4,10 +4,11 @@ describe Comment do
 
   describe "push notifications" do
   
-    it "should send a Pusher event after creation" do
-      Pusher.should_receive(:"[]").with(COMMENT_CHANNEL)
+    it "should create a CommentActivity after creation" do
       sprite = Factory(:sprite)
-      Comment.create!(:commentable => sprite, :artist => Factory(:another_artist), :body => "Great sprite!!! :)")
+      lambda do
+        Comment.create!(:commentable => sprite, :artist => Factory(:another_artist), :body => "Great sprite!!! :)")
+      end.should change(CommentActivity, :count).by(1)
     end
   
   end

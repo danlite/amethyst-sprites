@@ -18,7 +18,7 @@
     <% end %>
     </td><td>
     <span style="font-weight: bold; font-size: 80%"><%= format_event_datetime(activity.created_at) %></span>
-    <p><%= text_for_activity(activity) %></p>
+    <p><%= text_for_series_activity(activity) %></p>
     <% if activity.is_a? UploadActivity %>
     <div id="comments-sprite-<%= activity.sprite_id %>" class="comments-container" style="width: 100%">
       <% activity.sprite.comments.order('created_at DESC').each do |comment| %>

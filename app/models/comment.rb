@@ -3,14 +3,15 @@ COMMENT_CHANNEL = "comment_channel"
 class Comment < ActiveRecord::Base
   belongs_to :artist
   belongs_to :commentable, :polymorphic => true
+  has_one :comment_activity, :dependent => :destroy
   
   validates :body, :presence => true, :length => { :within => 1..5000 }
   
-  after_create :send_event
+  after_create :create_activity
   
   protected
   
-  def send_event
-    Pusher[COMMENT_CHANNEL].trigger('comment', {:sprite_id => self.commentable_id, :content => ActivityPushController.new(:id => self.id).show_comment})
+  def create_activity
+    CommentActivity.create(:comment => self)
   end
 end

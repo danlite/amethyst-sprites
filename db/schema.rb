@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110906205508) do
+ActiveRecord::Schema.define(:version => 20110907061633) do
 
   create_table "activities", :force => true do |t|
     t.string   "type"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20110906205508) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "hidden"
+    t.integer  "comment_id"
   end
 
   create_table "artists", :force => true do |t|
@@ -61,6 +62,15 @@ ActiveRecord::Schema.define(:version => 20110906205508) do
     t.datetime "updated_at"
     t.integer  "current_series_id"
     t.integer  "form_order"
+  end
+
+  create_table "reservations", :force => true do |t|
+    t.integer  "artist_id"
+    t.integer  "series_id"
+    t.string   "step"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sprite_series", :force => true do |t|
