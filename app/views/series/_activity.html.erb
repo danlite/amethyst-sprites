@@ -5,7 +5,7 @@
       <%= image_tag(activity.sprite.image.url, :class => 'sprite-display') %>
       <%= render :partial => "sprites/colour_map", :locals => { :colour_map => activity.sprite.colour_map, :num_colours => nil } if activity.sprite.colour_map %>
       <br />
-      <% if activity.sprite.commenting_open? %>
+      <% if current_artist and activity.sprite.commenting_open? %>
       <a href="#"
       class="button"
       style="height: 35px; padding: 0 10px; display: block"

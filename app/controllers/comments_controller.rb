@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(params[:comment].merge(:commentable => @commentable, :artist_id => current_artist))
+    @comment = Comment.new(params[:comment].merge(:commentable => @commentable, :artist_id => current_artist.id))
     
     success = false
     
