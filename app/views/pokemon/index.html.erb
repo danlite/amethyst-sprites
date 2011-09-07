@@ -5,8 +5,12 @@
   <%= @newest_artists.map{|a| style_artist_name(a)}.join(", ").html_safe %><%= ", and #{@remaining_artists} others" if @remaining_artists > 0 %></p>
 </div>
 
-<div style="float: right; width: 450px">
-  <div id="activity-feed-header" style="text-align: center; font-weight: bold; font-size: 120%">Latest Activity<hr width="75%" /></div>
+<div id="show-feed-button" style="float: right;">
+  <%= link_to_function "Show activity", "toggleActivityFeed()" %>
+</div>
+
+<div id="activity-feed-container" style="float: right; width: 450px; display: none">
+  <div id="activity-feed-header" style="text-align: center; font-weight: bold; font-size: 120%">Latest Activity <%= link_to_function "(hide)", "toggleActivityFeed()" %><hr width="75%" /></div>
   <div id="activity-feed">
     <% @latest_activities.each do |activity| %>
     <%= render :partial => "activities/activity", :locals => {:activity => activity} %>
@@ -16,7 +20,7 @@
     <% end %>
   </div>
 </div>
-<div id="gallery" style="padding-right: 500px">
+<div id="gallery">
   <%= render :partial => "pokemon", :collection => @pokemon, :locals => { :number_of_entries => @pokemon.count } %>
 </div>
 
@@ -48,5 +52,26 @@
   var events = [<%= [UploadActivity, ProgressActivity, CommentActivity].map{|c| "'#{c.to_s}'"}.join(', ') %>];
   $(events).each(function(i, eventName){
     channel.bind(eventName, eventCallback);
+  });
+  
+  function toggleActivityFeed() {
+    var feedContainer = $('#activity-feed-container');
+    var showing = (feedContainer.css('display') == 'none');
+    
+    $('#show-feed-button').toggle('fast');
+    
+    feedContainer.toggle('fast', function(){
+      var padding = showing ? '500px' : '100px';
+      var gallery = $('#gallery');
+      gallery.css('padding-right', padding);
+    });
+    
+  }
+  
+  $(document).ready(function() {
+    // Show activity feed by default only in large browswer windows
+    if ($(window).width() >= 1200 && $('#activity-feed-container').css('display') == 'none') {
+      toggleActivityFeed();
+    }
   });
 </script>
