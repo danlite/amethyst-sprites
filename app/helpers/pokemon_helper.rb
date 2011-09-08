@@ -6,9 +6,9 @@ module PokemonHelper
     if series
       state_text = case series.state
         when SERIES_RESERVED then "reserved"
-        when SERIES_WORKING then "being worked on"
+        when SERIES_WORKING then "WIP"
         when SERIES_AWAITING_EDIT then "awaiting edit"
-        when SERIES_EDITING then "being edited"
+        when SERIES_EDITING then "in edit"
         when SERIES_AWAITING_QC then "awaiting QC"
         when SERIES_QC then "in QC"
         when SERIES_AWAITING_APPROVAL then "awaiting approval"

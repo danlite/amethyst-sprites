@@ -30,7 +30,7 @@ class SpriteSeries < ActiveRecord::Base
     end
     
     event :mark_for_edit do
-      transitions :to => :awaiting_edit, :from => [:working], :guard => :has_working_sprite, :on_transition => :unreserve
+      transitions :to => :awaiting_edit, :from => [:working, :editing], :guard => :has_working_sprite, :on_transition => :unreserve
     end
     
     event :begin_edit do
