@@ -22,7 +22,7 @@ module ActivitiesHelper
     elsif activity.is_a? ProgressActivity
       text_for_progress_activity(activity)
     elsif activity.is_a? CommentActivity
-      "#{h(activity.comment.artist.name)}: &ldquo;#{h(activity.comment.body.truncate(40))}&rdquo;".html_safe
+      "#{h(activity.comment.artist.name)}: &ldquo;#{h(activity.comment.body.truncate(70, :separator => ' '))}&rdquo;".html_safe
     else
       ""
     end
