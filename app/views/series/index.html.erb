@@ -11,7 +11,7 @@
     <% text = series.pokemon.full_name %>
   <% end %>
   <div style="margin: 5px; <%= 'float: left' if @filter %>">
-    <%= series_button(series, text, series.latest_sprite, false, "width: 178px") %>
+    <%= series_button(series, text, series.latest_sprite, false, {:style => "width: 178px"}) %>
   </div>
 <% end %>
 </div>

@@ -16,14 +16,70 @@ body {
   height: 20px;
 }
 
-.gallery-cell {
+#activity-feed-container {
+  border: 1px solid black;
+  margin: 10px 0;
+  width: 100%;
+  height: 220px;
+  overflow-y: auto;
+  font-size: smaller;
+  -moz-box-shadow: inset 0 0 5px 2px #888;
+  -webkit-box-shadow: inset 0 0 5px 2px #888;
+  box-shadow: inset 0 0 5px 2px #888;
+}
+
+.activity-description {
+  max-width: 500px;
+}
+
+.activity-feed-item {
+  width: 740px;
+}
+
+#activity-feed-container #activity-feed {
+  padding: 0;
+}
+
+#activity-feed-container .activity-separator {
+  display: none;
+}
+
+#activity-feed-container .activity-feed-item {
   float: left;
+  width: 370px;
+}
+
+#activity-feed-container .activity-description {
+  width: 250px;
+}
+
+.activity-feed-item .button {
+  display: block;
+  float: left;
+}
+
+.activity-description {
+  float: left;
+  padding: 10px 0;
+  padding-left: 10px;
+}
+
+.activity-separator {
+  width: 75%;
+}
+
+#gallery {
+  width: 858px;
+  margin: 0 auto;
+}
+
+#gallery table {
+  border-collapse: collapse;
+}
+
+.gallery-cell {
   border: 2px solid #ddd;
-  width: 160px;
-  height: 200px;
   padding: 2px;
-  margin-top: -2px;
-  margin-left: -2px;
 }
 
 .pokemon-state {
@@ -94,16 +150,6 @@ ul.hmenu li {
 
 .artist-admin {
   font-weight: bold;
-}
-
-.activity-feed-item {
-  display: table-row;
-}
-
-.activity-description {
-  float: left;
-  padding: 10px 0;
-  padding-left: 10px;
 }
 
 .destructive {

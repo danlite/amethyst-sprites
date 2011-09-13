@@ -3,12 +3,11 @@
     <%= button_for_activity(activity) %>
     <div class="activity-description">
       <span style="font-weight: bold; font-size: 80%"><%= format_activity_feed_datetime(activity.created_at) %></span>
-      <br /><br />
-      <%= text_for_activity(activity) %>
+      <p><%= text_for_activity(activity) %></p>
     </div>
     <div style="clear: both"></div>
   </div>
   <div>
-    <hr style="width: 75%" />
+    <hr class="activity-separator" />
   </div>
 </div>

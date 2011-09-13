@@ -20,6 +20,7 @@
   		<li class="less-important"><%= link_to "Awaiting approval", series_index_path(:filter => SERIES_AWAITING_APPROVAL) %></li>
   	</ul>
   	<ul class="hmenu" style="float: right">
+  	  <li class="mainmenu">&nbsp;</li>
   	  <li><%= link_to "About", 'http://www.smogon.com/forums/showpost.php?p=2381261&postcount=1', :target => '_blank' %></li>
   		<% if current_artist %>
   		<li>Logged in as <%= current_artist.name %></li>
