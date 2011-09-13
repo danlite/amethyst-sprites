@@ -1,5 +1,3 @@
-ACTIVITY_CHANNEL = "activity_channel"
-
 class Activity < ActiveRecord::Base
   belongs_to :actor, :class_name => "Artist"
   belongs_to :sprite
