@@ -1,6 +1,6 @@
 <div>
   <div id="activity-<%= activity.id %>" class="activity-feed-item <%= activity.type %>">
-    <%= button_for_activity(activity) %>
+    <div class="button-container"><%= button_for_activity(activity) %></div>
     <div class="activity-description">
       <span style="font-weight: bold; font-size: 80%"><%= format_activity_feed_datetime(activity.created_at) %></span>
       <p><%= text_for_activity(activity) %></p>

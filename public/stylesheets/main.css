@@ -30,6 +30,8 @@ body {
 
 .activity-description {
   max-width: 500px;
+  float: left;
+  padding-left: 10px;
 }
 
 .activity-feed-item {
@@ -47,21 +49,20 @@ body {
 #activity-feed-container .activity-feed-item {
   float: left;
   width: 370px;
+  margin: 6px;
 }
 
 #activity-feed-container .activity-description {
   width: 250px;
 }
 
-.activity-feed-item .button {
-  display: block;
-  float: left;
+#activity-feed-container p {
+  margin: 0;
+  margin-top: 5px;
 }
 
-.activity-description {
+.activity-feed-item .button-container {
   float: left;
-  padding: 10px 0;
-  padding-left: 10px;
 }
 
 .activity-separator {

@@ -41,7 +41,7 @@
   var eventCallback = function(data) {
     var contentElement = $(data.content)
     contentElement.hide().prependTo('#activity-feed')
-    contentElement.slideToggle();
+    contentElement.fadeToggle();
   };
   
   // bind_all doesn't seem to do what I want, so here I'll specify and bind to each event type manually
