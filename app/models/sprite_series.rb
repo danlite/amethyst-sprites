@@ -14,6 +14,9 @@ class SpriteSeries < ActiveRecord::Base
   has_many :contributors, :foreign_key => "series_id", :dependent => :destroy
   has_many :activities, :foreign_key => "series_id", :dependent => :destroy
   
+  scope :active, where('state NOT IN (?)', [SERIES_DONE, SERIES_ARCHIVED])
+  scope :not_limbo, where('limbo IS NULL OR limbo = ?', false)
+  
   state_machine do
     state :reserved
     state :working
