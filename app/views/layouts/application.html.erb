@@ -18,6 +18,9 @@
   		<li class="less-important"><%= link_to "Awaiting edit", series_index_path(:filter => SERIES_AWAITING_EDIT) %></li>
   		<li class="less-important"><%= link_to "Awaiting QC", series_index_path(:filter => SERIES_AWAITING_QC) %></li>
   		<li class="less-important"><%= link_to "Awaiting approval", series_index_path(:filter => SERIES_AWAITING_APPROVAL) %></li>
+  		<% if current_artist %>
+  		<li class="less-important"><%= link_to image_tag('icon/palette.png', :title => 'Palette Grabber', :style => 'padding: 0 10px'), palette_path %>
+  		<% end %>
   	</ul>
   	<ul class="hmenu" style="float: right">
   	  <li class="mainmenu">&nbsp;</li>

@@ -90,6 +90,11 @@ body {
   text-overflow: ellipsis;
 }
 
+.leftimage {
+  display: block;
+  float: left;
+}
+
 .mainmenu {
   font-size: 16pt;
   font-weight: bold;

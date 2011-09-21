@@ -1,0 +1,15 @@
+<h1>Palette Grabber</h1>
+
+<%= form_tag do %>
+  Enter URL of sprite: <%= text_field_tag :sprite_url, '', :style => "width: 600px" %> <%= submit_tag "Go!" %>
+<% end %>
+
+<% if @image_data %>
+<div style="margin: 10px; padding: 10px; border: 1px solid black">
+  <image src="<%= params[:sprite_url] %>" class="leftimage" />
+  <image src="data:image/png;base64,<%= @image_data %>" class="leftimage" />
+  <div style="clear: both"></div>
+  <br />
+  <span><%= params[:sprite_url] %></span>
+</div>
+<% end %>
