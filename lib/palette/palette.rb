@@ -248,6 +248,7 @@ module Palette
 
       if loner_dot.almost_grayscale? and not grey_dots.empty?
         Dot.add_connection({:d => 1, :dot_ids => [loner_id, grey_dots.first].sort})
+        grey_dots << loner_id
         next
       end
 
