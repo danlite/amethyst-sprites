@@ -6,8 +6,9 @@
 
 <% if @image_data %>
 <div style="margin: 10px; padding: 10px; border: 1px solid black">
-  <image src="<%= params[:sprite_url] %>" class="leftimage" />
+  <image src="<%= params[:sprite_url] %>" class="leftimage" style="margin-right: 10px" />
   <image src="data:image/png;base64,<%= @image_data %>" class="leftimage" />
+	<% unless @info.blank? %><p style="padding-top: 10px"><%= @info %></p><% end %>
   <div style="clear: both"></div>
   <br />
   <span><%= params[:sprite_url] %></span>
