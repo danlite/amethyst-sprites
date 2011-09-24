@@ -13,5 +13,6 @@ SERIES_STATES = [
 SPRITE_STEPS = [
   SPRITE_WORK = 'work',
   SPRITE_EDIT = 'edit',
-  SPRITE_QC = 'qc'
+  SPRITE_QC = 'qc',
+  SPRITE_REVAMP = 'revamp'
 ]

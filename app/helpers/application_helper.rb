@@ -11,7 +11,7 @@ module ApplicationHelper
     options[:class] = "button " + options[:class].to_s
     link_to(series_path(:id => series), options) do
       things = []
-      things << image_tag(sprite.image.url, :style => "height: #{dim}px; weight: #{dim}px; vertical-align: middle; padding: 4px; margin: 4px") if sprite
+      things << image_tag(sprite.image.url, :style => "height: #{dim}px; width: #{dim}px; vertical-align: middle; padding: 4px; margin: 4px") if sprite
       things << tag(:br) if sprite and text
       things << text if text
       things.join.html_safe
