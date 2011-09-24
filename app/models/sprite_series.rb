@@ -90,7 +90,7 @@ class SpriteSeries < ActiveRecord::Base
   end
   
   def artist_can_revamp?(artist)
-    self.state == SERIES_DONE and artist.admin
+    self.state == SERIES_DONE and artist and artist.admin
   end
   
   def artist_can_upload?(artist)
