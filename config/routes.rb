@@ -6,7 +6,10 @@ AmethystSprites::Application.routes.draw do
   get 'palette' => 'palette#index', :as => 'palette'
   post 'palette' => 'palette#index'
   
-  resources :artists
+  resources :artists do
+    get :work, :on => :member
+  end
+  
   resources :sessions
   resources :activities
   

@@ -6,7 +6,7 @@
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
   <%= javascript_include_tag "http://js.pusherapp.com/1.9/pusher.min.js" %>
-  <%= javascript_include_tag 'comments' %>
+  <%= javascript_include_tag :all %>
 </head>
 <body>
   <% if Rails.env.development? %>
@@ -22,11 +22,17 @@
   		<li class="less-important"><%= link_to image_tag('icon/palette.png', :title => 'Palette Grabber', :style => 'padding: 0 10px'), palette_path %>
   		<% end %>
   	</ul>
-  	<ul class="hmenu" style="float: right">
+  	<ul id="user-items" class="hmenu" style="float: right">
   	  <li class="mainmenu">&nbsp;</li>
   	  <li><%= link_to "About", 'http://www.smogon.com/forums/showpost.php?p=2381261&postcount=1', :target => '_blank' %></li>
   		<% if current_artist %>
-  		<li>Logged in as <%= current_artist.name %></li>
+  		<li>
+				Logged in as <%= current_artist.name %>
+				<%= link_to_function \
+					image_tag('icon/image_pencil.png', :style => 'vertical-align: middle', :class => 'work-button'),
+					'AS.toggleWorkPopup($(this))',
+					:title => "Your Work" %>
+			</li>
   		<% end %>
   	  <%= render 'navigation/registration_items' %>
   	  <%= render 'navigation/login_items' %>
@@ -47,6 +53,24 @@
 
   <%= yield %>
 </div>
+<div id="work-popup"></div>
+
+<script type="text/javascript" charset="utf-8">
+	var opts = {
+	  lines: 12, // The number of lines to draw
+	  length: 4, // The length of each line
+	  width: 2, // The line thickness
+	  radius: 5, // The radius of the inner circle
+	  color: '#000', // #rgb or #rrggbb
+	  speed: 1, // Rounds per second
+	  trail: 60, // Afterglow percentage
+	  shadow: false // Whether to render a shadow
+	};
+	var target = $('#work-popup');
+	var spinner = new Spinner(opts).spin(target[0]);
+	$(spinner.el).css('left', '150px').css('top', '10px');
+	target.append($('<div>').css('height', '20px'));
+</script>
 
 </body>
 </html>

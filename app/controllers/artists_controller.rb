@@ -1,4 +1,6 @@
 class ArtistsController < ApplicationController
+  before_filter :authenticate_artist, :only => [:work]
+  
   def new
     @artist = Artist.new
   end
@@ -11,6 +13,19 @@ class ArtistsController < ApplicationController
     else
       render 'new'
     end
+  end
+  
+  def work
+    artist_id = params[:id]
+    artist_id = current_artist.id if artist_id == 'your'
+    
+    @artist = Artist.find(artist_id)
+    @current_work = Hash.new{|h,k| h[k] = []}
+    @artist.reservations.each do |series|
+      @current_work[series.state] << series
+    end
+    
+    render 'work', :layout => !request.xhr?
   end
   
 end

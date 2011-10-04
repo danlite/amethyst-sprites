@@ -1,7 +1,8 @@
 module SeriesHelper
   
   def humanize_state_description(state)
-    state.gsub!(/^mark_for/, "request_")
+    state = state.dup
+    state.gsub!(/^mark_for_/, "request_")
     state.gsub!(/edit$/, "peer_edit")
     
     state.humanize.gsub(/[Qq]c/, "QC")
