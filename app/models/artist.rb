@@ -58,7 +58,10 @@ class Artist < ActiveRecord::Base
   protected
   
   def assign_contributors
-    list = Contributor.where('artist_id IS NULL AND name = ?', self.name)
+    Contributor.where('artist_id IS NULL AND name = ?', self.name).each do |cont|
+      cont.artist = self
+      cont.save
+    end
   end
   
   def encrypt_password
