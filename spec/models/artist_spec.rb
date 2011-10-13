@@ -18,7 +18,7 @@ describe Artist do
       @series = Factory(:sprite_series)
       @contributor = Contributor.create(:artist => @artist, :series => @series, :role => :editor)
       
-      @artist.series_contributions.should == [@series]
+      @artist.contribution_series.should == [@series]
     end
   end
   

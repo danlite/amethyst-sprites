@@ -13,5 +13,10 @@ SERIES_STATES = [
 SPRITE_STEPS = [
   SPRITE_WORK = 'work',
   SPRITE_EDIT = 'edit',
-  SPRITE_QC = 'qc'
+  SPRITE_QC = 'qc',
+  SPRITE_REVAMP = 'revamp'
 ]
+
+def state_compare(s1, s2)
+  SERIES_STATES.index(s1) <=> SERIES_STATES.index(s2)
+end

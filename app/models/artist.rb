@@ -6,11 +6,13 @@ class Artist < ActiveRecord::Base
   
   attr_accessor :password
   before_save :encrypt_password
+  after_create :assign_contributors
   
   has_many :reservations, :class_name => "SpriteSeries", :foreign_key => "reserver_id"
   has_many :sprites
+  has_many :sprite_series, :through => :sprites, :source => :series
   has_many :contributions, :class_name => "Contributor"
-  has_many :series_contributions, :through => :contributions, :source => :series
+  has_many :contribution_series, :through => :contributions, :source => :series
   
   validates :password, :presence => true, :confirmation => true, :on => :create
   validates :email, :presence => true, :uniqueness => true
@@ -25,11 +27,8 @@ class Artist < ActiveRecord::Base
     end
   end
   
-  def encrypt_password
-    if password.present?
-      self.password_salt = BCrypt::Engine.generate_salt
-      self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
-    end
+  def all_series
+    sprite_series | contribution_series
   end
   
   def current_wip
@@ -59,5 +58,21 @@ class Artist < ActiveRecord::Base
     end
     
     true    
+  end
+  
+  protected
+  
+  def assign_contributors
+    Contributor.where('artist_id IS NULL AND name = ?', self.name).each do |cont|
+      cont.artist = self
+      cont.save
+    end
+  end
+  
+  def encrypt_password
+    if password.present?
+      self.password_salt = BCrypt::Engine.generate_salt
+      self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
+    end
   end
 end

@@ -5,6 +5,7 @@
   <% if series.state == SERIES_WORKING %>Add another sprite<% end %>
   <% if series.state == SERIES_AWAITING_EDIT %>Submit a peer edit<% end %>
   <% if series.state == SERIES_EDITING %>Submit a peer edit<% end %>
+	<% if series.state == SERIES_DONE %>Submit a revamp<% end %>
   </h3>
   <%= form_tag submit_series_sprites_path(series), :multipart => true do %>
   	<%= file_field_tag 'image' %><br /><br />

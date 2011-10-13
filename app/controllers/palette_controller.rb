@@ -5,7 +5,9 @@ class PaletteController < ApplicationController
   
   def index
     if params[:sprite_url]
-      @image_data = ActiveSupport::Base64.encode64(Palette.make(params[:sprite_url]).to_blob)
+      result = Palette.make(params[:sprite_url])
+      @image_data = ActiveSupport::Base64.encode64(result[:palette].to_blob)
+      @info = result[:info]
     end
     render 'choose'
   end

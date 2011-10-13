@@ -163,12 +163,17 @@ module Palette
   
   def Palette.make(image_or_url)
     image = image_or_url
+    info = ''
     
     if image_or_url.is_a? String
       image = Magick::Image.from_blob(open(image_or_url).read)[0]
     end
     
     unique = image.unique_colors
+    if unique.columns > 32
+      info = 'The original image had more than 32 colours, so it was processed to contain no more than 32 colours. This process does not preserve colours, so the palette may or may not contain exact colours form the original image.'
+      unique = image.quantize(32, Magick::RGBColorspace, Magick::NoDitherMethod).unique_colors
+    end
 
     Dot.reset
     # Add all opaque colours into main list
@@ -328,7 +333,7 @@ module Palette
 
     palette_draw.draw(palette)
 
-    palette.trim(true)
+    {:palette => palette.trim(true), :info => info}
   end
   
 end

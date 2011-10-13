@@ -89,8 +89,12 @@ class SpriteSeries < ActiveRecord::Base
     self.latest_sprite and self.latest_sprite.step == SPRITE_QC
   end
   
+  def artist_can_revamp?(artist)
+    self.state == SERIES_DONE and artist and artist.admin
+  end
+  
   def artist_can_upload?(artist)
-    self.owned? and artist and artist == self.reserver
+    (self.owned? and artist and artist == self.reserver) or artist_can_revamp?(artist)
   end
   
   def events_for_artist(artist)

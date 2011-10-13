@@ -1,0 +1,17 @@
+<% if current_artist == @artist %>
+<h2>Your Work</h2>
+<% end %>
+
+<% @current_work.each_key.sort{|a,b| state_compare(a,b) }.each do |state| %>
+<% work = @current_work[state] %>
+<div class="artist-work">
+	<h3><%= humanize_state_description(state) %></h3>
+	<ul>
+	<% work.each do |series| %>
+		<li>
+			<%= link_to series.pokemon.full_name, named_pokemon_path(series.pokemon.name, series.pokemon.form_name) %>
+		</li>
+	<% end %>
+	</ul>
+</div>
+<% end %>

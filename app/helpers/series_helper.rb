@@ -1,7 +1,8 @@
 module SeriesHelper
   
   def humanize_state_description(state)
-    state.gsub!(/^mark_for/, "request_")
+    state = state.dup
+    state.gsub!(/^mark_for_/, "request_")
     state.gsub!(/edit$/, "peer_edit")
     
     state.humanize.gsub(/[Qq]c/, "QC")
@@ -9,7 +10,9 @@ module SeriesHelper
   
   def text_for_series_activity(activity)
     if activity.is_a? UploadActivity
-      activity.sprite.artist ? "uploaded by #{activity.sprite.artist.name}" : "sprite work by #{activity.series.contributors.map{|c| c.name }.join(", ")}"
+      artists = activity.sprite.artist ? activity.sprite.artist.name : activity.series.contributors.map{|c| c.name }.join(", ")
+      action = activity.sprite.artist ? (activity.sprite.step == SPRITE_REVAMP ? 'revamped' : 'uploaded') : 'sprite work'
+      "#{action} by #{artists}"
     elsif activity.is_a? ProgressActivity
       text_for_series_progress_activity(activity)
     else

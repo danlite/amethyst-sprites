@@ -16,6 +16,45 @@ body {
   height: 20px;
 }
 
+#work-popup {
+	position: absolute;
+	background-color: #eee;
+	display: none;
+	width: 300px;
+	padding: 10px;
+	border: 1px solid #000;
+	font-size: 90%;
+	right: 6px;
+	z-index: 99;
+}
+
+.work-button {
+	padding: 2px 5px;
+	margin: 1px 1px 0 1px;
+}
+
+.work-button-selected {
+	margin: 0;
+	border: 1px solid black;
+	background-color: #eee;
+	border-bottom-style: none;
+	z-index: 100;
+	position: relative;
+}
+
+.artist-work ul {
+	list-style: none;
+	padding-left: 10px;
+}
+
+#work-popup h2 {
+	margin: 0px;
+}
+
+#work-popup .artist-work {
+	margin-bottom: 10px;
+}
+
 #activity-feed-container {
   border: 1px solid black;
   margin: 10px 0;
@@ -49,6 +88,7 @@ body {
 #activity-feed-container .activity-feed-item {
   float: left;
   width: 370px;
+	height: 96px;
   margin: 6px;
 }
 
@@ -119,7 +159,7 @@ body {
 
 ul.hmenu {
   list-style: none;
-  margin: 0 0 2em;
+  margin: 0 0 20px;
   padding: 0;
 }
 
