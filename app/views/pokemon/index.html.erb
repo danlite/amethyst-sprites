@@ -2,7 +2,7 @@
 
 <div style="margin: 10px 0">
   <p><strong>Newest artists: </strong>
-  <%= @newest_artists.map{|a| style_artist_name(a)}.join(", ").html_safe %><%= ", and #{@remaining_artists} #{pluralize @remaining_artists, 'other'}" if @remaining_artists > 0 %></p>
+  <%= @newest_artists.map{|a| style_artist_name(a)}.join(", ").html_safe %><%= ", and #{pluralize @remaining_artists, 'other'}" if @remaining_artists > 0 %></p>
 </div>
 
 <div id="activity-feed-header" style="text-align: center; font-weight: bold; font-size: 120%">Latest Activity <%= link_to "(view all)", activities_path, :style => "font-size: 80%" %></div>
