@@ -38,5 +38,16 @@ module AmethystSprites
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :port           => ENV['MAILGUN_SMTP_PORT'], 
+      :address        => ENV['MAILGUN_SMTP_SERVER'],
+      :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+      :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+      :domain         => 'amethyst-sprites.heroku.com',
+      :authentication => :plain
+    }
+    
   end
 end

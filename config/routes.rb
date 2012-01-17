@@ -1,8 +1,13 @@
 AmethystSprites::Application.routes.draw do
-
+  default_url_options :host => "amethyst-sprites.heroku.com"
+  
   get 'log_out' => 'sessions#destroy', :as => 'log_out'
   get 'log_in' => 'sessions#new', :as => 'log_in'
   get 'sign_up' => 'artists#new', :as => 'sign_up'
+  
+  get 'forgot' => 'password_resets#new', :as => 'forgot'
+  post 'forgot' => 'password_resets#new'
+  
   get 'palette' => 'palette#index', :as => 'palette'
   post 'palette' => 'palette#index'
   
@@ -10,6 +15,7 @@ AmethystSprites::Application.routes.draw do
     get :work, :on => :member
   end
   
+  resources :password_resets
   resources :sessions
   resources :activities
   
