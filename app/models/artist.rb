@@ -35,9 +35,7 @@ class Artist < ActiveRecord::Base
   end
   
   def generate_token(column)
-    begin
-      self[column] = SecureRandom.urlsafe_base64
-    end while Artist.exists?(column => self[column])
+    begin; self[column] = SecureRandom.urlsafe_base64; end while Artist.exists?(column => self[column])
   end
   
   def all_series
