@@ -3,7 +3,6 @@ module SeriesHelper
   def humanize_state_description(state)
     state = state.dup
     state.gsub!(/^mark_for_/, "request_")
-    state.gsub!(/edit$/, "peer_edit")
     
     state.humanize.gsub(/[Qq]c/, "QC")
   end
@@ -29,7 +28,7 @@ module SeriesHelper
     when SERIES_AWAITING_EDIT
       "edit requested by #{actor}"
     when SERIES_EDITING
-      "began peer-editing by #{actor}"
+      "began editing by #{actor}"
     when SERIES_AWAITING_QC
       "QC requested by #{actor}"
     when SERIES_QC
