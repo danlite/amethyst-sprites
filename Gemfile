@@ -6,8 +6,7 @@ gem 'rails', '3.1.3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'paperclip'
-gem 'aws-s3', :require => 'aws/s3'
+gem 'paperclip', :git => 'https://github.com/DanLite/paperclip.git'
 gem 'aws-sdk'
 gem 'transitions', :require => ["transitions", "active_record/transitions"]
 gem 'pg'
