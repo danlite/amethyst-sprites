@@ -21,7 +21,7 @@ class ActivityPushController < AbstractController::Base
   
   def show_activity
     @activity = Activity.find(params[:id])
-    render :partial => "activities/activity", :locals => {:activity => @activity}
+    render :partial => "activities/activity", :locals => {:activity => @activity, :small => true}
   end
   
   def show_full_activity

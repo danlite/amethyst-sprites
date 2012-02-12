@@ -1,5 +1,7 @@
 <h1>All activity</h1>
 
-<% @activities.each do |a| %>
-<%= render :partial => 'activity', :locals => {:activity => a} %>
-<% end %>
+<div id="activity-list-container">
+  <% @activities.each do |a| %>
+  <%= render :partial => 'activity', :locals => {:activity => a, :small => false} %>
+  <% end %>
+</div>

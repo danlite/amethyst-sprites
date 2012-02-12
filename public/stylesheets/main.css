@@ -97,7 +97,7 @@ time {
   box-shadow: inset 0 0 5px 2px #999;
 }
 
-#activity-feed-container .activity-feed-item {
+.activity-feed-item {
   margin: 6px;
 }
 
@@ -198,10 +198,6 @@ input.url-display {
   max-width: 500px;
   float: left;
   padding-left: 10px;
-}
-
-.activity-feed-item {
-  width: 740px;
 }
 
 #activity-feed-container #activity-feed {

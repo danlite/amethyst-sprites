@@ -1,4 +1,4 @@
-<div class="span4">
+<div class="span<%= small ? 4 : 8 %>">
   <div id="activity-<%= activity.id %>" class="activity-feed-item <%= activity.type %>">
      <div class="button-container"><%= button_for_activity(activity) %></div>
      <div class="activity-description">
