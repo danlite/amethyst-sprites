@@ -6,9 +6,9 @@ class SpritesController < ApplicationController
     
     error_messages = nil
     error_colours = nil
+    authorized = true
     
     if @series.artist_can_upload?(current_artist)
-      
       step = case @series.state
         when SERIES_WORKING, SERIES_RESERVED then SPRITE_WORK
         when SERIES_EDITING then SPRITE_EDIT
@@ -18,7 +18,14 @@ class SpritesController < ApplicationController
       sprite = Sprite.new(:artist => current_artist, :step => step, :series => @series, :make_transparent => params[:make_transparent])
       
       if sprite
-        sprite.image = params[:image]
+        if params[:image]
+          sprite.image = params[:image]
+        elsif params[:image_data]
+          temp = Tempfile.new('imgdata')
+          temp.binmode
+          temp.write ActiveSupport::Base64.decode64(params[:image_data])
+          sprite.image = temp
+        end
         if sprite.save
           @series.begin_work! if @series.state == SERIES_RESERVED
           expire_fragment(@series.pokemon)
@@ -27,14 +34,32 @@ class SpritesController < ApplicationController
           error_messages = sprite.errors.full_messages
         end
       end
+
+      if sprite.error_num_colours
+        error_colours = {:colour_map => sprite.colour_map, :num_colours => sprite.error_num_colours}
+        sprite.error_num_colours = nil
+      end
+    else
+      authorized = false
+      error_messages = 'You are not the owner of this Pokemon sprite.'
     end
     
-    if sprite.error_num_colours
-      error_colours = {:colour_map => sprite.colour_map, :num_colours => sprite.error_num_colours}
-      sprite.error_num_colours = nil
+    if request.xhr?
+      status = (sprite and sprite.valid?) ? 200 : (authorized ? 400 : 403)
+      render :text => (status == 200) ? series_path(@series) : '', :status => status 
+    else
+      redirect_to series_path(@series), :flash => {:errors => error_messages, :error_colours => error_colours}
     end
+  end
+  
+  def base64
+    @sprite = Sprite.find(params[:id])
     
-    redirect_to series_path(@series), :flash => {:errors => error_messages, :error_colours => error_colours}
+    if @sprite.image.file?
+      render :text => ActiveSupport::Base64.encode64(@sprite.image.to_file.read).gsub("\n", '')
+    else
+      render :status => 404
+    end
   end
   
 end

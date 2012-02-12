@@ -21,6 +21,7 @@ AmethystSprites::Application.routes.draw do
   resources :activities
   
   resources :sprites do
+    get :base64, :on => :member
     resources :comments
   end
   
@@ -39,6 +40,7 @@ AmethystSprites::Application.routes.draw do
       post :submit, :on => :collection
     end
     match 'transition/:event' => 'series#transition', :on => :member, :as => :transition, :via => :get
+    match 'editor' => 'series#editor', :on => :member, :via => :get
   end
   
   root :to => 'pokemon#index'

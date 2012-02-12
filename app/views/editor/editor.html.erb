@@ -1,0 +1,35 @@
+<div id="editor-container">
+  <div id="editor" class="striped">
+    <canvas id="sprite"></canvas>
+    <canvas id="grid" class="overlay"></canvas>
+    <canvas id="cursor" class="overlay"></canvas>
+  </div>
+</div>
+
+<div id="art-toolbar" class="toolbar-vertical">
+
+  <button id="grid-toggle" class="btn tool-group" data-toggle="button"><i class="icon-th"></i> Grid</button>
+
+  <div class="btn-group tool-group">
+    <button id="zoom-out" class="btn"><i class="icon-zoom-out"></i></button>
+    <button id="zoom-in" class="btn"><i class="icon-zoom-in"></i></button>
+  </div>
+  <hr />
+  <div class="tabbed-preview tool-group">
+    <div class="side-tab"><i id="eyedrop-label" class="icon-eye-open icon-white" title="Eyedropper colour (right-click on canvas to select)"></i></div>
+    <div id="hover-colour" class="colour-preview striped"><div class="colour"></div></div>
+  </div>
+  <div class="tabbed-preview tool-group">
+    <div class="side-tab"><i id="chosen-colour-label" class="icon-pencil icon-white" title="Chosen colour (left click on canvas to draw)"></i></div>
+    <div id="current-colour" class="colour-preview striped"><div class="colour"></div></div>
+  </div>
+  <hr />
+  <div id="palette" class="tool-group"></div>
+  <hr />
+  <button id="sprite-submit" class="btn btn-primary tool-group" disabled="disabled"><i class="icon-upload icon-white"></i> Save</button>
+</div>
+
+<script type="text/javascript">
+  IMAGE_DATA_PATH = "<%= @image_data_path %>";
+  SUBMIT_IMAGE_PATH = "<%= @submit_image_path %>";
+</script>

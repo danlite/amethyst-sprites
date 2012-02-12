@@ -19,5 +19,13 @@
     </div>
   	<%= submit_tag 'Upload', :class => 'btn' %>
   <% end %>
+  
+  <% if series.latest_sprite %>
+    <h3>Or...</h3>
+    <div>
+      <%= link_to "Make an edit of the latest sprite in your browser", editor_series_path(series), :class => 'btn btn-danger' %>
+      <em>(<strong>EXPERIMENTAL!</strong> Firefox or Chrome recommended)</em>
+    </div>
+  <% end %>
 </div>
 <% end %>

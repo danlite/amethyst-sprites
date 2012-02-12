@@ -2,14 +2,15 @@
 <html>
 <head>
   <title>Pokémon Amethyst Web System</title>
-  <%= stylesheet_link_tag :all %>
+  <%= stylesheet_link_tag 'bootstrap', 'main' %>
+  <%= stylesheet_link_tag 'editor' if @editor %>
   <%= csrf_meta_tag %>
   
   <%= javascript_include_tag "jquery.min" %>
   <%= javascript_include_tag "http://js.pusherapp.com/1.9/pusher.min.js" %>
 </head>
 <body>
-  <% if Rails.env.development? %>
+  <% if Rails.env.development? and !@editor %>
   <div id="dev-header"></div>
   <% end %>
 
@@ -41,10 +42,6 @@
                 <li><%= link_to('Your work', work_artist_path(current_artist)) %>
                 <li><%= link_to('Log out', log_out_path) %></li>
               </ul>
-            <%#= link_to_function \
-            image_tag('icon/image_pencil.png', :class => 'work-button'),
-            'AS.toggleWorkPopup($(this))',
-            :title => "Your Work" %>
             </li>
             <% else %>
             <li><%= link_to('Log in', log_in_path) %></li>
@@ -55,24 +52,29 @@
       </div>
     </div>
   </div>
-
-  <div class="container">
-    <% if notice %>	
-    <div class="alert alert-success"><%= notice %></div>
-    <% end %>
-    <% if alert %>
-    <div class="alert"><%= alert %></div>
-    <% end %>
-    <% if flash[:errors] %>
-    <div class="alert alert-error">
-      <%= flash[:errors].is_a?(String) ? flash[:errors] : content_tag(:ul){ flash[:errors].map{|e| content_tag(:li, e)}.join.html_safe } %>
-      <%= render(:partial => "sprites/colour_map", :locals => flash[:error_colours]) if flash[:error_colours] %>
-    </div>
-    <% end %>
-
+  
+  <% if @editor %>
     <%= yield %>
-  </div>
+  <% else %>
+    <div class="container">
+      <% if notice %>	
+      <div class="alert alert-success"><%= notice %></div>
+      <% end %>
+      <% if alert %>
+      <div class="alert"><%= alert %></div>
+      <% end %>
+      <% if flash[:errors] %>
+      <div class="alert alert-error">
+        <%= flash[:errors].is_a?(String) ? flash[:errors] : content_tag(:ul){ flash[:errors].map{|e| content_tag(:li, e)}.join.html_safe } %>
+        <%= render(:partial => "sprites/colour_map", :locals => flash[:error_colours]) if flash[:error_colours] %>
+      </div>
+      <% end %>
 
+      <%= yield %>
+    </div>
+  <% end %>
+
+  <%= javascript_include_tag "editor" if @editor %>
   <%= javascript_include_tag "bootstrap", "spin.min", "jquery_ujs", "application", "comments" %>
 </body>
 </html>
