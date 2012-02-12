@@ -5,11 +5,11 @@
 <% cache(pokemon) do %>
 <td id="pokemon_<%= pokemon.id %>" class="gallery-cell">
 	<% series = pokemon.current_series %>
-	<div style="width: 160px; height: 160px">
+	<div class="pokemon-sprite">
 		<%= link_to(image_tag(series.latest_sprite.image.url), named_pokemon_path(:name => pokemon.name, :form => pokemon.form_name)) if series and series.latest_sprite and series.latest_sprite.image? %>
 	</div>
-	<div class="pokemon-state"><%= link_to pokemon.full_name, named_pokemon_path(:name => pokemon.name, :form => pokemon.form_name) %></div>
-	<%= html_for_series(series) %>
+	<div class="pokemon-name"><%= link_to pokemon.full_name, named_pokemon_path(:name => pokemon.name, :form => pokemon.form_name) %></div>
+	<div class="series-status"><%= html_for_series(series) %></div>
 </td>
 <% end %>
 

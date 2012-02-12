@@ -9,7 +9,11 @@ class PasswordResetsController < ApplicationController
   end
   
   def edit
-    @artist = Artist.find_by_password_reset_token!(params[:id])
+    @artist = Artist.find_by_password_reset_token(params[:id])
+    if !@artist
+      redirect_to root_path
+      return
+    end
   end
   
   def update

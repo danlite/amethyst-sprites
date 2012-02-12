@@ -1,13 +1,10 @@
-<div>
+<div class="span4">
   <div id="activity-<%= activity.id %>" class="activity-feed-item <%= activity.type %>">
-    <div class="button-container"><%= button_for_activity(activity) %></div>
-    <div class="activity-description">
-      <span style="font-weight: bold; font-size: 80%"><%= format_activity_feed_datetime(activity.created_at) %></span>
-      <p><%= text_for_activity(activity) %></p>
-    </div>
-    <div style="clear: both"></div>
-  </div>
-  <div>
-    <hr class="activity-separator" />
-  </div>
+     <div class="button-container"><%= button_for_activity(activity) %></div>
+     <div class="activity-description">
+       <time><%= time_ago_in_words(activity.created_at) %> ago</time>
+       <p><%= text_for_activity(activity) %></p>
+     </div>
+     <div class="clearfix"></div>
+   </div>
 </div>

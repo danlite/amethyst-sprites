@@ -1,4 +1,4 @@
 <div class="comment">
-  <span style="font-weight: bold; font-size: 80%"><%= format_event_datetime(comment.created_at) %> by <%= comment.artist.name %></span>
+  <span><time><%= time_ago_in_words(comment.created_at) %> ago</time> by <%= comment.artist.name %></span>
   <%= simple_format(comment.body) %>
 </div>

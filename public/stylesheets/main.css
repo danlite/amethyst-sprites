@@ -1,13 +1,134 @@
-html {
-  font-family: Lucida, "Lucida Grande", Verdana, Geneva, Helvetica, Arial, sans-serif;
+.striped {
+  background-image: url('/images/background-stripes.png');
 }
 
-body {
-  margin: 0;
+.btn.sprite {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0;
 }
 
-#body-content {
-  margin: 8px;
+.btn.sprite.small {
+  height: 96px;
+  width: 96px;
+}
+
+.btn.sprite.large {
+  height: 176px;
+  width: 176px;
+}
+
+.btn.sprite img {
+  vertical-align: middle;
+  padding: 4px;
+  margin: 4px
+}
+
+.btn.sprite.small img {
+  height: 80px;
+  width: 80px;
+}
+
+.btn.sprite.large img {
+  height: 160px;
+  width: 160px;
+}
+
+time {
+  font-weight: bold;
+  color: #666;
+  font-size: smaller;
+}
+
+.button-container {
+  float: left;
+  margin-right: 5px;
+}
+
+.activity-description {
+  float: left;
+  width: 50%;
+}
+
+#gallery {
+  width: 858px;
+  margin: 0 auto;
+}
+
+#gallery table {
+  border-collapse: collapse;
+}
+
+.gallery-cell {
+  padding: 0;
+  border: 2px solid #ddd;
+  width: 164px;
+}
+
+.gallery-cell .pokemon-sprite {
+  height: 160px;
+  width: 160px;
+  margin-top: 2px;
+  margin-left: 2px;
+}
+
+.gallery-cell .pokemon-name {
+  text-align: center;
+}
+
+.gallery-cell .series-status {
+  text-align: center;
+  font-size: smaller;
+}
+
+.clearfix {
+  clear: both;
+}
+
+#activity-feed-container {
+  background-color: #eee;
+  border: 1px solid #666;
+  margin: 10px auto;
+  height: 220px;
+  overflow-y: auto;
+  font-size: smaller;
+  -moz-box-shadow: inset 0 0 5px 2px #999;
+  -webkit-box-shadow: inset 0 0 5px 2px #999;
+  box-shadow: inset 0 0 5px 2px #999;
+}
+
+#activity-feed-container .activity-feed-item {
+  margin: 6px;
+}
+
+.comments-container .comment {
+  position: relative;
+  left: 10px;
+  padding: 2px;
+  border: 1px solid #aaa;
+  margin-bottom: 1px;
+  background-color: #eee;
+}
+
+.create-comment-sidebar {
+  float: left;
+  width: 180px;
+}
+
+.create-comment-body {
+  float: left;
+  width: 370px;
+  padding: 5px;
+}
+
+.create-comment-body textarea {
+  width: 98%;
+  height: 200px;
+}
+
+#create-comment-container {
+  padding: 5px;
+  background-color: #ddd;
 }
 
 #dev-header {
@@ -16,55 +137,61 @@ body {
   height: 20px;
 }
 
+.sprite-display {
+  border: 1px dashed #999;
+  padding: 5px;
+  margin: 5px;
+  background-color: white;
+}
+
+.gallery-series {
+  margin: 5px;
+  float: left;
+}
+
+input.url-display {
+  width: 500px;
+}
+
+/*
+
 #work-popup {
-	position: absolute;
-	background-color: #eee;
-	display: none;
-	width: 300px;
-	padding: 10px;
-	border: 1px solid #000;
-	font-size: 90%;
-	right: 6px;
-	z-index: 99;
+  position: absolute;
+  background-color: #eee;
+  display: none;
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #000;
+  font-size: 90%;
+  right: 6px;
+  z-index: 99;
 }
 
 .work-button {
-	padding: 2px 5px;
-	margin: 1px 1px 0 1px;
+  padding: 2px 5px;
+  margin: 1px 1px 0 1px;
 }
 
 .work-button-selected {
-	margin: 0;
-	border: 1px solid black;
-	background-color: #eee;
-	border-bottom-style: none;
-	z-index: 100;
-	position: relative;
+  margin: 0;
+  border: 1px solid black;
+  background-color: #eee;
+  border-bottom-style: none;
+  z-index: 100;
+  position: relative;
 }
 
 .artist-work ul {
-	list-style: none;
-	padding-left: 10px;
+  list-style: none;
+  padding-left: 10px;
 }
 
 #work-popup h2 {
-	margin: 0px;
+  margin: 0px;
 }
 
 #work-popup .artist-work {
-	margin-bottom: 10px;
-}
-
-#activity-feed-container {
-  border: 1px solid black;
-  margin: 10px 0;
-  width: 100%;
-  height: 220px;
-  overflow-y: auto;
-  font-size: smaller;
-  -moz-box-shadow: inset 0 0 5px 2px #888;
-  -webkit-box-shadow: inset 0 0 5px 2px #888;
-  box-shadow: inset 0 0 5px 2px #888;
+  margin-bottom: 10px;
 }
 
 .activity-description {
@@ -85,12 +212,7 @@ body {
   display: none;
 }
 
-#activity-feed-container .activity-feed-item {
-  float: left;
-  width: 370px;
-	height: 96px;
-  margin: 6px;
-}
+
 
 #activity-feed-container .activity-description {
   width: 250px;
@@ -109,23 +231,14 @@ body {
   width: 75%;
 }
 
-#gallery {
-  width: 858px;
-  margin: 0 auto;
-}
-
-#gallery table {
-  border-collapse: collapse;
-}
-
-.gallery-cell {
-  border: 2px solid #ddd;
-  padding: 2px;
-}
-
 .pokemon-state {
-  width: 160px;
+  width: 100%;
   margin: 0;
+  
+  text-align: center;
+  background-color: red;
+  color: white;
+  
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -204,13 +317,6 @@ ul.hmenu li {
   color: red;
 }
 
-.sprite-display {
-  border: 1px dashed #999;
-  padding: 5px;
-  margin: 5px;
-  background-color: white;
-}
-
 .pretty-submit {
   font-size: 16px;
   border-style: none;
@@ -229,24 +335,6 @@ ul.hmenu li {
   background-color: #bbb;
 }
 
-#comment-overlay {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-}
-
-#create-comment-container {
-  display: none;
-  width: 800px;
-  text-align: center;
-  border: 5px solid black;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
-  margin: 100px auto;
-  background-color: #ddd;
-}
-
 .comment {
   padding: 5px;
   border: 1px solid #999;
@@ -258,7 +346,7 @@ ul.hmenu li {
   margin-bottom: 10px;
 }
 
-/* Modified from http://www.red-team-design.com/just-another-awesome-css3-buttons */
+// Modified from http://www.red-team-design.com/just-another-awesome-css3-buttons
 
 .button
 {
@@ -322,4 +410,4 @@ ul.hmenu li {
 {
   outline: 0;
   background: #fafafa;
-}
+}*/

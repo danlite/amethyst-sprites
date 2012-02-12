@@ -6,23 +6,18 @@
       <%= render :partial => "sprites/colour_map", :locals => { :colour_map => activity.sprite.colour_map, :num_colours => nil } if activity.sprite.colour_map %>
       <br />
       <% if current_artist and activity.sprite.commenting_open? %>
-      <a href="#"
-      class="button"
-      style="height: 35px; padding: 0 10px; display: block"
-      onclick="if (AS_Comments.showCommentForm()){$.ajax('<%= new_sprite_comment_path(activity.sprite) %>', { success: AS_Comments.commentFormLoaded })}; return false;">
-        Post a comment
-      </a>
+      <button class="btn" data-toggle="modal" data-target="#create-comment-container" onclick="$('#create-comment-container').load('<%= new_sprite_comment_path(activity.sprite) %>', null, AS_Comments.commentFormLoaded); return false;">Post a comment</button>
       <% end %>
     <% else %>
-    <div style="width: 182px">
+    <div>
       &nbsp;
     </div>
     <% end %>
     </td><td>
-    <span style="font-weight: bold; font-size: 80%"><%= format_event_datetime(activity.created_at) %></span>
+    <time><%= time_ago_in_words(activity.created_at) %> ago</time>
     <p><%= text_for_series_activity(activity) %></p>
     <% if activity.is_a? UploadActivity %>
-    <div id="comments-sprite-<%= activity.sprite_id %>" class="comments-container" style="width: 100%">
+    <div id="comments-sprite-<%= activity.sprite_id %>" class="comments-container">
       <% activity.sprite.comments.order('created_at DESC').each do |comment| %>
       <%= render :partial => 'comments/comment', :object => comment %>
       <% end %>
@@ -30,6 +25,6 @@
     <% end %>
     </td>
   </tr></table>
-  <div style="clear: both"></div>
+  <div class="clearfix"></div>
   <hr width="100%" />
 </div>

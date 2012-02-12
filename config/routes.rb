@@ -4,6 +4,7 @@ AmethystSprites::Application.routes.draw do
   get 'log_out' => 'sessions#destroy', :as => 'log_out'
   get 'log_in' => 'sessions#new', :as => 'log_in'
   get 'sign_up' => 'artists#new', :as => 'sign_up'
+  post 'sign_up' => 'artists#create'
   
   get 'forgot' => 'password_resets#new', :as => 'forgot'
   post 'forgot' => 'password_resets#new'

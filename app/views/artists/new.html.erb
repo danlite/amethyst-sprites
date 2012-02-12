@@ -1,32 +1,12 @@
-<h1>Sign Up</h1>
-
-<%= form_for @artist do |f| %>
-  <% if @artist.errors.any? %>
-  <div class="error_messages">
-    <h2>Form is invalid</h2>
-    <ul>
-      <% for message in @artist.errors.full_messages %>
-      <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
+<%= semantic_form_for @artist, :url => sign_up_url, :html => {:class => 'form-vertical'} do |f| %>
+  <fieldset>
+    <legend>Register</legend>
+  <%= f.input :name, :required => false, :hint => "(If you've worked on this project before, please use your Smogon/Serebii forum username)" %>
+  <%= f.input :email, :required => false, :hint => "(used for password recovery)" %>
+  <%= f.input :password, :required => false %>
+  <%= f.input :password_confirmation, :required => false %>
+  <%= f.buttons do %>
+  <%= f.commit_button 'Submit' %>
   <% end %>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %><br />
-    (If you've worked on this project before, please use your Smogon/Serebii forum username)
-  </p>
-  <p>
-    <%= f.label :email, "Email (used for password recovery)" %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </p>
-  <p>
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %>
-  </p>
-  <p><%= f.submit %></p>
+  </fieldset>
 <% end %>

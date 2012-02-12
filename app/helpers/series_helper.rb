@@ -27,7 +27,7 @@ module SeriesHelper
     when SERIES_RESERVED
       "reserved by #{actor}"
     when SERIES_AWAITING_EDIT
-      "peer edit requested by #{actor}"
+      "edit requested by #{actor}"
     when SERIES_EDITING
       "began peer-editing by #{actor}"
     when SERIES_AWAITING_QC

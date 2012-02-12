@@ -1,16 +1,15 @@
-<div style="width: 100%; padding: 5px; text-align: left">
-  <div style="float: left">
-    <%= image_tag @commentable.image.url, :class => 'sprite-display' %>
-  </div>
-  <div style="float: left; width: 600px">
-    <%= form_for([@commentable, @comment], :remote => true, :format => :json, :html => {:id => "create-comment-form"}) do |f| %>
-    <span style="font-weight: bold">Post a comment:</span><br />
-    <%= f.text_area :body, :style => "width: 99%; height: 150px; margin-top: 3px" %>
-    <div style="float: right">
-      <%= button_to_function "Close", "AS_Comments.closeCommentForm()", :class => 'button', :style => "height: 40px" %>
-      <%= f.submit "Post", :disable_with => "Posting…", :class => 'button', :style => "height: 40px" %>
-    </div>
+<div class="create-comment-sidebar">
+  <%= image_tag @commentable.image.url, :class => 'sprite-display' %>
+</div>
+<div class="create-comment-body">
+  <%= semantic_form_for([@commentable, @comment], :remote => true, :format => :json, :html => {:id => "create-comment-form"}) do |f| %>
+    <span class="control-group">
+      <%= f.input :body, :required => false, :label => 'Post a comment:' %>
+    </span>
+    <%= f.buttons do %>
+      <%= button_to_function "Close", "$('#create-comment-container').modal('hide');", :class => 'btn' %>
+      <%= f.commit_button "Post", :disable_with => "Posting…" %>
     <% end %>
-  </div>
-  <div style="clear: both"></div>
+    </div>
+  <% end %>
 </div>

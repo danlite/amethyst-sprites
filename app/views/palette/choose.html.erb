@@ -1,16 +1,23 @@
-<h1>Palette Grabber</h1>
-
-<%= form_tag do %>
-  Enter URL of sprite: <%= text_field_tag :sprite_url, '', :style => "width: 600px" %> <%= submit_tag "Go!" %>
+<%= form_tag palette_path, :class => 'form-horizontal' do %>
+  <fieldset>
+    <legend>Palette Grabber</legend>
+    <div class="control-group">
+      <label for="sprite_url" class="control-label">Enter URL of sprite:</label>
+      <div class="controls">
+        <%= text_field_tag :sprite_url, '', :required => true %>
+        <%= submit_tag "Go!", :class => 'btn' %>
+      </div>
+    </div>
+  </fieldset>
 <% end %>
 
 <% if @image_data %>
-<div style="margin: 10px; padding: 10px; border: 1px solid black">
-  <image src="<%= params[:sprite_url] %>" class="leftimage" style="margin-right: 10px" />
+<div>
+  <image src="<%= params[:sprite_url] %>" class="leftimage" />
   <image src="data:image/png;base64,<%= @image_data %>" class="leftimage" />
-	<% unless @info.blank? %><p style="padding-top: 10px"><%= @info %></p><% end %>
-  <div style="clear: both"></div>
+	<% unless @info.blank? %><p><%= @info %></p><% end %>
+  <div class="clearfix"></div>
   <br />
-  <span><%= params[:sprite_url] %></span>
+  <input type="text" disabled value="<%= params[:sprite_url] %>" class="url-display"></input>
 </div>
 <% end %>

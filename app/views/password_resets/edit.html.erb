@@ -1,21 +1,10 @@
-<%= form_for @artist, :url => password_reset_path(params[:id]) do |f| %>
-  <% if @artist.errors.any? %>
-    <div class="error_messages">
-      <h2>Form is invalid</h2>
-      <ul>
-        <% for message in @artist.errors.full_messages %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <p>
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </p>
-  <p>
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %>
-  </p>
-  <p><%= f.submit "Update Password" %></p>
+<%= semantic_form_for @artist, :url => password_reset_path(params[:id]) do |f| %>
+  <fieldset>
+    <legend>Set a new password</legend>
+    <%= f.input :password, :required => false %>
+    <%= f.input :password_confirmation, :required => false %>
+    <%= f.buttons do %>
+      <%= f.commit_button "Update Password" %>
+    <% end %>
+  </fieldset>
 <% end %>

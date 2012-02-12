@@ -1,75 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Amethyst Sprite System</title>
+  <title>Pokémon Amethyst Web System</title>
   <%= stylesheet_link_tag :all %>
   <%= csrf_meta_tag %>
+  
+  <%= javascript_include_tag "jquery.min" %>
   <%= javascript_include_tag "http://js.pusherapp.com/1.9/pusher.min.js" %>
-  <%= javascript_include_tag :all %>
 </head>
 <body>
   <% if Rails.env.development? %>
   <div id="dev-header"></div>
   <% end %>
-  <div id="body-content">
-  	<ul class="hmenu mainmenu" style="float: left">
-  		<li><%= link_to "Gallery", pokemon_index_path %></li>
-  		<li class="less-important"><%= link_to "Awaiting edit", series_index_path(:filter => SERIES_AWAITING_EDIT) %></li>
-  		<li class="less-important"><%= link_to "Awaiting QC", series_index_path(:filter => SERIES_AWAITING_QC) %></li>
-  		<li class="less-important"><%= link_to "Awaiting approval", series_index_path(:filter => SERIES_AWAITING_APPROVAL) %></li>
-  		<% if current_artist %>
-  		<li class="less-important"><%= link_to image_tag('icon/palette.png', :title => 'Palette Grabber', :style => 'padding: 0 10px'), palette_path %>
-  		<% end %>
-  	</ul>
-  	<ul id="user-items" class="hmenu" style="float: right">
-  	  <li class="mainmenu">&nbsp;</li>
-  	  <li><%= link_to "About", 'http://www.smogon.com/forums/showpost.php?p=2381261&postcount=1', :target => '_blank' %></li>
-  		<% if current_artist %>
-  		<li>
-				Logged in as <%= current_artist.name %>
-				<%= link_to_function \
-					image_tag('icon/image_pencil.png', :style => 'vertical-align: middle', :class => 'work-button'),
-					'AS.toggleWorkPopup($(this))',
-					:title => "Your Work" %>
-			</li>
-  		<% end %>
-  	  <%= render 'navigation/registration_items' %>
-  	  <%= render 'navigation/login_items' %>
-  	</ul>
-  	<div style="clear: both"></div>
-  <% if notice %>	
-  	<div class="notice"><%= notice %></div>
-  <% end %>
-  <% if alert %>
-  	<div class="alert"><%= alert %></div>
-  <% end %>
-  <% if flash[:errors] %>
-    <div class="error">
+
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <span class="brand">PAWS</span>
+        <div class="nav-collapse">
+          <ul class="nav">
+            <li><%= link_to "Gallery", pokemon_index_path %></li>
+            <li><%= link_to "Awaiting edit", series_index_path(:filter => SERIES_AWAITING_EDIT) %></li>
+            <li><%= link_to "Awaiting QC", series_index_path(:filter => SERIES_AWAITING_QC) %></li>
+            <li><%= link_to "Awaiting approval", series_index_path(:filter => SERIES_AWAITING_APPROVAL) %></li>
+            <% if current_artist %>
+            <li class="less-important"><%= link_to image_tag('icon/palette.png', :title => 'Palette Grabber'), palette_path %>
+            <% end %>
+          </ul>
+          <ul class="nav pull-right">
+            <li><%= link_to "About", 'http://www.smogon.com/forums/showpost.php?p=2381261&postcount=1', :target => '_blank' %></li>
+            <% if current_artist %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as <%= current_artist.name %> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><%= link_to('Your work', work_artist_path(current_artist)) %>
+                <li><%= link_to('Log out', log_out_path) %></li>
+              </ul>
+            <%#= link_to_function \
+            image_tag('icon/image_pencil.png', :class => 'work-button'),
+            'AS.toggleWorkPopup($(this))',
+            :title => "Your Work" %>
+            </li>
+            <% else %>
+            <li><%= link_to('Log in', log_in_path) %></li>
+            <li><%= link_to('Register', sign_up_path) %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <% if notice %>	
+    <div class="alert alert-success"><%= notice %></div>
+    <% end %>
+    <% if alert %>
+    <div class="alert"><%= alert %></div>
+    <% end %>
+    <% if flash[:errors] %>
+    <div class="alert alert-error">
       <%= flash[:errors].is_a?(String) ? flash[:errors] : content_tag(:ul){ flash[:errors].map{|e| content_tag(:li, e)}.join.html_safe } %>
       <%= render(:partial => "sprites/colour_map", :locals => flash[:error_colours]) if flash[:error_colours] %>
     </div>
-  <% end %>
+    <% end %>
 
-  <%= yield %>
-</div>
-<div id="work-popup"></div>
+    <%= yield %>
+  </div>
 
-<script type="text/javascript" charset="utf-8">
-	var opts = {
-	  lines: 12, // The number of lines to draw
-	  length: 4, // The length of each line
-	  width: 2, // The line thickness
-	  radius: 5, // The radius of the inner circle
-	  color: '#000', // #rgb or #rrggbb
-	  speed: 1, // Rounds per second
-	  trail: 60, // Afterglow percentage
-	  shadow: false // Whether to render a shadow
-	};
-	var target = $('#work-popup');
-	var spinner = new Spinner(opts).spin(target[0]);
-	$(spinner.el).css('left', '150px').css('top', '10px');
-	target.append($('<div>').css('height', '20px'));
-</script>
-
+  <%= javascript_include_tag "bootstrap", "spin.min", "jquery_ujs", "application", "comments" %>
 </body>
 </html>

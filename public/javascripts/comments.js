@@ -1,21 +1,5 @@
 var AS_Comments = {
   
-  showing: false,
-  
-  showCommentForm: function() {
-    if (this.showing) { return; }
-    
-    $('#comment-overlay').css('top', $(window).scrollTop() + 100 + 'px');
-    
-    var container = $('#create-comment-container');
-    container.data('originalContent', container.html());
-    container.fadeIn();
-    
-    this.showing = true;
-    
-    return true;
-  },
-  
   commentFormLoaded: function(data, status, xhr) {
     $('#create-comment-container').html(data);
     
@@ -24,18 +8,12 @@ var AS_Comments = {
     })
     .bind("ajax:success", function(evt, data, status, xhr){
       if (data.success) {
-        AS_Comments.closeCommentForm();
+		$('#create-comment-container').modal('hide');
       } else {
-        alert("Your comment could not be posted.");
+        $('#create-comment-form .control-group').addClass('error');
       }
     })
     .bind("ajax:complete", function(evt, xhr, status){
     })
-  },
-  
-  closeCommentForm: function() {
-    if (!this.showing) { return; }
-    var container = $('#create-comment-container')
-    container.fadeOut(400, function(){container.html(container.data('originalContent')); AS_Comments.showing = false;});
   }
 };

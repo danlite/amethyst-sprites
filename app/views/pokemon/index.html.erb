@@ -1,15 +1,20 @@
-<div style="width: 100%">
-
-<div style="margin: 10px 0">
+<div>
   <p><strong>Newest artists: </strong>
   <%= @newest_artists.map{|a| style_artist_name(a)}.join(", ").html_safe %><%= ", and #{pluralize @remaining_artists, 'other'}" if @remaining_artists > 0 %></p>
 </div>
 
-<div id="activity-feed-header" style="text-align: center; font-weight: bold; font-size: 120%">Latest Activity <%= link_to "(view all)", activities_path, :style => "font-size: 80%" %></div>
-<div id="activity-feed-container">
+<div id="activity-feed-header">Latest Activity <%= link_to "(view all)", activities_path %></div>
+<div id="activity-feed-container" class="span12">
   <div id="activity-feed">
-    <% @latest_activities.each do |activity| %>
-    <%= render :partial => "activities/activity", :locals => {:activity => activity} %>
+    <% 0.upto(@latest_activities.count / 3) do |i| %>
+      <% activities = @latest_activities[i, 3] %>
+      <% if activities.count > 0 %>
+        <div class="row">
+        <% activities.each do |activity| %>
+          <%= render :partial => "activities/activity", :locals => {:activity => activity} %>
+        <% end %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
@@ -18,8 +23,6 @@
   <table>
   <%= render :partial => "pokemon", :collection => @pokemon, :locals => { :number_of_entries => @pokemon.count } %>
   </table>
-</div>
-
 </div>
 
 <script type="text/javascript">

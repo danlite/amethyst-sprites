@@ -1,15 +1,17 @@
-<h1>Log in</h1>
-
 <%= form_tag sessions_path do %>
-  <p>
-    <%= label_tag :name_or_email %><br />
-    <%= text_field_tag :name_or_email, params[:name_or_email] %>
-  </p>
-  <p>
-    <%= label_tag :password %><br />
-    <%= password_field_tag :password %>
-  </p>
-  <%= hidden_field_tag :continue, params[:continue] %>
-  <p><%= submit_tag "Log in" %></p>
-  <%= link_to "Forgot password?", forgot_path %>
+  <fieldset>
+    <legend>Log in</legend>
+    <div class="control-group">
+      <%= label_tag :name_or_email %>
+      <%= text_field_tag :name_or_email, params[:name_or_email] %>
+    </div>
+    <div class="control-group">
+      <%= label_tag :password %>
+      <%= password_field_tag :password %>
+      <span class="help-inline"><%= link_to "Forgot password?", forgot_path %></span>
+    </div>
+    <%= hidden_field_tag :continue, params[:continue] %>
+    <div class="form-actions">
+      <%= submit_tag "Log in", :class => 'btn' %>
+    </div>
 <% end %>

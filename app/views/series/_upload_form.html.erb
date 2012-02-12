@@ -1,0 +1,23 @@
+<% if series.artist_can_upload?(current_artist) %>
+<div class="alert alert-info">
+  <h3>
+  <% if series.state == SERIES_RESERVED %>Submit the first sprite<% end %>
+  <% if series.state == SERIES_WORKING %>Add another sprite<% end %>
+  <% if series.state == SERIES_AWAITING_EDIT %>Submit an edit<% end %>
+  <% if series.state == SERIES_EDITING %>Submit an edit<% end %>
+	<% if series.state == SERIES_DONE %>Submit a revamp<% end %>
+  </h3>
+  <%= form_tag submit_series_sprites_path(series), :multipart => true, :html => {:class => 'form-horizontal'} do %>
+    <div class="control-group">
+    	<%= file_field_tag 'image' %>
+    </div>
+    <div class="control-group">
+    	<%= label_tag 'make_transparent', :class => 'checkbox' do %>
+      	<%= check_box_tag 'make_transparent' %>
+    	  Automatically determine the background colour and replace it with transparency. Make sure the background colour doesn't appear in the sprite (e.g. white background and white eyes)!
+    	<% end %>
+    </div>
+  	<%= submit_tag 'Upload', :class => 'btn' %>
+  <% end %>
+</div>
+<% end %>

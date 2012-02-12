@@ -7,11 +7,10 @@ module ApplicationHelper
   end
   
   def series_button(series, text, sprite, small = false, options = {})
-    dim = small ? 80 : 160
-    options[:class] = "button " + options[:class].to_s
+    options[:class] = "btn sprite #{small ? 'small' : 'large'} " + options[:class].to_s
     link_to(series_path(:id => series), options) do
       things = []
-      things << image_tag(sprite.image.url, :style => "height: #{dim}px; width: #{dim}px; vertical-align: middle; padding: 4px; margin: 4px", :alt => '') if sprite
+      things << image_tag(sprite.image.url, :alt => '', :class => 'sprite') if sprite
       things << tag(:br) if sprite and text
       things << text if text
       things.join.html_safe
