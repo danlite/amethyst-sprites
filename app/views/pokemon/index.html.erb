@@ -8,7 +8,7 @@
 <div id="activity-feed-container">
   <div id="activity-feed">
     <% 0.upto(@latest_activities.count / 3) do |i| %>
-      <% activities = @latest_activities[i, 3] %>
+      <% activities = @latest_activities[i * 3, 3] %>
       <% if activities.count > 0 %>
         <div class="row">
         <% activities.each do |activity| %>
@@ -46,6 +46,8 @@
   var channel = pusher.subscribe('<%= ACTIVITY_CHANNEL %>');
   
   var eventCallback = function(data) {
+    return; // since activities are put 3 to a div.row, this will no longer display new activities properly
+    
     var contentElement = $(data.content)
     contentElement.hide().prependTo('#activity-feed')
     contentElement.fadeToggle();
