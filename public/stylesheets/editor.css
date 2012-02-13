@@ -77,7 +77,7 @@ body {
 }
 
 .striped {
-  background: url(../images/background-stripes.png);
+  background: url(../images/background-stripes-light.png);
 }
 
 canvas#sprite {
