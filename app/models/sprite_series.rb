@@ -45,7 +45,7 @@ class SpriteSeries < ActiveRecord::Base
     end
     
     event :begin_qc do
-      transitions :to => :qc, :from => [:working, :awaiting_edit, :editing, :awaiting_qc, :awaiting_approval]
+      transitions :to => :qc, :from => [:awaiting_edit, :awaiting_qc, :awaiting_approval]
     end
     
     event :mark_for_approval do
@@ -108,7 +108,7 @@ class SpriteSeries < ActiveRecord::Base
       case event
         when :archive, :finish then (not owned? or is_owner) and artist.admin
         when :mark_for_approval then (not owned? or is_owner) and (artist.admin or artist.qc)
-        when :begin_qc then (not is_owner) and (artist.admin or artist.qc)
+        when :begin_qc then artist.admin or artist.qc
         when :mark_for_qc, :mark_for_edit then is_owner and has_working_sprite
         when :begin_work then is_owner
         when :begin_edit then state == SERIES_AWAITING_QC ? (latest_sprite and latest_sprite.artist == artist) : true
