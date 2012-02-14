@@ -16,5 +16,11 @@ module ApplicationHelper
       things.join.html_safe
     end
   end
+  
+  def progress_widget    
+    @finished_series = SpriteSeries.where(:state => SERIES_DONE).count
+    @total_pokemon = Pokemon.count
+    render 'series/progress'
+  end
 
 end

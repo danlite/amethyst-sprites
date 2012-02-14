@@ -1,0 +1,9 @@
+<% percent = (@finished_series.to_f / [@total_pokemon, 1].max.to_f * 100).floor %>
+
+<div id="total-progress" title="<%= @finished_series %> of <%= @total_pokemon %> sprites completed">
+  <div id="progress-percent"><%= percent %>%</div>
+  <div class="progress progress-success" id="progress-bar">
+    <div class="bar" style="width: <%= percent %>%"></div>
+  </div>
+  <div class="clearfix"></div>
+</div>

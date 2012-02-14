@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pokémon Amethyst Web System</title>
+  <title>Pok&eacute;mon Amethyst Sprite Site</title>
   <%= stylesheet_link_tag 'bootstrap', 'main' %>
   <%= stylesheet_link_tag 'editor' if @editor %>
   <%= csrf_meta_tag %>
@@ -22,7 +22,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <span class="brand">PAWS</span>
+        <span class="brand">PASS</span>
         <div class="nav-collapse">
           <ul class="nav">
             <li><%= link_to "Gallery", pokemon_index_path %></li>
@@ -34,6 +34,12 @@
             <% end %>
           </ul>
           <ul class="nav pull-right">
+            <li>
+              <% cache('total-progress') do %>
+              <%= progress_widget %>
+              <% end %>
+            </li>
+            <li class="divider-vertical"></li>
             <li><%= link_to "About", 'http://www.smogon.com/forums/showpost.php?p=2381261&postcount=1', :target => '_blank' %></li>
             <% if current_artist %>
             <li class="dropdown">

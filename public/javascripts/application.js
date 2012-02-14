@@ -3,6 +3,8 @@
 
 $(document).ready(function() {
 	$("input:text:visible:first").focus();
+	
+	$('#total-progress').tooltip({'placement': 'bottom'});
 });
 
 var AS = {

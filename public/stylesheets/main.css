@@ -50,6 +50,27 @@ time {
   width: 50%;
 }
 
+#progress-bar {
+  display: inline-block;
+  width: 150px;
+  margin: 11px 5px 0;
+}
+
+#progress-percent {
+  display: inline-block;
+  float: left;
+  margin-right: 5px;
+  margin-top: 11px;
+  
+  color: #999;
+  
+  cursor: default;
+}
+
+#total-progress:hover #progress-percent {
+  color: white;
+}
+
 #gallery {
   width: 858px;
   margin: 0 auto;
