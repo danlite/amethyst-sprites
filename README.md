@@ -1,10 +1,12 @@
 ## TODO
 
-- add progress meter on gallery ("52% completed" or "380/730 completed")
-- user pages to show their contributions
+- allow admins to flag (with comment) finished sprites needing a revamp
+  - ability to flag directly from gallery page
+- better user pages to show their contributions and current work
 - user settings page to change email/password, set time zone
-- "forgot password?" mechanism
+- improved activity feed with less redundant content
+  - possibly show only one instance of a particular Pokémon, with its latest status
 
 ## CREDITS
 
-Various icons taken from the "Silk" icon set (v1.3, Mark James, http://www.famfamfam.com/lab/icons/silk/).
+Palette icon taken from the "Silk" icon set (v1.3, Mark James, http://www.famfamfam.com/lab/icons/silk/).
