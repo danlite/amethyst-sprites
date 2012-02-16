@@ -148,9 +148,13 @@ $(document).ready(function() {
 		}
 	});
 	
-	$.get(IMAGE_DATA_PATH, function(data) {
-		loadImage('data:image/png;base64,' + data);
-	});
+	if (IMAGE_DATA_PATH != undefined) {
+		$.get(IMAGE_DATA_PATH, function(data) {
+			loadImage('data:image/png;base64,' + data);
+		});
+	} else {
+		redrawEditor();
+	}
 });
 
 function submitSprite() {
@@ -207,7 +211,7 @@ function toggleGrid() {
 }
 
 function refreshSpritePixel(x, y, clear) {
-	var i = (y * img.width + x) * 4;
+	var i = (y * imgData.width + x) * 4;
 	var r = pixelArray[i];
 	var g = pixelArray[i + 1];
 	var b = pixelArray[i + 2];
@@ -224,7 +228,7 @@ function refreshSpritePixel(x, y, clear) {
 }
 
 function drawPixel(x, y, colour) {
-	var i = (y * img.width + x) * 4;
+	var i = (y * imgData.width + x) * 4;
 	var changed = false;
 	for (var component = 0; component < 4; component++) {
 		changed = changed || (pixelArray[i + component] != colour[component]);
@@ -314,6 +318,41 @@ function refreshCursor(x, y) {
 	}
 }
 
+function replaceColour(oldColour, newColour) {
+	var oldKey = oldColour.join(','),
+		newKey = newColour.join(','),
+		changedPixels = false;
+
+	for (var i = 0; i < pixelArray.length; i += 4) {
+		var matches = true;
+		for (var o = 0; o < 4; o++) {
+			if (pixelArray[i + o] != oldColour[o]) {
+				matches = false;
+				break;
+			}
+		}
+		
+		if (!matches) {
+			continue;
+		}
+		
+		changedPixels = true;
+		
+		for (var o = 0; o < 4; o++) {
+			pixelArray[i + o] = newColour[o];
+		}
+	}
+	
+	if (changedPixels) {
+		setPaletteNeedsRedraw();
+		displayImageOnSpriteCanvas();
+	}
+}
+
+function setPaletteNeedsRedraw() {
+	orderedColours = [];
+}
+
 function displayImageOnSpriteCanvas() {
 	var spriteCanvas = $('canvas#sprite')[0];
 	var cursorCanvas = $('canvas#cursor')[0];
@@ -321,12 +360,25 @@ function displayImageOnSpriteCanvas() {
 	var tempCanvas = $('<canvas></canvas>')[0];
 	var tempCtx = tempCanvas.getContext('2d');
 	
-	tempCanvas.width = img.width;
-	tempCanvas.height = img.height;
-	tempCtx.drawImage(img, 0, 0, img.width, img.height);
+	var width, height;
 	
-	var canvasWidth = img.width * scale;
-	var canvasHeight = img.height * scale;
+	if (img) {
+		width = img.width;
+		height = img.height;
+	} else {
+		width = 160;
+		height = 160;
+	}
+	
+	tempCanvas.width = width;
+	tempCanvas.height = height;
+	
+	if (img) {
+		tempCtx.drawImage(img, 0, 0, width, height);
+	}
+	
+	var canvasWidth = width * scale;
+	var canvasHeight = height * scale;
 	
 	cursorCanvas.width = canvasWidth;
 	cursorCanvas.height = canvasHeight;
@@ -341,34 +393,38 @@ function displayImageOnSpriteCanvas() {
 	$('#editor').toggle(true);
 	
 	if (!imgData) {
-		imgData = tempCtx.getImageData(0, 0, img.width, img.height);
+		imgData = tempCtx.getImageData(0, 0, width, height);
 		pixelArray = imgData.data;
 	}
 	
 	var frequencyMap = {};
-	
-	for (var x = 0; x < img.width; x++) {
-		for (var y = 0; y < img.height; y++) {
+
+	for (var x = 0; x < imgData.width; x++) {
+		for (var y = 0; y < imgData.height; y++) {
 			var colour = refreshSpritePixel(x, y);
 			var key = colour.join(',');
 			var value = frequencyMap[key] || 0;
 			frequencyMap[key] = value + 1;
 		}
 	}
-	
+
 	if (orderedColours.length > 0) {
 		return;
 	}
-	
-	orderedColours = [];
-	colourIndexes = {};
-	
-	for (var colour in frequencyMap) {
-		orderedColours.push({ 'colour': colour, 'count': frequencyMap[colour] });
+
+	if (img) {
+		orderedColours = [];
+		colourIndexes = {};
+
+		for (var colour in frequencyMap) {
+			orderedColours.push({ 'colour': colour, 'count': frequencyMap[colour] });
+		}
+		orderedColours.sort(function(c1, c2) {
+			return c2.count - c1.count;
+		});
+	} else {
+		orderedColours = [{ 'colour': '0,0,0,0', 'count': imgData.width * imgData.height }, { 'colour': '0,0,0,255', 'count': 0 }];
 	}
-	orderedColours.sort(function(c1, c2) {
-		return c2.count - c1.count;
-	});
 	
 	$('#palette').empty();
 	

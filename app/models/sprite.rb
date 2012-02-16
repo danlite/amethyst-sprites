@@ -45,7 +45,7 @@ class Sprite < ActiveRecord::Base
     img_data = image.to_file.read
     img = Magick::Image.from_blob(img_data).first
     
-    valid_size = img.rows == SPRITE_DIMENSION and img.columns == SPRITE_DIMENSION
+    valid_size = ((img.rows == SPRITE_DIMENSION) and (img.columns == SPRITE_DIMENSION))
     errors.add(:image, "must be 160x160 pixels") unless valid_size
     
     valid_format = img.format.match(/^PNG/) and img.alpha?

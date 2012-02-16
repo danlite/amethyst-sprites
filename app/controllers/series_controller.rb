@@ -55,7 +55,7 @@ class SeriesController < ApplicationController
   def editor
     @series = SpriteSeries.find(params[:id])
     @editor = true
-    @image_data_path = base64_sprite_path(@series.latest_sprite)
+    @image_data_path = base64_sprite_path(@series.latest_sprite) if @series.latest_sprite
     @submit_image_path = submit_series_sprites_path(@series)
     
     render 'editor/editor'

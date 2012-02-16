@@ -30,6 +30,10 @@
 </div>
 
 <script type="text/javascript">
-  IMAGE_DATA_PATH = "<%= @image_data_path %>";
-  SUBMIT_IMAGE_PATH = "<%= @submit_image_path %>";
+<% if @image_data_path %>
+  var IMAGE_DATA_PATH = "<%= @image_data_path %>";
+<% else %>
+  var IMAGE_DATA_PATH;
+<% end %>
+  var SUBMIT_IMAGE_PATH = "<%= @submit_image_path %>";
 </script>

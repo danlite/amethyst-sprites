@@ -7,6 +7,7 @@ class SpritesController < ApplicationController
     error_messages = nil
     error_colours = nil
     authorized = true
+    sprite_saved = false
     
     if @series.artist_can_upload?(current_artist)
       step = case @series.state
@@ -26,7 +27,10 @@ class SpritesController < ApplicationController
           temp.write ActiveSupport::Base64.decode64(params[:image_data])
           sprite.image = temp
         end
-        if sprite.save
+        
+        sprite_saved = sprite.save
+        
+        if sprite_saved
           @series.begin_work! if @series.state == SERIES_RESERVED
           expire_fragment(@series.pokemon)
           UploadActivity.create(:sprite => sprite, :series => @series)
@@ -45,7 +49,7 @@ class SpritesController < ApplicationController
     end
     
     if request.xhr?
-      status = (sprite and sprite.valid?) ? 200 : (authorized ? 400 : 403)
+      status = sprite_saved ? 200 : (authorized ? 400 : 403)
       render :text => (status == 200) ? series_path(@series) : '', :status => status 
     else
       redirect_to series_path(@series), :flash => {:errors => error_messages, :error_colours => error_colours}
