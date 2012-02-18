@@ -154,6 +154,10 @@ canvas.overlay {
 .colour-preview .colour {
   width: 100%;
   height: 100%;
+  cursor: default;
+  line-height: 20px;
+  font-weight: bold;
+  font-size: 24pt;
 }
 
 #controls {

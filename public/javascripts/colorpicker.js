@@ -383,6 +383,10 @@
 				} else {
 					return this;
 				}
+				if (opt.remove) {
+					$(this).unbind(opt.eventName, show);
+					return;
+				}
 				return this.each(function () {
 					if (!$(this).data('colorpickerId')) {
 						var options = $.extend({}, opt);

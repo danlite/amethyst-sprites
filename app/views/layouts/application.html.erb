@@ -3,7 +3,7 @@
 <head>
   <title>Pok&eacute;mon Amethyst Sprite Site</title>
   <%= stylesheet_link_tag 'bootstrap', 'main' %>
-  <%= stylesheet_link_tag 'editor' if @editor %>
+  <%= stylesheet_link_tag 'editor', 'colorpicker' if @editor %>
   <%= csrf_meta_tag %>
   
   <%= javascript_include_tag "jquery.min" %>
@@ -80,7 +80,7 @@
     </div>
   <% end %>
 
-  <%= javascript_include_tag "editor" if @editor %>
+  <%= javascript_include_tag "editor", "colorpicker" if @editor %>
   <%= javascript_include_tag "bootstrap", "spin.min", "jquery_ujs", "application", "comments" %>
 </body>
 </html>

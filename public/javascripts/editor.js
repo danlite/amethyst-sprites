@@ -17,6 +17,45 @@ var orderedColours = [];
 var colourIndexes = {};
 var edited = false;
 
+////////
+// CanvasPixelArray
+////////
+
+function pixelArrayGetColourAtIndex (pa, i) {
+	var o,
+		colour = [];
+
+	i = i * 4;
+	for (o = 0; o < 4; o++) {
+		colour[o] = pa[i + o];
+	}
+	
+	return colour;
+}
+
+function pixelArraySetColourAtIndex (pa, i, colour) {
+	var o;
+
+	i = i * 4;
+	for (o = 0; o < 4; o++) {
+		pa[i + o] = colour[o];
+	}
+}
+
+Array.prototype.isEqual = function (array) {
+	if (this.length != array.length) {
+		return false;
+	}
+	
+	for (var i = 0; i < this.length; i++) {
+		if (this[i] != array[i]) {
+			return false;
+		}
+	}
+	
+	return true;
+}
+
 $(window).bind('beforeunload', function() {
 	if (edited) {
 		return "You have unsaved changes which will be lost if you leave this page!";
@@ -194,7 +233,7 @@ function colourFormat(rOrRGB, g, b, a) {
 	if (rOrRGB instanceof Array) {
 		g = rOrRGB[1];
 		b = rOrRGB[2];
-		a = rOrRGB[3];
+		a = rOrRGB[3] / 255.0;
 		rOrRGB = rOrRGB[0];
 	}
 	return "rgba(" + rOrRGB + "," + g + "," + b + "," + a + ")";
@@ -228,9 +267,11 @@ function refreshSpritePixel(x, y, clear) {
 }
 
 function drawPixel(x, y, colour) {
-	var i = (y * imgData.width + x) * 4;
-	var changed = false;
-	for (var component = 0; component < 4; component++) {
+	var i = (y * imgData.width + x) * 4,
+		changed = false,
+		component;
+
+	for (component = 0; component < 4; component++) {
 		changed = changed || (pixelArray[i + component] != colour[component]);
 		pixelArray[i + component] = colour[component];
 	}
@@ -244,13 +285,12 @@ function drawPixel(x, y, colour) {
 
 // Taken from http://en.wikipedia.org/wiki/Bresenham's_line_algorithm
 function drawLine(x1, y1, x2, y2, colour) {
-	var diffX = Math.abs(x1 - x2);
-	var diffY = Math.abs(y1 - y2);
-	
-	var stepX = x1 < x2 ? 1 : -1;
-	var stepY = y1 < y2 ? 1 : -1;
-	
-	var error = diffX - diffY;
+	var diffX = Math.abs(x1 - x2),
+		diffY = Math.abs(y1 - y2),
+		stepX = x1 < x2 ? 1 : -1,
+		stepY = y1 < y2 ? 1 : -1,
+		error = diffX - diffY,
+		error2;
 	
 	while (true) {
 		drawPixel(x1, y1, colour);
@@ -258,7 +298,7 @@ function drawLine(x1, y1, x2, y2, colour) {
 			break;
 		}
 		
-		var error2 = 2 * error;
+		error2 = 2 * error;
 		
 		if (error2 > -diffY) {
 			error -= diffY;
@@ -321,26 +361,23 @@ function refreshCursor(x, y) {
 function replaceColour(oldColour, newColour) {
 	var oldKey = oldColour.join(','),
 		newKey = newColour.join(','),
-		changedPixels = false;
+		changedPixels = false,
+		offset,
+		matches,
+		canvasPixelColour,
+		i;
 
-	for (var i = 0; i < pixelArray.length; i += 4) {
-		var matches = true;
-		for (var o = 0; o < 4; o++) {
-			if (pixelArray[i + o] != oldColour[o]) {
-				matches = false;
-				break;
-			}
-		}
-		
+	for (i = 0; i < pixelArray.length / 4; i++) {
+		canvasPixelColour = pixelArrayGetColourAtIndex(pixelArray, i);
+		matches = canvasPixelColour.isEqual(oldColour);
+
 		if (!matches) {
 			continue;
 		}
 		
 		changedPixels = true;
 		
-		for (var o = 0; o < 4; o++) {
-			pixelArray[i + o] = newColour[o];
-		}
+		pixelArraySetColourAtIndex(pixelArray, i, newColour);
 	}
 	
 	if (changedPixels) {
@@ -353,14 +390,138 @@ function setPaletteNeedsRedraw() {
 	orderedColours = [];
 }
 
+function redrawCurrentSprite() {
+	var frequencyMap = {},
+		key,
+		value;
+
+	for (var x = 0; x < imgData.width; x++) {
+		for (var y = 0; y < imgData.height; y++) {
+			key = refreshSpritePixel(x, y).join(',');
+			value = frequencyMap[key] || 0;
+			frequencyMap[key] = value + 1;
+		}
+	}
+	
+	return frequencyMap;
+}
+
+function redrawPalette(frequencyMap) {
+	var colour;
+	
+	if (frequencyMap) {
+		if (img) {
+			orderedColours = [];
+			colourIndexes = {};
+
+			for (colour in frequencyMap) {
+				orderedColours.push({ 'colour': colour, 'count': frequencyMap[colour] });
+			}
+			orderedColours.sort(function(c1, c2) {
+				return c2.count - c1.count;
+			});
+		} else {
+			orderedColours = [{ 'colour': '0,0,0,0', 'count': imgData.width * imgData.height }];
+		}
+	
+		for (var i = orderedColours.length; i < 16; i++) {
+			orderedColours.push({ 'colour': '0,0,0,0', 'count': -1});
+		}
+	}
+	
+	$('#palette').empty();
+	
+	$.each(orderedColours, function (i, oc) {
+		var colourComponents,
+			div,
+			tooltipTitle,
+			placeholder = (oc.count == -1),
+			parseIntMap;
+
+		if (!placeholder) {
+			colourIndexes[oc.colour] = i;
+		}
+		
+		parseIntMap = function (val) {
+			return parseInt(val);
+		};
+		
+		colourComponents = $.map(oc.colour.split(','), parseIntMap);
+		
+		div = $('<div class="colour-preview striped"><div class="colour"></div></div>');
+		
+		if (i == 0) {
+			chosenColour = colourComponents;
+			$(div).addClass('selected');
+		}
+		
+		$('#palette').append(div);
+		
+		if (placeholder) {
+			tooltipTitle = 'New colour';
+		} else {
+			tooltipTitle = (colourComponents[3] == 0) ? 'Clear' : 'R: ' + colourComponents[0] + '<br />G: ' + colourComponents[1] + '<br />B: ' + colourComponents[2];
+		}
+		
+		div.tooltip({ 'placement': 'right', 'title': tooltipTitle });
+		
+		if (placeholder) {
+			div.children('.colour').html('+').css('background-color', 'white');
+			div.ColorPicker({
+				onSubmit: function(hsb, hex, rgb, el) {
+					var pickedColour,
+						colour,
+						paletteItem = orderedColours[i];
+					pickedColour = [rgb.r, rgb.g, rgb.b, 255].join(',');
+					paletteItem.colour = pickedColour;
+					paletteItem.count = 0;
+					colour = $.map(pickedColour.split(','), parseIntMap); 
+
+					$(el).children('.colour').html('').css('background-color', colourFormat(colour));
+					$(el).ColorPickerHide();
+					// This doesn't work
+					$(el).tooltip({ 'placement': 'right', 'title': 'R: ' + colour[0] + '<br />G: ' + colour[1] + '<br />B: ' + colour[2] });
+					
+					// disable colour picker appearing
+					$(el).ColorPicker({ remove: true });
+
+					// set the picked colour as the current colour
+					$('#palette .colour-preview').removeClass('selected');
+					$(el).addClass('selected');
+					chosenColour = colour;
+					$('#current-colour .colour').css('background-color', colourFormat(colour));
+				}
+			});
+		} else {
+			div.children('.colour').css('background-color', colourFormat(colourComponents));
+		}
+
+		div.click(function() {
+			var paletteItem = orderedColours[i],
+				colour,
+				pickedColour;
+			if (paletteItem.count >= 0) {
+				colour = $.map(paletteItem.colour.split(','), parseIntMap);
+				$('#palette .colour-preview').removeClass('selected');
+				chosenColour = colour;
+				$('#current-colour .colour').css('background-color', colourFormat(colour));
+				$(this).addClass('selected');
+			}
+		});
+	});
+	$('#palette').append('<div class="clearfix"></div>');
+}
+
 function displayImageOnSpriteCanvas() {
-	var spriteCanvas = $('canvas#sprite')[0];
-	var cursorCanvas = $('canvas#cursor')[0];
-	
-	var tempCanvas = $('<canvas></canvas>')[0];
-	var tempCtx = tempCanvas.getContext('2d');
-	
-	var width, height;
+	var spriteCanvas = $('canvas#sprite')[0],
+		cursorCanvas = $('canvas#cursor')[0],
+		tempCanvas = $('<canvas></canvas>')[0],
+		tempCtx = tempCanvas.getContext('2d'),
+		width,
+		height,
+		canvasWidth,
+		canvasHeight,
+		frequencyMap;
 	
 	if (img) {
 		width = img.width;
@@ -370,15 +531,15 @@ function displayImageOnSpriteCanvas() {
 		height = 160;
 	}
 	
+	canvasWidth = width * scale,
+	canvasHeight = height * scale,
+	
 	tempCanvas.width = width;
 	tempCanvas.height = height;
 	
 	if (img) {
 		tempCtx.drawImage(img, 0, 0, width, height);
 	}
-	
-	var canvasWidth = width * scale;
-	var canvasHeight = height * scale;
 	
 	cursorCanvas.width = canvasWidth;
 	cursorCanvas.height = canvasHeight;
@@ -397,66 +558,11 @@ function displayImageOnSpriteCanvas() {
 		pixelArray = imgData.data;
 	}
 	
-	var frequencyMap = {};
+	frequencyMap = redrawCurrentSprite();
 
-	for (var x = 0; x < imgData.width; x++) {
-		for (var y = 0; y < imgData.height; y++) {
-			var colour = refreshSpritePixel(x, y);
-			var key = colour.join(',');
-			var value = frequencyMap[key] || 0;
-			frequencyMap[key] = value + 1;
-		}
+	if (orderedColours.length == 0) {
+		redrawPalette(frequencyMap);
 	}
-
-	if (orderedColours.length > 0) {
-		return;
-	}
-
-	if (img) {
-		orderedColours = [];
-		colourIndexes = {};
-
-		for (var colour in frequencyMap) {
-			orderedColours.push({ 'colour': colour, 'count': frequencyMap[colour] });
-		}
-		orderedColours.sort(function(c1, c2) {
-			return c2.count - c1.count;
-		});
-	} else {
-		orderedColours = [{ 'colour': '0,0,0,0', 'count': imgData.width * imgData.height }, { 'colour': '0,0,0,255', 'count': 0 }];
-	}
-	
-	$('#palette').empty();
-	
-	$.each(orderedColours, function (i, oc) {
-		colourIndexes[oc.colour] = i;
-		
-		var colourComponents = $.map(oc.colour.split(','), function (val) {
-			return parseInt(val);
-		});
-		
-		var div = $('<div class="colour-preview striped"><div class="colour"></div></div>');
-		
-		if (i == 0) {
-			chosenColour = colourComponents;
-			$(div).addClass('selected');
-		}
-		
-		$('#palette').append(div);
-		
-		var tooltipTitle = (colourComponents[3] == 0) ? 'Clear' : 'R: ' + colourComponents[0] + '<br />G: ' + colourComponents[1] + '<br />B: ' + colourComponents[2];
-		
-		div.tooltip({ 'placement': 'right', 'title': tooltipTitle });
-		
-		div.children('.colour').css('background-color', colourFormat(colourComponents));
-		div.click(function() {
-			$('#palette .colour-preview').removeClass('selected');
-			chosenColour = colourComponents;
-			$('#current-colour .colour').css('background-color', colourFormat(chosenColour));
-			$(this).addClass('selected');
-		});
-	});
-	$('#palette').append('<div class="clearfix"></div>');
 }
 
 function drawGridOnCanvas(canvas) {
