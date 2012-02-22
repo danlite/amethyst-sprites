@@ -7,7 +7,7 @@ class SpriteSeriesObserver < ActiveRecord::Observer
   end
   
   def after_destroy(series)
-    if series.state == SERIES_FINISHED
+    if series.state == SERIES_DONE
       ActionController::Base.new.expire_fragment 'total-progress'
     end
   end
