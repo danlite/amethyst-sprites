@@ -61,4 +61,32 @@ class SeriesController < ApplicationController
     render 'editor/editor'
   end
   
+  def flag_redo
+    series = SpriteSeries.find(params[:id])
+    success = series && request.get?
+    
+    if current_artist.admin and series
+      if request.post?
+        series.flagged_for_redo = true
+      elsif request.delete?
+        series.flagged_for_redo = false
+      end
+      
+      success ||= series.save
+    end
+    
+    if success
+      text = series.flagged_for_redo ? 'true' : 'false'
+      render :text => text
+    else
+      render :status => 500
+    end
+  end
+  
+  def redo_flags
+    flagged_series = SpriteSeries.where(:flagged_for_redo => true)
+    
+    render :text => flagged_series.map(&:id).to_json
+  end
+  
 end

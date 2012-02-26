@@ -89,7 +89,6 @@ time {
 .gallery-cell .pokemon-sprite {
   height: 160px;
   width: 160px;
-  margin-top: 2px;
   margin-left: 2px;
 }
 
@@ -185,4 +184,17 @@ input.url-display {
 .destructive {
   font-weight: bold;
   color: red;
+}
+
+.flag {
+  position: relative;
+  left: 128px;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  background: url('/images/corner-ribbon.png') no-repeat;
+}
+
+.flag.inactive {
+  opacity: 0.05;
 }

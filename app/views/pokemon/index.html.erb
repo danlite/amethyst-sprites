@@ -59,6 +59,48 @@
     channel.bind(eventName, eventCallback);
   });
   
+<% if current_artist %>
   $(document).ready(function() {
+    $('.series-notempty').each(function(i, el) {
+      var series = $(el);
+      var seriesID = series.attr('id').split('_')[1];
+      
+      var flagDiv = $('<div class="flag inactive"></div>');
+      
+<% if current_artist.admin %>
+      flagDiv.tooltip({'title': 'Toggle whether sprite needs redoing'});
+      
+      flagDiv.click(function() {
+        var removing = !$(this).hasClass('inactive');
+        $(this).toggleClass('inactive');
+        
+        $.ajax('/series/' + seriesID + '/flag_redo',
+          {
+            'type': removing ? 'DELETE' : 'POST',
+            'context': $(this),
+            'success': function(data) {
+              if ($.trim(data) == 'true') {
+                $(this).removeClass('inactive');
+              } else {
+                $(this).addClass('inactive');
+              }
+            }
+          }
+        );
+      });
+<% else %>
+      flagDiv.tooltip({'title': 'Indicates whether sprite needs redoing'})
+<% end %>
+      
+      series.prepend(flagDiv);
+      series.children('.pokemon-sprite').css('margin-top', '-36px');
+    });
+          
+    $.get('/series/redo_flags.json', null, function(data) {
+      $.each(data, function (i, seriesID) {
+        $('#series_' + seriesID + ' .flag').removeClass('inactive');
+      });
+    });
   });
+<% end %>
 </script>
