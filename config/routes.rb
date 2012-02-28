@@ -41,8 +41,8 @@ AmethystSprites::Application.routes.draw do
     end
     match 'transition/:event' => 'series#transition', :on => :member, :as => :transition, :via => :get
     match 'editor' => 'series#editor', :on => :member, :via => :get
-    match 'flag_redo', :on => :member, :via => [:post, :delete, :get]
-    match 'redo_flags', :on => :collection
+    match 'change_flag', :on => :member, :via => :post
+    match 'flagged', :on => :collection
   end
   
   root :to => 'pokemon#index'

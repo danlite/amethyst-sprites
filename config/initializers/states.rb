@@ -17,6 +17,12 @@ SPRITE_STEPS = [
   SPRITE_REVAMP = 'revamp'
 ]
 
+SERIES_FLAGS = [
+  FLAG_NONE = 0,
+  FLAG_TWEAK = 1,
+  FLAG_REDO = 2,
+]
+
 def state_compare(s1, s2)
   SERIES_STATES.index(s1) <=> SERIES_STATES.index(s2)
 end

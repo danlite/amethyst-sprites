@@ -61,32 +61,33 @@ class SeriesController < ApplicationController
     render 'editor/editor'
   end
   
-  def flag_redo
+  def change_flag
     series = SpriteSeries.find(params[:id])
-    success = series && request.get?
+    success = series and request.get?
     
     if current_artist.admin and series
+      flag = (series.flag.to_i + 1) % 3
       if request.post?
-        series.flagged_for_redo = true
+        series.flag = flag
       elsif request.delete?
-        series.flagged_for_redo = false
+        series.flag = FLAG_NONE
       end
       
-      success ||= series.save
+      success = series.save || success
     end
     
     if success
-      text = series.flagged_for_redo ? 'true' : 'false'
+      text = series.flag
       render :text => text
     else
       render :status => 500
     end
   end
   
-  def redo_flags
-    flagged_series = SpriteSeries.where(:flagged_for_redo => true)
+  def flagged
+    flagged_series = SpriteSeries.where(:flag => [FLAG_REDO, FLAG_TWEAK])
     
-    render :text => flagged_series.map(&:id).to_json
+    render :text => Hash[*flagged_series.map{|s| [s.id, s.flag]}.flatten].to_json
   end
   
 end

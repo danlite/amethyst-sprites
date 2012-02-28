@@ -196,6 +196,15 @@ input.url-display {
   background: url('/images/corner-ribbon.png') no-repeat;
 }
 
+.flag.redo {
+  background-image: url('/images/corner-ribbon-redo.png');
+}
+
+.flag.tweak {
+  background-image: url('/images/corner-ribbon-tweak.png');
+}
+
 .flag.inactive {
   opacity: 0.05;
+  background-image: url('/images/corner-ribbon.png');
 }

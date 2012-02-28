@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120226040134) do
+ActiveRecord::Schema.define(:version => 20120228204722) do
 
   create_table "activities", :force => true do |t|
     t.string   "type"
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(:version => 20120226040134) do
     t.datetime "updated_at"
     t.integer  "reserver_id"
     t.boolean  "limbo"
-    t.boolean  "flagged_for_redo"
+    t.integer  "flag"
   end
 
   add_index "sprite_series", ["pokemon_id"], :name => "index_sprite_series_on_pokemon_id"
