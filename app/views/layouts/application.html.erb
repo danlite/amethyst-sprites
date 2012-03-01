@@ -29,6 +29,7 @@
             <li><%= link_to "Awaiting edit", series_index_path(:filter => SERIES_AWAITING_EDIT) %></li>
             <li><%= link_to "Awaiting QC", series_index_path(:filter => SERIES_AWAITING_QC) %></li>
             <li><%= link_to "Awaiting approval", series_index_path(:filter => SERIES_AWAITING_APPROVAL) %></li>
+            <li><%= link_to "Flagged", series_index_path(:filter => 'flagged') %></li>
             <% if current_artist %>
             <li class="less-important"><%= link_to image_tag('icon/palette.png', :title => 'Palette Grabber'), palette_path %>
             <% end %>

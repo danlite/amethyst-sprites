@@ -9,7 +9,11 @@ class SeriesController < ApplicationController
       @series = @pokemon.series.order("created_at DESC")
     else
       @filter = params[:filter]
-      @series = SpriteSeries.where("state = ?", @filter).order("created_at DESC")
+      if @filter == 'flagged'
+        @series = SpriteSeries.where(:flag => [FLAG_TWEAK, FLAG_REDO]).order("created_at DESC")
+      else
+        @series = SpriteSeries.where("state = ?", @filter).order("created_at DESC")
+      end
     end
   end
   
