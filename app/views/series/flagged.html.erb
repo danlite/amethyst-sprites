@@ -1,0 +1,22 @@
+<% if !@tweak.empty? %>
+  <div class="gallery container">
+  <%= content_tag(:h2, 'Tweak') %>
+  <% @tweak.each do |series| %>
+    <div class="gallery-series">
+      <%= series_button(series, series.pokemon.full_name, series.latest_sprite, false) %>
+    </div>
+  <% end %>
+    <div class="clearfix"></div>
+  </div>
+<% end %>
+
+<% if !@redo.empty? %>
+  <div class="gallery container">
+  <%= content_tag(:h2, 'Redo') %>
+  <% @redo.each do |series| %>
+    <div class="gallery-series">
+      <%= series_button(series, series.pokemon.full_name, series.latest_sprite, false) %>
+    </div>
+  <% end %>
+  </div>
+<% end %>

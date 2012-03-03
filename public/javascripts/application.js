@@ -5,8 +5,6 @@ $(document).ready(function() {
 	$("input:text:visible:first").focus();
 	
 	$('#total-progress').tooltip({'placement': 'bottom'});
-	
-	$('a.btn.sprite').tooltip();
 });
 
 var AS = {

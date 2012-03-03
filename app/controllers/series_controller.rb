@@ -11,6 +11,9 @@ class SeriesController < ApplicationController
       @filter = params[:filter]
       if @filter == 'flagged'
         @series = SpriteSeries.where(:flag => [FLAG_TWEAK, FLAG_REDO]).order("created_at DESC")
+        @tweak = @series.where(:flag => FLAG_TWEAK)
+        @redo = @series.where(:flag => FLAG_REDO)
+        render 'flagged'
       else
         @series = SpriteSeries.where("state = ?", @filter).order("created_at DESC")
       end

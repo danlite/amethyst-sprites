@@ -208,3 +208,7 @@ input.url-display {
   opacity: 0.05;
   background-image: url('/images/corner-ribbon.png');
 }
+
+.gallery.container {
+  margin: 20px auto;
+}
