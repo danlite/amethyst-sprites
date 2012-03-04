@@ -59,7 +59,8 @@ module PokemonHelper
       end
     end
     
-    content_tag(:span, text, :class => "label #{label_class}")
+    tag = content_tag(:span, text, :class => "label #{label_class}")
+    tag += ' '.html_safe + content_tag(:span, 'limbo', :class => "label label-warning") if series.limbo?
   end
   
 end

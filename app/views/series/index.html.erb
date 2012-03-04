@@ -9,6 +9,7 @@
     <% text += "<br />(Limbo)".html_safe if series.limbo? %>
   <% else %>
     <% text = series.pokemon.full_name %>
+    <% text += ' '.html_safe + content_tag(:span, 'limbo', :class => 'label label-warning') if series.limbo? %>
   <% end %>
   <div class="gallery-series">
     <%= series_button(series, text, series.latest_sprite, false, {:title => series.flag == FLAG_REDO ? 'Flagged for redo' : series.flag == FLAG_TWEAK ? 'Flagged for tweak' : ''}) %>
