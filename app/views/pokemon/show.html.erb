@@ -1,4 +1,4 @@
-<%= render :partial => 'pokemon/pokemon_title', :locals => {:title_pokemon => @pokemon, :current_series => true} %>
+<%= render :partial => 'pokemon/pokemon_title', :locals => {:title_pokemon => @pokemon, :current_series => true, :series => @current_series } %>
 
 <% if @current_series %>
   <% if @current_series.limbo? %>

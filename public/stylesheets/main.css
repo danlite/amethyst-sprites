@@ -212,3 +212,7 @@ input.url-display {
 .gallery.container {
   margin: 20px auto;
 }
+
+.series-switcher {
+   margin: 10px 0;
+}

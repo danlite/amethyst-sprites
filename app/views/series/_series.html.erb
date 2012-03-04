@@ -1,7 +1,4 @@
 <div>
-  
-<h3><%= html_for_series(series) %></h3>
-  
 <% if series.state == SERIES_RESERVED  %>
 	<% if series.reserver == current_artist %>
 		<%= link_to "(Unreserve)", unclaim_pokemon_path(series.pokemon) %>

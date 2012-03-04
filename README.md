@@ -1,7 +1,5 @@
 ## TODO
 
-- allow admins to flag (with comment) finished sprites needing a revamp
-  - ability to flag directly from gallery page
 - better user pages to show their contributions and current work
 - user settings page to change email/password, set time zone
 - improved activity feed with less redundant content

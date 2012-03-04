@@ -33,4 +33,33 @@ module PokemonHelper
     end
   end
   
+  def series_label(series)
+    text = nil
+    label_class = ''
+    
+    if series
+      text = case series.state
+        when SERIES_RESERVED then "reserved"
+        when SERIES_WORKING then "WIP"
+        when SERIES_AWAITING_EDIT then "awaiting edit"
+        when SERIES_EDITING then "in edit"
+        when SERIES_AWAITING_QC then "awaiting QC"
+        when SERIES_QC then "in QC"
+        when SERIES_AWAITING_APPROVAL then "awaiting approval"
+        when SERIES_DONE then "done"
+        when SERIES_ARCHIVED then "archived"
+        else "unknown state"
+      end
+      
+      label_class = case series.state
+        when SERIES_DONE then 'label-success'
+        when SERIES_RESERVED, SERIES_WORKING, SERIES_EDITING, SERIES_QC then 'label-info'
+        when SERIES_AWAITING_EDIT, SERIES_AWAITING_QC, SERIES_AWAITING_APPROVAL then 'label-important'
+        when SERIES_ARCHIVED then ''
+      end
+    end
+    
+    content_tag(:span, text, :class => "label #{label_class}")
+  end
+  
 end

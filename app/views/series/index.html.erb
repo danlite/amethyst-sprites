@@ -10,7 +10,7 @@
   <% else %>
     <% text = series.pokemon.full_name %>
   <% end %>
-  <div <% if @filter %>class="gallery-series"<% end %>>
+  <div class="gallery-series">
     <%= series_button(series, text, series.latest_sprite, false, {:title => series.flag == FLAG_REDO ? 'Flagged for redo' : series.flag == FLAG_TWEAK ? 'Flagged for tweak' : ''}) %>
   </div>
 <% end %>
