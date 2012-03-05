@@ -24,9 +24,9 @@ module SeriesHelper
   
   def text_for_series_activity(activity)
     if activity.is_a? UploadActivity
-      artists = activity.sprite.artist ? activity.sprite.artist.name : activity.series.contributors.map{|c| c.name }.join(", ")
+      artists = activity.sprite.artist ? style_artist_name(activity.sprite.artist) : activity.series.contributors.map{|c| style_artist_name(c) }.join(", ")
       action = activity.sprite.artist ? (activity.sprite.step == SPRITE_REVAMP ? 'revamped' : 'uploaded') : 'sprite work'
-      "#{action} by #{artists}"
+      "#{action} by #{artists}".html_safe
     elsif activity.is_a? ProgressActivity
       text_for_series_progress_activity(activity)
     else
@@ -35,7 +35,7 @@ module SeriesHelper
   end
   
   def text_for_series_progress_activity(progress)
-    actor = progress.actor.name
+    actor = style_artist_name(progress.actor)
     
     case progress.subtype
     when SERIES_RESERVED
@@ -56,7 +56,7 @@ module SeriesHelper
       "archived by #{actor}"
     else
       "something happened"
-    end
+    end.html_safe
   end
   
 end

@@ -18,13 +18,13 @@ module ActivitiesHelper
   
   def text_for_activity(activity)
     if activity.is_a? UploadActivity
-      actor = activity.sprite.artist ? activity.sprite.artist.name : 'Someone'
+      actor = activity.sprite.artist ? style_artist_name(activity.sprite.artist) : 'Someone'
       action = activity.sprite.step == SPRITE_REVAMP ? 'revamped the sprite for' : 'uploaded a sprite for'
-      "#{actor} #{action} #{activity.sprite.series.pokemon.full_name}"
+      "#{actor} #{action} #{activity.sprite.series.pokemon.full_name}".html_safe
     elsif activity.is_a? ProgressActivity
       text_for_progress_activity(activity)
     elsif activity.is_a? CommentActivity
-      "#{h(activity.comment.artist.name)}: &ldquo;#{h(activity.comment.body.truncate(100, :separator => ' '))}&rdquo;".html_safe
+      "#{style_artist_name(activity.comment.artist)}: &ldquo;#{h(activity.comment.body.truncate(100, :separator => ' '))}&rdquo;".html_safe
     else
       ""
     end
@@ -48,7 +48,7 @@ module ActivitiesHelper
     else
       "did something"
     end
-    "#{progress.actor.name} #{text}"
+    "#{style_artist_name(progress.actor)} #{text}".html_safe
   end
 
 end

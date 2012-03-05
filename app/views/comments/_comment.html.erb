@@ -1,4 +1,4 @@
 <div class="comment">
-  <span><time><%= time_ago_in_words(comment.created_at) %> ago</time> by <%= comment.artist.name %></span>
+  <span><time><%= time_ago_in_words(comment.created_at) %> ago</time> by <%= style_artist_name(comment.artist) %></span>
   <%= simple_format(comment.body) %>
 </div>
