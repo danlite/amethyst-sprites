@@ -7,6 +7,21 @@ module SeriesHelper
     state.humanize.gsub(/[Qq]c/, "QC")
   end
   
+  def event_button_content(event)
+    text = humanize_state_description(event)
+    
+    icon = 'icon-pencil'''
+    if event == 'finish'
+      icon = 'icon-ok'
+    elsif event == 'archive'
+      icon = 'icon-folder-open'
+    elsif event.match(/^mark_for/)
+      icon = 'icon-share'
+    end
+    
+    content_tag(:i, nil, :class => "icon_white #{icon}") + " #{text}".html_safe
+  end
+  
   def text_for_series_activity(activity)
     if activity.is_a? UploadActivity
       artists = activity.sprite.artist ? activity.sprite.artist.name : activity.series.contributors.map{|c| c.name }.join(", ")

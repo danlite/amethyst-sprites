@@ -214,5 +214,14 @@ input.url-display {
 }
 
 .series-switcher {
-   margin: 10px 0;
+  font-weight: normal;
+  display: inline-block;
+}
+
+.pokemon-title {
+  margin-bottom: 10px;
+}
+
+.series .btn-group {
+  margin-bottom: 20px;
 }

@@ -1,12 +1,16 @@
-<h1><%= title_pokemon.full_name %></h1>
-<%= series_label(series) if defined?(series) and series %>
+<div class="pokemon-title">
+  <h1>
+    <%= title_pokemon.full_name %>
+    <div class="series-switcher">
+      <div class="btn-group">
+        <% current = (defined?(current_series) and current_series )%>
+        <%= link_to "current", !current ? title_pokemon : '#', :class => "btn #{!current ? '' : 'btn-primary disabled'}" %>
+        <%= link_to "all #{title_pokemon.series.count} series", current ? pokemon_series_index_path(title_pokemon) : '#', :class => "btn #{current ? '' : 'btn-primary disabled'}" %>
+      </div>
+    </div>
+  </h1>
+  <%= series_label(series) if defined?(series) and series %>
 
-<% if title_pokemon.series.count > 1 or (title_pokemon.series.count == 1 and title_pokemon.series.first.state == SERIES_ARCHIVED) %>
-<div class="series-switcher">
-  <div class="btn-group">
-    <% current = (defined?(current_series) and current_series )%>
-    <%= link_to "current", !current ? title_pokemon : '#', :class => "btn #{!current ? '' : 'btn-primary disabled'}" %>
-    <%= link_to "all #{title_pokemon.series.count} series", current ? pokemon_series_index_path(title_pokemon) : '#', :class => "btn #{current ? '' : 'btn-primary disabled'}" %>
-  </div>
+  <% if title_pokemon.series.count > 1 or (title_pokemon.series.count == 1 and title_pokemon.series.first.state == SERIES_ARCHIVED) %>
+  <% end %>
 </div>
-<% end %>

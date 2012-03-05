@@ -15,15 +15,15 @@ class PokemonController < ApplicationController
   def show
     name, form = params[:name], params[:form]
     
-    if form and name
+    if name
       @pokemon = Pokemon.find_by_name_and_form_name(name, form)
-    elsif name
-      @pokemon = Pokemon.find_by_name(name)
     else
       @pokemon = Pokemon.find(params[:id])
     end
     
-    @current_series = @pokemon.current_series
+    @series = @pokemon.current_series
+    
+    render 'series/show' if @series
   end
   
   def claim
