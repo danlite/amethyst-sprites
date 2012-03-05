@@ -1,4 +1,4 @@
-<%= render :partial => 'pokemon/pokemon_title', :locals => {:title_pokemon => @pokemon} if @pokemon %>
+<%= render :partial => 'pokemon/pokemon_title', :locals => {:title_pokemon => @pokemon, :all_series => true} if @pokemon %>
 <%= content_tag(:h2, humanize_state_description(@filter)) if @filter %>
 
 <div style="text-align: center">

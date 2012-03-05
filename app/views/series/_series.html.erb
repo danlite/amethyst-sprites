@@ -1,25 +1,28 @@
 <% if series.limbo? %>
-  <div>This Pokémon has sprites in limbo, so you may <%= link_to_unless (current_artist.nil? or current_artist.has_maximum_wip), "reserve and work on it", claim_pokemon_path(@pokemon) %>.</div>
+  <% if series.pokemon.current_series == series %>
+  <div>This Pokémon has sprites in limbo, so you may <%= link_to_unless (current_artist.nil? or current_artist.has_maximum_wip), "reserve and work on it", claim_pokemon_path(series.pokemon) %>.</div>
+  <% end %>
 <% elsif (@limbo_series = series.pokemon.series.where("limbo = ?", true)).exists? %>
   <div>This Pokémon has old sprites in limbo (<%= link_to "check it out", series_path(@limbo_series.first) %>)
 <% end %>
 
 <div class='series'>
-  
-<legend>Available actions</legend>
+
 <% if series.state == SERIES_RESERVED  %>
+
 	<% if series.reserver == current_artist %>
+    <legend>Available actions</legend>
 	  <div class="btn-group">
   		<%= link_to content_tag(:i, '', :class => 'icon-remove icon-white') + " Unreserve".html_safe, unclaim_pokemon_path(series.pokemon), :class => 'btn btn-inverse' %>
 		</div>
 	<% end %>
-	
 	<%= render :partial => "series/upload_form", :locals => { :series => series } %>
 	
 <% else %>
 
   <% events = series.events_for_artist(current_artist) %>
   <% if !events.blank? or (current_artist and current_artist.admin and series.state == SERIES_ARCHIVED) %>
+  <legend>Available actions</legend>
   <div class="btn-group">
   	<% events.each do |event| %>
   	<%= link_to event_button_content(event.to_s), transition_series_path(series, :event => event), :confirm => (event == :archive ? "Archive these sprites to start from scratch?" : nil), :class => 'btn' %>
@@ -29,14 +32,13 @@
   	<%= link_to content_tag(:i, '', :class => 'icon-trash icon-white') + ' Delete'.html_safe, series_path(series), :method => :delete, :confirm => "Are you sure you want to PERMANENTLY delete this series of sprites?", :class => 'btn btn-danger' %>
   	<% end %>
   </div>
-<% end %>
+  <% end %>
 
-<%= render :partial => "series/upload_form", :locals => { :series => series } %>
+  <%= render :partial => "series/upload_form", :locals => { :series => series } %>
 
-<div>
-  <legend>History</legend>
-  <%= render :partial => 'series/activity', :collection => series.activities.order('created_at DESC') %>
-</div>
-<% end %>
-
+  <div>
+    <legend>History</legend>
+    <%= render :partial => 'series/activity', :collection => series.activities.order('created_at DESC') %>
+  </div>
+  <% end %>
 </div>
