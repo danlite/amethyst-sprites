@@ -259,3 +259,7 @@ input.url-display {
 a.btn.with-label {
   padding-bottom: 2px;
 }
+
+#footer {
+  margin: 10px auto;
+}

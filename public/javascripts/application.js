@@ -7,6 +7,8 @@ $(document).ready(function() {
 	$('#total-progress').tooltip({'placement': 'bottom'});
 	
 	$('.artist-badge .label').tooltip({'placement': 'right'});
+	
+	$('a.artist').tooltip();
 });
 
 var AS = {

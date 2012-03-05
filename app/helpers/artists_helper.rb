@@ -1,10 +1,10 @@
 module ArtistsHelper
   
-  def style_artist_name(artist)
+  def style_artist_name(artist, link = false)
     classes = ['artist']
     classes << 'artist-qc' if artist.qc
     classes << 'artist-admin' if artist.admin
-    content_tag(:span, artist.name, :class => classes.join(' '))
+    link_to_if link, artist.name, artist, :class => classes.join(' '), :title => artist_title(artist)
   end
   
   def artist_title(artist)

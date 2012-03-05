@@ -1,9 +1,11 @@
 <div>
-  <p><strong>Newest artists: </strong>
-  <%= @newest_artists.map{|a| style_artist_name(a)}.join(", ").html_safe %><%= ", and #{pluralize @remaining_artists, 'other'}" if @remaining_artists > 0 %></p>
+  <h3>Artists</h3>
+  <%= @newest_artists.map{|a| style_artist_name(a, true)}.join(", ").html_safe %><%= ", and #{pluralize @remaining_artists, 'other'}" if @remaining_artists > 0 %></p>
 </div>
 
-<div id="activity-feed-header">Latest Activity <%= link_to "(view all)", activities_path %></div>
+<div id="activity-feed-header">
+  <h3>Latest Activity <%= link_to "view all", activities_path, :class => 'btn btn-mini' %></h3>
+</div>
 <div class="row">
 <div id="activity-feed-container">
   <div id="activity-feed">
