@@ -33,7 +33,7 @@ module PokemonHelper
     end
   end
   
-  def series_label(series)
+  def series_label(series, show_reserver = false)
     text = nil
     label_class = ''
     limbo = false
@@ -53,6 +53,10 @@ module PokemonHelper
     
     tag = content_tag(:span, text, :class => "label #{label_class}")
     tag += ' '.html_safe + content_tag(:span, 'limbo', :class => "label label-warning") if limbo
+    
+    if show_reserver and series.reserver
+      return tag + ' '.html_safe + content_tag(:span){ 'by '.html_safe + style_artist_name(series.reserver) }
+    end
     
     tag
   end

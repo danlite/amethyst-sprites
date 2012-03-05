@@ -1,6 +1,5 @@
 ## TODO
 
-- better user pages to show their contributions and current work
 - user settings page to change email/password, set time zone
 - improved activity feed with less redundant content
   - possibly show only one instance of a particular Pokémon, with its latest status

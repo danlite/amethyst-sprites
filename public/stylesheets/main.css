@@ -94,7 +94,7 @@ time {
   padding: 0;
   border: 2px solid #ddd;
   width: 164px;
-  vertical-align: top;
+  vertical-align: bottom;
 }
 
 .gallery-cell .pokemon-sprite {
