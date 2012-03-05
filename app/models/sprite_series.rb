@@ -49,7 +49,7 @@ class SpriteSeries < ActiveRecord::Base
     end
     
     event :mark_for_approval do
-      transitions :to => :awaiting_approval, :from => [:working, :awaiting_edit, :editing, :awaiting_qc, :qc]
+      transitions :to => :awaiting_approval, :from => [:working, :awaiting_edit, :editing, :awaiting_qc, :qc], :on_transition => :unreserve
     end
     
     event :finish do
