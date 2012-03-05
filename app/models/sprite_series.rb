@@ -53,7 +53,7 @@ class SpriteSeries < ActiveRecord::Base
     end
     
     event :finish do
-      transitions :to => :done, :from => [:working, :awaiting_edit, :editing, :awaiting_qc, :qc, :awaiting_approval], :on_transition => [:unreserve, :unlimbo]
+      transitions :to => :done, :from => [:working, :awaiting_edit, :editing, :awaiting_qc, :qc, :awaiting_approval], :on_transition => [:unreserve, :unlimbo, :archive_siblings]
     end
     
     event :archive do
@@ -125,6 +125,13 @@ class SpriteSeries < ActiveRecord::Base
     
     def unlimbo
       self.limbo = false
-    end      
+    end
+    
+    def archive_siblings
+      self.pokemon.series.where('state != ? AND id != ?', SERIES_ARCHIVED, self.id).each do |sibling|
+        sibling.archive!
+      end
+      self.pokemon.reload # necessary to load the new current_series value and pass SeriesPokemonValidator validation
+    end
   
 end
