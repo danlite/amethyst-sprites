@@ -1,21 +1,25 @@
 module PokemonHelper
   
+  def state_text(series)
+    state_text = case series.state
+      when SERIES_RESERVED then "reserved"
+      when SERIES_WORKING then "WIP"
+      when SERIES_AWAITING_EDIT then "awaiting edit"
+      when SERIES_EDITING then "in edit"
+      when SERIES_AWAITING_QC then "awaiting QC"
+      when SERIES_QC then "in QC"
+      when SERIES_AWAITING_APPROVAL then "awaiting approval"
+      when SERIES_DONE then "done"
+      when SERIES_ARCHIVED then "archived"
+      else "unknown state"
+    end
+  end
+  
   def html_for_series(series)
     state_text = "available"
     
     if series
-      state_text = case series.state
-        when SERIES_RESERVED then "reserved"
-        when SERIES_WORKING then "WIP"
-        when SERIES_AWAITING_EDIT then "awaiting edit"
-        when SERIES_EDITING then "in edit"
-        when SERIES_AWAITING_QC then "awaiting QC"
-        when SERIES_QC then "in QC"
-        when SERIES_AWAITING_APPROVAL then "awaiting approval"
-        when SERIES_DONE then "done"
-        when SERIES_ARCHIVED then "archived"
-        else "unknown state"
-      end
+      state_text = state_text(series)
     end
       
     content_tag(:span, state_text)
@@ -37,18 +41,7 @@ module PokemonHelper
     if series
       limbo = series.limbo?
       
-      text = case series.state
-        when SERIES_RESERVED then "reserved"
-        when SERIES_WORKING then "WIP"
-        when SERIES_AWAITING_EDIT then "awaiting edit"
-        when SERIES_EDITING then "in edit"
-        when SERIES_AWAITING_QC then "awaiting QC"
-        when SERIES_QC then "in QC"
-        when SERIES_AWAITING_APPROVAL then "awaiting approval"
-        when SERIES_DONE then "done"
-        when SERIES_ARCHIVED then "archived"
-        else "unknown state"
-      end
+      text = state_text(series)
       
       label_class = case series.state
         when SERIES_DONE then 'label-success'
