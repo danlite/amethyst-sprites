@@ -7,4 +7,11 @@ module ArtistsHelper
     content_tag(:span, artist.name, :class => classes.join(' '))
   end
   
+  def artist_title(artist)
+    titles = []
+    titles << "Project Admin" if artist.admin
+    titles << "QC Artist" if artist.qc
+    titles.join(" and ")
+  end
+  
 end

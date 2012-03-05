@@ -10,7 +10,11 @@ module ApplicationHelper
     options[:class] = "btn sprite #{small ? 'small' : 'large'} " + options[:class].to_s
     link_to(series_path(:id => series), options) do
       things = []
-      things << image_tag(sprite.image.url, :alt => '', :class => 'sprite') if sprite
+      if sprite
+        things << image_tag(sprite.image.url, :alt => '', :class => 'sprite')
+      else
+        things << content_tag(:div, '', :class => 'sprite-placeholder') if !small
+      end
       things << tag(:br) if sprite and text
       things << text if text
       things.join.html_safe

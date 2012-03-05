@@ -28,4 +28,15 @@ class ArtistsController < ApplicationController
     render 'work', :layout => !request.xhr?
   end
   
+  def show
+    artist_id = params[:id]
+    artist_id = current_artist.id if artist_id == 'your'
+    
+    @artist = Artist.find(artist_id)
+    
+    @work = @artist.reservations
+    @contributions = @artist.contribution_series
+    @series = ((SpriteSeries.joins(:sprites).where('sprites.artist_id = ?', @artist.id) | @contributions) - @work).sort{|s1, s2| s2.updated_at <=> s1.updated_at}
+  end
+  
 end

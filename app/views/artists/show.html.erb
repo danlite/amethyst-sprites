@@ -1,0 +1,46 @@
+<legend>
+<h1>
+  <%= @artist.name %>
+  <% if @artist.admin or @artist.qc %>
+  <div class="artist-badge">
+    <span class="label label-info" title="<%= artist_title(@artist) %>">
+      <% if @artist.admin %><i class="icon-star icon-white"></i><% end %>
+      <% if @artist.qc %><i class="icon-ok-sign icon-white"></i><% end %>
+    </span>
+  </div>
+  <% end %>
+</h1>
+</legend>
+
+<div class="stats">
+  <div class="statistic">
+    <div class="title">Date joined</div> <%= @artist.created_at.to_formatted_s :month_day_and_year %>
+  </div>
+  <div class="statistic">
+    <div class="title">Sprites submitted</div> <%= @artist.sprites.count + @contributions.count %>
+  </div>
+</div>
+
+<% if not @work.blank? %>
+  <legend>Current work</legend>
+  <div class="series-gallery">
+  <% @work.each do |series| %>
+    <div class="gallery-series">
+      <%= series_button(series, series.pokemon.full_name + "<br />" + series_label(series), series.latest_sprite, false, :class => 'with-label') %>
+    </div>
+  <% end %>
+    <div class="clearfix"></div>
+  </div>
+<% end %>
+
+<% if not @series.blank? %>
+  <legend>Contributions</legend>
+  <div class="series-gallery">
+  <% @series.each do |series| %>
+    <div class="gallery-series">
+      <%= series_button(series, series.pokemon.full_name + "<br />" + series_label(series), series.latest_sprite, false, :class => 'with-label') %>
+    </div>
+  <% end %>
+    <div class="clearfix"></div>
+  </div>
+<% end %>

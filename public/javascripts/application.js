@@ -5,6 +5,8 @@ $(document).ready(function() {
 	$("input:text:visible:first").focus();
 	
 	$('#total-progress').tooltip({'placement': 'bottom'});
+	
+	$('.artist-badge .label').tooltip({'placement': 'right'});
 });
 
 var AS = {
