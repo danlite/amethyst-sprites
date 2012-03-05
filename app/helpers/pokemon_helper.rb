@@ -16,10 +16,6 @@ module PokemonHelper
         when SERIES_ARCHIVED then "archived"
         else "unknown state"
       end
-    
-      state_text += " by #{series.reserver.name}" if series.owned?
-    
-      state_text += " (limbo)" if series.limbo?
     end
       
     content_tag(:span, state_text)
@@ -36,8 +32,11 @@ module PokemonHelper
   def series_label(series)
     text = nil
     label_class = ''
+    limbo = false
     
     if series
+      limbo = series.limbo?
+      
       text = case series.state
         when SERIES_RESERVED then "reserved"
         when SERIES_WORKING then "WIP"
@@ -60,7 +59,7 @@ module PokemonHelper
     end
     
     tag = content_tag(:span, text, :class => "label #{label_class}")
-    tag += ' '.html_safe + content_tag(:span, 'limbo', :class => "label label-warning") if series.limbo?
+    tag += ' '.html_safe + content_tag(:span, 'limbo', :class => "label label-warning") if limbo
     
     tag
   end
