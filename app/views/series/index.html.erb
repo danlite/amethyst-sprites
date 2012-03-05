@@ -10,7 +10,7 @@
   <% end %>
   <% text += ' '.html_safe + content_tag(:span, 'limbo', :class => 'label label-warning') if series.limbo? %>
   <div class="gallery-series">
-    <%= series_button(series, text, series.latest_sprite, false, {:title => series.flag == FLAG_REDO ? 'Flagged for redo' : series.flag == FLAG_TWEAK ? 'Flagged for tweak' : ''}) %>
+    <%= series_button(series, text, series.latest_sprite, false, {:class => 'with-label', :title => series.flag == FLAG_REDO ? 'Flagged for redo' : series.flag == FLAG_TWEAK ? 'Flagged for tweak' : ''}) %>
   </div>
 <% end %>
 </div>
