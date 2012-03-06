@@ -1,10 +1,10 @@
 <div class="row">
   <h3>Artists</h3>
-  <%= @newest_artists.map{|a| style_artist_name(a, true)}.join(", ").html_safe %><%= ", and #{pluralize @remaining_artists, 'other'}" if @remaining_artists > 0 %></p>
+  <%= @newest_artists.map{|a| style_artist_name(a)}.join(", ").html_safe %><%= ", and #{pluralize @remaining_artists, 'other'}" if @remaining_artists > 0 %></p>
 </div>
 
-<div class="row">
-  <div id="activity-feed-header">Latest Activity <%= link_to "(view all)", activities_path %></div>
+<div class="row" id="latest-activity">
+  <h3>Latest Activity</h3>
   <div id="changed-pokemon">
     <%= render :partial => "pokemon/activity_pokemon", :collection => @recent_changes %>
   </div>

@@ -34,7 +34,7 @@
   width: 160px;
 }
 
-.btn.sprite .sprite-placeholder {
+.sprite .sprite-placeholder {
   display: inline-block;
   margin: 0;
   vertical-align: middle;
@@ -42,6 +42,13 @@
   margin: 4px;
   width: 160px;
   height: 160px;
+}
+
+.sprite.small .sprite-placeholder {
+  padding: 0;
+  margin: 0;
+  width: 80px;
+  height: 80px;
 }
 
 time {
@@ -269,9 +276,9 @@ a.btn.with-label {
 
 #changed-pokemon .changed-pokemon {
   display: inline-block;
-  width: 200px;
+  width: 228px;
   
-  border: 1px solid #333;
+  border: 1px solid #888;
   border-radius: 8px;
   background-color: #ddd;
   
@@ -283,7 +290,6 @@ a.btn.with-label {
 
 .changed-pokemon a {
   color: #333;
-  font-weight: bold;
 }
 
 .changed-pokemon .table-row {
@@ -308,4 +314,19 @@ a.btn.with-label {
 
 .changed-pokemon .summary .summary-label {
   margin-top: 2px;
+}
+
+.changed-pokemon .summary .pokemon-name {
+  font-weight: bold;
+}
+
+.artist-name {
+  width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#latest-activity {
+  margin-bottom: 10px;
 }

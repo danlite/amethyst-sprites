@@ -9,17 +9,21 @@
     </div>
   
     <div class="summary">
-      <%= link_to activity_pokemon.name, activity_pokemon %><br />
-      <div class="activity-label summary-label" title="Last activity <%= time_ago_in_words(activity_pokemon.acted_on_at) %> ago">
-        <%= series_label(activity_pokemon.current_series) %>
+      <div class="pokemon-name"><%= link_to activity_pokemon.name, activity_pokemon %></div>
+      <div class="activity-label summary-label">
+        <%= series_label(activity_pokemon.current_series, false, :title => "Last activity #{time_ago_in_words(activity_pokemon.acted_on_at)} ago") %>
       </div>
+      
       <% comment_count = activity_pokemon.current_series.sprites.joins(:comments).count %>
       <% if comment_count > 0 %>
       <div class="comment-label summary-label">
         <span class="label" title="<%= pluralize(comment_count, 'comment') %>"><i class="icon-comment icon-white"></i></span>
       </div>
       <% end %>
-      <%= style_artist_name(activity_pokemon.current_series.reserver) if activity_pokemon.current_series.owned? %>
+      
+      <% if activity_pokemon.current_series.owned? %>
+      <div class="artist-name">by <%= style_artist_name(activity_pokemon.current_series.reserver, :title => activity_pokemon.current_series.reserver.name) %></div>
+      <% end %>
     </div>
   </div>
 </div>
