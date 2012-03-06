@@ -24,12 +24,12 @@
   margin: 4px
 }
 
-.btn.sprite.small img {
+.sprite.small img {
   height: 80px;
   width: 80px;
 }
 
-.btn.sprite.large img {
+.sprite.large img {
   height: 160px;
   width: 160px;
 }
@@ -82,7 +82,7 @@ time {
 }
 
 #gallery {
-  width: 858px;
+  width: 832px;
   margin: 0 auto;
 }
 
@@ -262,4 +262,50 @@ a.btn.with-label {
 
 #footer {
   margin: 10px auto;
+}
+
+#changed-pokemon {
+}
+
+#changed-pokemon .changed-pokemon {
+  display: inline-block;
+  width: 200px;
+  
+  border: 1px solid #333;
+  border-radius: 8px;
+  background-color: #ddd;
+  
+  margin: 2px;
+  padding: 3px;
+  
+  font-size: 0.9em;
+}
+
+.changed-pokemon a {
+  color: #333;
+  font-weight: bold;
+}
+
+.changed-pokemon .table-row {
+  display: table-row;
+  height: 80px;
+}
+
+.changed-pokemon .sprite {
+  float: left;
+  height: 80px;
+  background-color: white;
+  border: 1px dashed #999;
+  border-radius: 4px;
+  
+  margin-right: 4px;
+}
+
+.changed-pokemon .summary {
+  float: left;
+  height: 100%;
+}
+
+.changed-pokemon .summary .summary-label {
+  margin-top: 2px;
 }

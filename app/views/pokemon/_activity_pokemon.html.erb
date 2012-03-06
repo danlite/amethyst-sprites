@@ -1,0 +1,25 @@
+<div class="changed-pokemon" id="change-<%= activity_pokemon.id %>">
+  <div class="table-row">
+    <div class="sprite small">
+      <% if activity_pokemon.current_series.latest_sprite %>
+      <%= image_tag activity_pokemon.current_series.latest_sprite.image.url %>
+      <% else %>
+      <div class="sprite-placeholder"></div>
+      <% end %>
+    </div>
+  
+    <div class="summary">
+      <%= link_to activity_pokemon.name, activity_pokemon %><br />
+      <div class="activity-label summary-label" title="Last activity <%= time_ago_in_words(activity_pokemon.acted_on_at) %> ago">
+        <%= series_label(activity_pokemon.current_series) %>
+      </div>
+      <% comment_count = activity_pokemon.current_series.sprites.joins(:comments).count %>
+      <% if comment_count > 0 %>
+      <div class="comment-label summary-label">
+        <span class="label" title="<%= pluralize(comment_count, 'comment') %>"><i class="icon-comment icon-white"></i></span>
+      </div>
+      <% end %>
+      <%= style_artist_name(activity_pokemon.current_series.reserver) if activity_pokemon.current_series.owned? %>
+    </div>
+  </div>
+</div>

@@ -2,14 +2,14 @@ class PokemonController < ApplicationController
   before_filter :authenticate_artist, :except => [:index, :show]
   
   def index
+    @javascripts = 'gallery'
+    
     @pokemon = Pokemon.includes(:current_series).order('dex_number ASC, form_order ASC, form_name ASC')
     
     @newest_artists = Artist.order("created_at DESC").all
     @remaining_artists = Artist.count - @newest_artists.count
     
-    visible_activities = Activity.visible
-    @latest_activities = visible_activities.order("created_at DESC").limit(15).all
-    @older_activity_count = visible_activities.count - @latest_activities.count
+    @recent_changes = Pokemon.recently_changed
   end
   
   def show

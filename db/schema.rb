@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120228204722) do
+ActiveRecord::Schema.define(:version => 20120306014137) do
 
   create_table "activities", :force => true do |t|
     t.string   "type"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20120228204722) do
     t.datetime "updated_at"
     t.integer  "current_series_id"
     t.integer  "form_order"
+    t.datetime "acted_on_at"
   end
 
   add_index "pokemon", ["current_series_id"], :name => "index_pokemon_on_current_series_id"
