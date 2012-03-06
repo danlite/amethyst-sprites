@@ -19,7 +19,7 @@ module ActivitiesHelper
   def text_for_activity(activity)
     if activity.is_a? UploadActivity
       actor = activity.sprite.artist ? style_artist_name(activity.sprite.artist) : 'Someone'
-      action = activity.sprite.step == SPRITE_REVAMP ? 'revamped the sprite for' : 'uploaded a sprite for'
+      action = activity.sprite.step == SPRITE_REVAMP ? 'tweaked the sprite for' : 'uploaded a sprite for'
       "#{actor} #{action} #{activity.sprite.series.pokemon.full_name}".html_safe
     elsif activity.is_a? ProgressActivity
       text_for_progress_activity(activity)

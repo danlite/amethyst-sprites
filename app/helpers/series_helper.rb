@@ -25,7 +25,7 @@ module SeriesHelper
   def text_for_series_activity(activity)
     if activity.is_a? UploadActivity
       artists = activity.sprite.artist ? style_artist_name(activity.sprite.artist) : activity.series.contributors.map{|c| style_artist_name(c) }.join(", ")
-      action = activity.sprite.artist ? (activity.sprite.step == SPRITE_REVAMP ? 'revamped' : 'uploaded') : 'sprite work'
+      action = activity.sprite.artist ? (activity.sprite.step == SPRITE_REVAMP ? 'tweaked' : 'uploaded') : 'sprite work'
       "#{action} by #{artists}".html_safe
     elsif activity.is_a? ProgressActivity
       text_for_series_progress_activity(activity)
