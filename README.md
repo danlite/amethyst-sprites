@@ -2,7 +2,6 @@
 
 - user settings page to change email/password, set time zone
 - improved activity feed with less redundant content
-  - possibly show only one instance of a particular Pokémon, with its latest status
 - handle sprites with semi-transparent pixels (and possibly try to threshold the alpha on them)
 - show differences made by sprite edits, probably by cycling through each sprite
 
