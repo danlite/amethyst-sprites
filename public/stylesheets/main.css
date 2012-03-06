@@ -321,7 +321,7 @@ a.btn.with-label {
 }
 
 .artist-name {
-  width: 130px;
+  width: 135px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
