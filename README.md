@@ -9,10 +9,13 @@
 - undo
 - flood fill
 - edit colours in palette (automatically replacing pixels on canvas)
+- height guide
+- background image to pixel-over
 - actual-size preview
 - replace colour tool
 - keyboard shortcuts
 - layers
+- shift image or marquee tool
 
 ## CREDITS
 
