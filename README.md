@@ -2,7 +2,17 @@
 
 - user settings page to change email/password, set time zone
 - handle sprites with semi-transparent pixels (and possibly try to threshold the alpha on them)
-- show differences made by sprite edits, probably by cycling through each sprite
+- cycle through differences between sprite edits
+
+### Sprite Editor
+
+- undo
+- flood fill
+- edit colours in palette (automatically replacing pixels on canvas)
+- actual-size preview
+- replace colour tool
+- keyboard shortcuts
+- layers
 
 ## CREDITS
 
