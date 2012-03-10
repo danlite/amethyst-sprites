@@ -3,6 +3,7 @@
 - user settings page to change email/password, set time zone
 - handle sprites with semi-transparent pixels (and possibly try to threshold the alpha on them)
 - cycle through differences between sprite edits
+- make progress activities less tall in sprite history section
 - [IMG] tag generation for sprite images
 
 ### Sprite Editor
