@@ -14,8 +14,11 @@
     </div>
     <% end %>
     </td><td>
-    <time><%= time_ago_in_words(activity.created_at) %> ago</time>
-    <p><%= text_for_series_activity(activity) %></p>
+    <p>
+      <time><%= time_ago_in_words(activity.created_at) %> ago</time>
+      <%= tag(:br) unless activity.is_a? ProgressActivity %>
+      <%= text_for_series_activity(activity) %>
+    </p>
     <% if activity.is_a? UploadActivity %>
     <div id="comments-sprite-<%= activity.sprite_id %>" class="comments-container">
       <% activity.sprite.comments.order('created_at DESC').each do |comment| %>
