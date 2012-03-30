@@ -34,8 +34,10 @@ class Sprite < ActiveRecord::Base
   end
   
   def commenting_open?
-    # Only allow commenting if it's the latest sprite of an active series
-    (series.latest_sprite == self) and (![SERIES_ARCHIVED, SERIES_DONE].include?(series.state))
+    # Only allow commenting if it's the latest sprite of an active series,
+    # or if it's the latest sprite of a finished but flagged series
+    # This may later need to be changed to take into account a user's privileges
+    (series.latest_sprite == self) and (([FLAG_TWEAK, FLAG_REDO].include?(series.flag) and series.state == SERIES_DONE) or (![SERIES_DONE, SERIES_ARCHIVED].include?(series.state)))
   end
   
   protected
