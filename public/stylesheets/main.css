@@ -300,6 +300,7 @@ a.btn.with-label {
 .changed-pokemon .sprite {
   float: left;
   height: 80px;
+  width: 80px;
   background-color: white;
   border: 1px dashed #999;
   border-radius: 4px;
