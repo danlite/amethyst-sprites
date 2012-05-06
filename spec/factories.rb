@@ -33,7 +33,7 @@ Factory.define :finished_series, :class => 'SpriteSeries' do |s|
 end
 
 Factory.define :sprite do |s|
-  s.image fixture_file_upload(Rails.root.join('spec/sprite.png'), 'image/png')
+  s.image fixture_file_upload(Rails.root.join('spec/fixtures/sprite.png'), 'image/png')
   s.association :series, :factory => :sprite_series
   s.association :artist
   s.step SPRITE_WORK

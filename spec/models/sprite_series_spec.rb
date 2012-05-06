@@ -21,8 +21,8 @@ describe SpriteSeries do
     it "should get its latest sprite" do
       @series = Factory(:sprite_series)
       @artist = Factory(:artist)
-      @series.sprites.create(:step => SPRITE_WORK, :artist => @artist, :image => File.open(Rails.root.join('spec', 'sprite.png')))
-      latest = @series.sprites.create(:step => SPRITE_EDIT, :artist => @artist, :image => File.open(Rails.root.join('spec', 'sprite.png')))
+      @series.sprites.create(:step => SPRITE_WORK, :artist => @artist, :image => File.open(Rails.root.join('spec/fixtures', 'sprite.png')))
+      latest = @series.sprites.create(:step => SPRITE_EDIT, :artist => @artist, :image => File.open(Rails.root.join('spec/fixtures', 'sprite.png')))
       @series.latest_sprite.should == latest
     end
   end

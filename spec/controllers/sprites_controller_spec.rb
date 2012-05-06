@@ -9,7 +9,7 @@ describe SpritesController do
       @series.reserver = @artist
       @series.save
       
-      @image_data = fixture_file_upload(Rails.root.join('spec/sprite.png'), 'image/png')
+      @image_data = fixture_file_upload('/sprite.png', 'image/png')
       
       controller.stub!(:authenticate_artist).and_return(true)
       controller.stub!(:current_artist).and_return(@artist)
