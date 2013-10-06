@@ -86,6 +86,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memcachier (0.0.2)
     mime-types (1.25)
     multi_json (1.2.0)
     multi_xml (0.4.1)
@@ -170,6 +171,7 @@ DEPENDENCIES
   factory_girl_rails
   formtastic-bootstrap!
   jquery-rails
+  memcachier
   paperclip!
   pg
   pusher

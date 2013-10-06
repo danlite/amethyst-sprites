@@ -11,6 +11,7 @@ gem 'aws-sdk'
 gem 'transitions', :require => ["transitions", "active_record/transitions"]
 gem 'pg'
 gem 'dalli'
+gem 'memcachier'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'rmagick', :require => "RMagick"
